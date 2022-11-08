@@ -15,6 +15,10 @@ const fileUpload = require("express-fileupload");
 const cors = require("cors");
 const authRouter = require("./routes/authRoute");
 
+// middleware
+const errorHandlerMiddleware = require("./middleware/error-handler");
+
+
 if (process.env.NODE_ENV !== "production") {
   app.use(morgan("dev"));
 }
@@ -30,6 +34,9 @@ app.use(fileUpload());
 //routes
 
 app.use("/api/v1/auth", authRouter);
+
+
+app.use(errorHandlerMiddleware);
 
 const port = process.env.PORT || 5000;
 
