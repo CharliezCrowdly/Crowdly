@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import loginImage from "../../assets/images/shape.png";
 import Wrapper from "./wrapper/loginpage";
+import { Alert } from "../../component";
 import { BsFillArrowLeftCircleFill } from "react-icons/bs";
 import {
   UnderlineInput,
   SingleSelectInput,
 } from "../../component/formcomponents";
+import { useAppContext } from "../../context/appContext";
+
 
 const initialState = {
   name: "",
@@ -20,13 +23,50 @@ const initialState = {
 
 const LoginPage = () => {
   const [values, setValues] = useState(initialState);
-
+  const { setupUser, isLoading, showAlert, user } = useAppContext();
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
   const onSubmit = (e) => {
+    console.log("jello");
     e.preventDefault();
+    const {
+      name,
+      email,
+      password,
+      isMember,
+      profilePicture,
+      location,
+      username,
+      usertype,
+    } = values;
+
+    const currentUser = {
+      name,
+      email,
+      password,
+      location,
+      profilePicture,
+      username,
+      usertype
+    };
+
+    console.log(currentUser)
+
+    if (isMember) {
+      setupUser({
+        currentUser,
+        endPoint: "login",
+        alertText: "Login Successful: Redirection...",
+      });
+    } else {
+      setupUser({
+        currentUser,
+        endPoint: "register",
+        alertText: "User Created!: Redirection...",
+      });
+    }
   };
   function setUser(usertype) {
     setValues({ ...values, usertype: usertype });
@@ -37,6 +77,7 @@ const LoginPage = () => {
       <div className="login-container">
         <BsFillArrowLeftCircleFill className="back-arrow" />
         <form className="form-container" onSubmit={onSubmit}>
+        {showAlert && <Alert />}
           <h1 className="login-heading">
             {values.isMember ? "Login" : "Register"}
           </h1>
@@ -47,6 +88,12 @@ const LoginPage = () => {
             type={"text"}
             name={"name"}
           />
+          <UnderlineInput
+              handleChange={handleChange}
+              placeholder={"Enter Username"}
+              type={"text"}
+              name={"username"}
+            />
 
           <UnderlineInput
             handleChange={handleChange}
@@ -85,7 +132,8 @@ const LoginPage = () => {
             </p>
           )}
 
-          <button type="submit" className="btn-submit">
+          <button type="submit" disabled={isLoading}className="btn-submit">
+
             Submit
           </button>
         </form>
