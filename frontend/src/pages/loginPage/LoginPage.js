@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import loginImage from "../../assets/images/shape.png";
 import Wrapper from "./wrapper/loginpage";
 import { Alert } from "../../component";
@@ -8,6 +8,8 @@ import {
   SingleSelectInput,
 } from "../../component/formcomponents";
 import { useAppContext } from "../../context/appContext";
+
+import { useNavigate } from "react-router-dom";
 
 const initialState = {
   name: "",
@@ -26,6 +28,15 @@ const LoginPage = () => {
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      setTimeout(() => {
+        navigate("/feeds");
+      }, 3000);
+    }
+  }, [user, navigate]);
 
   const onSubmit = (e) => {
     console.log("jello");
