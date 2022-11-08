@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@cucumber/cucumber": "^8.7.0",
     "react": "^18.2.0"
   }
 }

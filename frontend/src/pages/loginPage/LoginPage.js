@@ -9,7 +9,6 @@ import {
 } from "../../component/formcomponents";
 import { useAppContext } from "../../context/appContext";
 
-
 const initialState = {
   name: "",
   username: "",
@@ -49,10 +48,10 @@ const LoginPage = () => {
       location,
       profilePicture,
       username,
-      usertype
+      usertype,
     };
 
-    console.log(currentUser)
+    console.log(currentUser);
 
     if (isMember) {
       setupUser({
@@ -77,40 +76,45 @@ const LoginPage = () => {
       <div className="login-container">
         <BsFillArrowLeftCircleFill className="back-arrow" />
         <form className="form-container" onSubmit={onSubmit}>
-        {showAlert && <Alert />}
+          {" "}
+          {showAlert && <Alert />}
           <h1 className="login-heading">
+            {" "}
             {values.isMember ? "Login" : "Register"}
-          </h1>
-
-          <UnderlineInput
-            handleChange={handleChange}
-            placeholder={"Enter Fullname"}
-            type={"text"}
-            name={"name"}
-          />
-          <UnderlineInput
+          </h1>{" "}
+          {!values.isMember ? (
+            <UnderlineInput
+              handleChange={handleChange}
+              placeholder={"Enter Fullname"}
+              type={"text"}
+              name={"name"}
+            />
+          ) : (
+            ""
+          )}
+          {!values.isMember ? (
+            <UnderlineInput
               handleChange={handleChange}
               placeholder={"Enter Username"}
               type={"text"}
               name={"username"}
             />
-
+          ) : (
+            ""
+          )}
           <UnderlineInput
             handleChange={handleChange}
             placeholder={"Enter Email"}
             type={"email"}
             name={"email"}
-          />
-
+          />{" "}
           {!values.isMember ? <SingleSelectInput setUser={setUser} /> : ""}
-
           <UnderlineInput
             handleChange={handleChange}
             placeholder={"Enter Password"}
             type={"password"}
             name="password"
-          />
-
+          />{" "}
           {values.isMember ? (
             <p
               className="toggle-account"
@@ -118,8 +122,9 @@ const LoginPage = () => {
                 setValues({ ...values, isMember: false });
               }}
             >
+              {" "}
               Don't have a account
-              <span className="log-reg"> Register ?</span>
+              <span className="log-reg"> Register ?</span>{" "}
             </p>
           ) : (
             <p
@@ -128,14 +133,14 @@ const LoginPage = () => {
                 setValues({ ...values, isMember: true });
               }}
             >
-              Already have a account <span>Login ?</span>
+              {" "}
+              Already have a account <span>Login ?</span>{" "}
             </p>
           )}
-
-          <button type="submit" disabled={isLoading}className="btn-submit">
-
+          <button type="submit" disabled={isLoading} className="btn-submit">
+            {" "}
             Submit
-          </button>
+          </button>{" "}
         </form>
 
         <div className="image-container">
