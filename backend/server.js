@@ -13,6 +13,7 @@ const connectDB = require("./db/connect");
 const fileUpload = require("express-fileupload");
 
 const cors = require("cors");
+const authRouter = require("./routes/authRoute");
 
 if (process.env.NODE_ENV !== "production") {
   app.use(morgan("dev"));
@@ -26,6 +27,9 @@ app.use(express.static("./public"));
 app.use(express.json());
 
 app.use(fileUpload());
+//routes
+
+app.use("/api/v1/auth", authRouter);
 
 const port = process.env.PORT || 5000;
 
