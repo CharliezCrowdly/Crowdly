@@ -12,7 +12,7 @@ const initialState = {
   email: "",
   profilePicture: null,
   password: "",
-  isMember: true,
+  isMember:false,
   location: "",
   usertype: null,
 };
