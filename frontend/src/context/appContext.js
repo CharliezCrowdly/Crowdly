@@ -108,7 +108,62 @@ const AppProvider = ({ children }) => {
     removeFromLocalStorage();
   };
 
-  
+  const setupUser = async ({ currentUser, endPoint, alertText }) => {
+    dispatch({ type: SETUP_USER_BEGIN });
+
+    const { name, email, password, profilePicture, username, usertype } =
+      currentUser;
+
+    let formData = new FormData();
+
+    formData.append("name", name);
+    formData.append("username", username);
+    // formData.append("location", location);
+    formData.append("usertype", usertype);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("profilePicture", profilePicture);
+
+    try {
+      const { data } = await axios.post(`/api/v1/auth/${endPoint}`, formData);
+      console.log(data);
+
+      const { user, token } = data;
+      const username = user.username;
+      const profilePicture = user.profilePicture;
+      const name = user.name;
+
+      addUserToLocalStorage({
+        user,
+        token,
+
+        profilePicture,
+        username,
+        name,
+      });
+      dispatch({
+        type: SETUP_USER_SUCCESS,
+        payload: {
+          user,
+          token,
+          username,
+          profilePicture,
+
+          alertText,
+          name,
+        },
+      });
+    } catch (error) {
+      //local storage later
+
+      dispatch({
+        type: SETUP_USER_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+
+    clearAlert();
+  };
 
   const removeFromLocalStorage = () => {
     localStorage.removeItem("user");
