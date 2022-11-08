@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import Wrapper from "../wrappers/formwrappers/SingleSelectInput";
+import Wrapper from "../../wrappers/formwrappers/SingleSelectInput";
 
 const options = [
   {

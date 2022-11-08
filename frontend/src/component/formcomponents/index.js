@@ -1,3 +1,3 @@
 import UnderlineInput from "./underlineInput";
-
-export {UnderlineInput}
+import SingleSelectInput from "./SingleSelectInput";
+export {UnderlineInput,SingleSelectInput}

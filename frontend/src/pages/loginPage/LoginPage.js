@@ -1,10 +1,11 @@
-import React,{ useState } from "react";
+import React, { useState } from "react";
 import loginImage from "../../assets/images/shape.png";
 import Wrapper from "./wrapper/loginpage";
 import { BsFillArrowLeftCircleFill } from "react-icons/bs";
-import { UnderlineInput } from "../../component/formcomponents";
-
-
+import {
+  UnderlineInput,
+  SingleSelectInput,
+} from "../../component/formcomponents";
 
 const initialState = {
   name: "",
@@ -12,7 +13,7 @@ const initialState = {
   email: "",
   profilePicture: null,
   password: "",
-  isMember:false,
+  isMember: false,
   location: "",
   usertype: null,
 };
@@ -20,24 +21,16 @@ const initialState = {
 const LoginPage = () => {
   const [values, setValues] = useState(initialState);
 
-
-
-
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
- 
-
   const onSubmit = (e) => {
     e.preventDefault();
-
-  
-
-
-}
-
-    
+  };
+  function setUser(usertype) {
+    setValues({ ...values, usertype: usertype });
+  }
 
   return (
     <Wrapper>
@@ -47,16 +40,13 @@ const LoginPage = () => {
           <h1 className="login-heading">
             {values.isMember ? "Login" : "Register"}
           </h1>
-          {!values.isMember ? (
-            <UnderlineInput
-              handleChange={handleChange}
-              placeholder={"Enter Fullname"}
-              type={"text"}
-              name={"name"}
-            />
-          ) : (
-            ""
-          )}
+
+          <UnderlineInput
+            handleChange={handleChange}
+            placeholder={"Enter Fullname"}
+            type={"text"}
+            name={"name"}
+          />
 
           <UnderlineInput
             handleChange={handleChange}
@@ -64,6 +54,8 @@ const LoginPage = () => {
             type={"email"}
             name={"email"}
           />
+
+          {!values.isMember ? <SingleSelectInput setUser={setUser} /> : ""}
 
           <UnderlineInput
             handleChange={handleChange}
@@ -108,7 +100,5 @@ const LoginPage = () => {
       </div>
     </Wrapper>
   );
-}
-;
-
+};
 export default LoginPage;
