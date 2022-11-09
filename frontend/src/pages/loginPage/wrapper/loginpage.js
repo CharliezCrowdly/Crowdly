@@ -35,9 +35,9 @@ const Wrapper = styled.div`
       padding: 2%;
 
       border: none;
-      color: whitesmoke;
+      color: white;
       font-weight: bolder;
-      background-color: var(--primary-color);
+      background-color: var(--light-blue-600);
       cursor: pointer;
     }
 
