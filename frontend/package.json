@@ -13,13 +13,13 @@
     "react-icons": "^4.6.0",
     "react-router-dom": "^6.2.2",
     "react-scripts": "5.0.1",
+    "selenium-webdriver": "^4.6.0",
     "styled-components": "^5.3.6",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -40,5 +40,9 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:5000"
+  "proxy": "http://localhost:5000",
+  "devDependencies": {
+    "@cucumber/pretty-formatter": "^1.0.0",
+    "chai": "^4.3.7"
+  }
 }
