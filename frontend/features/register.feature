@@ -1,7 +1,12 @@
 Feature: Is register successful?
   Is Registration process successfully completed
 
-  Scenario: Sunday isn't Friday
-    Given today is Sunday
-    When I ask whether it's Friday yet
-    Then I should be told "Nope"
+  Scenario: Register a applicant on Crowdly
+    Given I visit Crowdly Registration Page
+    When I enter my fullname
+    When I enter my username
+    When I enter my email
+    When I select applicant
+    When I enter my password
+    When I press submit
+    Then I should be told "Success"
