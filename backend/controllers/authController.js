@@ -1,7 +1,7 @@
 const { StatusCodes } = require("http-status-codes");
 const User = require("../models/user");
 
-const { BAD_REQUESTError } = require("../errors/index");
+const { BAD_REQUESTError, UnAuthenticatedError } = require("../errors/index");
 
 const register = async (req, res) => {
   const { name, email, password, username, usertype } = req.body;
