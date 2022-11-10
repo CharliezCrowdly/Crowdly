@@ -33,7 +33,7 @@ const LoginPage = () => {
   useEffect(() => {
     if (user) {
       setTimeout(() => {
-        navigate("/feeds");
+        navigate("/user/feeds");
       }, 3000);
     }
   }, [user, navigate]);
