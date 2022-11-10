@@ -1,2 +1,3 @@
 import Alert from "../component/Alert";
-export { Alert };
+import Recommendation from "../component/Recommendation"
+export { Alert, Recommendation };

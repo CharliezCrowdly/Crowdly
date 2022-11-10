@@ -2,7 +2,7 @@ import React from "react";
 import "./index.css";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { LoginPage, ProtectedRoute } from "./pages";
+import { LoginPage, ProtectedRoute, FeedPage } from "./pages";
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
           path="feeds"
           element={
             <ProtectedRoute>
-              <h1>Feeds Page</h1>
+              <FeedPage/>
             </ProtectedRoute>
           }
         />
