@@ -134,8 +134,8 @@ const LoginPage = () => {
               }}
             >
               {" "}
-              Don't have a account
-              <span className="log-reg"> Register ?</span>{" "}
+              Don't have a account?
+              <span className="log-reg"> Register</span>{" "}
             </p>
           ) : (
             <p
@@ -145,7 +145,7 @@ const LoginPage = () => {
               }}
             >
               {" "}
-              Already have a account <span>Login ?</span>{" "}
+              Already have a account? <span>Login</span>{" "}
             </p>
           )}
           <button type="submit" disabled={isLoading} className="btn-submit">
@@ -158,7 +158,7 @@ const LoginPage = () => {
           <img src={loginImage} alt="no " />
 
           <h4 className="login-info">
-            {values.isMember ? " Login To" : "Create"} Your Charlie Account
+            {values.isMember ? " Login To" : "Create"} Your Crowdly Account
           </h4>
         </div>
       </div>

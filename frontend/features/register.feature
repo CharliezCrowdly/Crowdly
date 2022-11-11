@@ -9,4 +9,4 @@ Feature: Is register successful?
     When I select applicant
     When I enter my password
     When I press submit
-    Then I should be told "Success"
+    Then I should be loggedin

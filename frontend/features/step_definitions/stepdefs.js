@@ -3,17 +3,27 @@ const { Given, When, Then } = require("@cucumber/cucumber");
 const webdriver = require("selenium-webdriver");
 const { By, until } = require("selenium-webdriver");
 let driver = new webdriver.Builder().forBrowser("chrome").build();
-Given("I visit Crowdly Registration Page", { timeout: 60 * 1000 }, async () => {
-  await driver.get("http://localhost:3000/login");
-});
+Given(
+  "I visit Crowdly Registration Page",
+  { timeout: 1000 * 1000 },
+  async () => {
+    await driver.get("http://localhost:3000/login");
+  }
+);
 When("I enter my fullname", async () => {
-  await driver.findElement(By.name("name")).sendKeys("Test User");
+  await driver
+    .findElement(By.xpath("//input[@placeholder='Enter Fullname']"))
+    .sendKeys("Test User");
 });
 When("I enter my username", async () => {
-  await driver.findElement(By.name("username")).sendKeys("TestUser");
+  await driver
+    .findElement(By.xpath("//input[@placeholder='Enter Username']"))
+    .sendKeys("TestUser122323");
 });
 When("I enter my email", async () => {
-  await driver.findElement(By.name("email")).sendKeys("testuser@gmail.com");
+  await driver
+    .findElement(By.name("email"))
+    .sendKeys("testuser122332@gmail.com");
 });
 When("I select applicant", async () => {
   let element = driver.wait(
@@ -46,7 +56,18 @@ When("I press login", async () => {
   );
   loginNow.click();
 });
-Then('I should be told "Success"', async () => {
-  // driver.findElement(By.)
+Then("I should be loggedin", async () => {
+  driver
+    .wait(until.elementLocated(By.id("successFail")))
+    .getText()
+    .then((text) => {
+      if (text === "User Created!: Redirection...") {
+        console.log(text);
+        return true;
+      } else {
+        console.log("Fail");
+        return false;
+      }
+    });
 });
-//User Created!: Redirection...
+//

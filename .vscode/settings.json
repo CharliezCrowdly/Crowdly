@@ -1,0 +1,6 @@
+{
+  "cucumber-quick": {
+    "tool": "cucumberjs",
+    "script": "npx cucumber-js frontend/features/**/*.feature --require frontend/features/**/*.js"
+  }
+}

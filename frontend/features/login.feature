@@ -6,4 +6,4 @@ Feature: Is register successful?
     When I enter my email
     When I enter my password
     When I press login
-    Then I should be told "Success"
+    Then I should be loggedin
