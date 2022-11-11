@@ -1,5 +1,5 @@
 import React from "react";
-import { UserInfoCard } from "../../component";
+import { UserInfoCard, Navbar, SmallNavBar } from "../../component";
 import { Outlet } from "react-router-dom";
 import Wrapper from "./wrapper/SharedLayout";
 
@@ -9,6 +9,8 @@ const SharedLayout = () => {
       <main className="dashboard">
         <div className="dashboardblur"></div>
         <div className="dashboard-content">
+          <Navbar />
+          <SmallNavBar />
           <div className="dashboard-page">
             <div className="left-content">
               <UserInfoCard />
