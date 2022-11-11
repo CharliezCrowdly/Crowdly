@@ -3,23 +3,18 @@ const { Given, When, Then } = require("@cucumber/cucumber");
 const webdriver = require("selenium-webdriver");
 const { By, until } = require("selenium-webdriver");
 let driver = new webdriver.Builder().forBrowser("chrome").build();
-
 Given("I visit Crowdly Registration Page", { timeout: 60 * 1000 }, async () => {
   await driver.get("http://localhost:3000/login");
 });
-
 When("I enter my fullname", async () => {
   await driver.findElement(By.name("name")).sendKeys("Test User");
 });
-
 When("I enter my username", async () => {
   await driver.findElement(By.name("username")).sendKeys("TestUser");
 });
-
 When("I enter my email", async () => {
   await driver.findElement(By.name("email")).sendKeys("testuser@gmail.com");
 });
-
 When("I select applicant", async () => {
   let element = driver.wait(
     until.elementLocated(By.xpath("//div[@class='singleselectinput']"))
@@ -30,20 +25,28 @@ When("I select applicant", async () => {
   );
   candidate.click();
 });
-
 When("I enter my password", async () => {
   await driver.findElement(By.name("password")).sendKeys("password");
 });
-
 When("I press submit", async () => {
   let submit = driver.wait(
     until.elementLocated(By.xpath("//button[normalize-space()='Submit']"))
   );
   submit.click();
 });
-
+When("I press login now", async () => {
+  let loginNow = driver.wait(
+    until.elementLocated(By.xpath("//p[@class='toggle-account']"))
+  );
+  loginNow.click();
+});
+When("I press login", async () => {
+  let loginNow = driver.wait(
+    until.elementLocated(By.xpath("//button[normalize-space()='Submit']"))
+  );
+  loginNow.click();
+});
 Then('I should be told "Success"', async () => {
   // driver.findElement(By.)
 });
-
 //User Created!: Redirection...
