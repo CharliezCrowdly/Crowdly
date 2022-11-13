@@ -39,7 +39,6 @@ const LoginPage = () => {
   }, [user, navigate]);
 
   const onSubmit = (e) => {
-    console.log("jello");
     e.preventDefault();
     const {
       name,
@@ -62,7 +61,7 @@ const LoginPage = () => {
       usertype,
     };
 
-    console.log(currentUser);
+   
 
     if (isMember) {
       setupUser({
@@ -143,15 +142,14 @@ const LoginPage = () => {
               onClick={() => {
                 setValues({ ...values, isMember: true });
               }}
+              data-testid="toggle-account"
             >
-              {" "}
               Already have a account? <span>Login</span>{" "}
             </p>
           )}
-          <button type="submit" disabled={isLoading} className="btn-submit">
-            {" "}
+          <button data-testid="btn-submit"  type="submit" disabled={isLoading} className="btn-submit">
             Submit
-          </button>{" "}
+          </button>
         </form>
 
         <div className="image-container">
