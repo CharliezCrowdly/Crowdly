@@ -10,5 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "@cucumber/cucumber": "^8.7.0"
   }
 }

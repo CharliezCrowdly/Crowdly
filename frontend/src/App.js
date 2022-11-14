@@ -1,22 +1,30 @@
+import React from "react";
+import "./index.css";
 
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { LoginPage, ProtectedRoute, FeedPage, SharedLayout } from "./pages";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <BrowserRouter>
+      <Routes>
+        <Route path="login" element={<LoginPage />} />
+        <Route path="/" element={<h1>landing page</h1>} />
+
+        <Route
+          path="/user"
+          element={
+            <ProtectedRoute>
+              <SharedLayout />
+            </ProtectedRoute>
+          }
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <Route path="feeds" element={<FeedPage />} />
+        </Route>
+
+        <Route path="*" element={<h2>error</h2>}></Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
