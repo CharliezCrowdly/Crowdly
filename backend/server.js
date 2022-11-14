@@ -11,13 +11,13 @@ const morgan = require("morgan");
 
 const connectDB = require("./db/connect");
 const fileUpload = require("express-fileupload");
+const authenticateUser = require("./middleware/authentication");
 
 const cors = require("cors");
 const authRouter = require("./routes/authRoute");
-
+const postRouter = require("./routes/postRoute");
 // middleware
 const errorHandlerMiddleware = require("./middleware/error-handler");
-
 
 if (process.env.NODE_ENV !== "production") {
   app.use(morgan("dev"));
@@ -34,7 +34,7 @@ app.use(fileUpload());
 //routes
 
 app.use("/api/v1/auth", authRouter);
-
+app.use("/api/v1/posts", authenticateUser, postRouter);
 
 app.use(errorHandlerMiddleware);
 
