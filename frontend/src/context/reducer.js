@@ -9,6 +9,9 @@ import {
   CREATE_POST_BEGIN,
   CREATE_POST_SUCCESS,
   CREATE_POST_ERROR,
+  GET_POSTS_BEGIN,
+  GET_POSTS_SUCCESS,
+  GET_POSTS_ERROR,
 } from "./action";
 import { initialState } from "./appContext";
 
@@ -77,7 +80,6 @@ const reducer = (state, action) => {
     };
   }
 
-
   if (action.type === CREATE_POST_BEGIN) {
     return {
       ...state,
@@ -109,9 +111,21 @@ const reducer = (state, action) => {
     };
   }
 
-  
+  if (action.type === GET_POSTS_BEGIN) {
+    return { ...state, isLoading: true };
+  }
 
- 
+  if (action.type === GET_POSTS_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+
+      userfeed: action.payload.userfeed,
+    };
+  }
+  if (action.type === GET_POSTS_ERROR) {
+    return { ...state, isLoading: false };
+  }
 
   throw new Error(`no such action: ${action.type}`);
 };

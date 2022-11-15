@@ -11,6 +11,9 @@ import {
   CREATE_POST_BEGIN,
   CREATE_POST_SUCCESS,
   CREATE_POST_ERROR,
+  GET_POSTS_BEGIN,
+  GET_POSTS_SUCCESS,
+  GET_POSTS_ERROR
 } from "./action";
 
 import axios from "axios";
@@ -198,6 +201,22 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+
+  const getallPosts = async () => {
+    dispatch({ type: GET_POSTS_BEGIN });
+    try {
+      const response = await authFetch("/posts/getposts");
+      const { posts } = response.data;
+
+      dispatch({ type: GET_POSTS_SUCCESS, payload: { userfeed: posts } });
+    } catch (error) {
+      console.log(error.response);
+    }
+    clearAlert();
+
+    dispatch({ type: GET_POSTS_ERROR });
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -205,6 +224,7 @@ const AppProvider = ({ children }) => {
         displayAlert,
         setupUser,
         createPost,
+        getallPosts
       }}
     >
       {children}
