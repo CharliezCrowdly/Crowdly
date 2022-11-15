@@ -12,7 +12,7 @@ import PostComment from "./PostComment";
 import Commentlst from "./Commentlst";
 
 const PostBox = React.memo(({ item }) => {
-  const { user, likepost } = useAppContext();
+  const { user, likepost, unlikepost } = useAppContext();
 
   const loadComment = useRef(false);
 
@@ -86,6 +86,7 @@ const PostBox = React.memo(({ item }) => {
     e.preventDefault();
     const postid = item._id;
     if (postState.liked) {
+      unlikepost({postid})
       SetPost({
         ...postState,
         liked: false,

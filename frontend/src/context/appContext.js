@@ -253,6 +253,14 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const unlikepost = async ({ postid }) => {
+    try {
+      await authFetch.patch(`/posts/unlikepost/${postid}`);
+      console.log(postid);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <AppContext.Provider
       value={{
@@ -264,6 +272,7 @@ const AppProvider = ({ children }) => {
         commentOnPost,
         commentDelete,
         likepost,
+        unlikepost
       }}
     >
       {children}

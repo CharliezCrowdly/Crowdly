@@ -12,6 +12,7 @@ const Wrapper = styled.div`
     & > .comment-header {
       display: flex;
       align-items: center;
+      width: 100%;
       & > .username {
         margin-left: 2%;
         font-size: 0.7rem;
@@ -22,6 +23,7 @@ const Wrapper = styled.div`
       & > .description {
         font-size: 0.7rem;
         margin-left: 5px;
+        width: 100%;
       }
     }
   }
