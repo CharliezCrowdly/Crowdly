@@ -1,0 +1,161 @@
+const request = require("supertest");
+const { response } = require("../server");
+const app = require("../server");
+it("test should run", () => {});
+
+it("Post /Register ==> 400 if all value is not provided ", () => {
+  return request(app)
+    .post("/api/v1/auth/register")
+    .send({
+      name: "JohnDoe",
+      email: "JohnDoe@gmail.com",
+      usertype: "individaul",
+      username: "JohnDoe",
+    })
+    .expect("Content-Type", /json/)
+    .expect(400)
+    .then((response) => {
+      expect(response.body).toEqual(
+        expect.objectContaining({
+          msg: "please provide all the values",
+        })
+      );
+    });
+});
+
+it("Post /Register ==> 400 if email already in use ", () => {
+  return request(app)
+    .post("/api/v1/auth/register")
+    .send({
+      name: "JohnDoe",
+      email: "JohnDoe@gmail.com",
+
+      usertype: "individaul",
+      username: "JohnDwwoe",
+      password: "neymar123",
+    })
+    .expect(400)
+    .then((response) => {
+      expect(response.body).toEqual(
+        expect.objectContaining({
+          msg: "Email already in use",
+        })
+      );
+    });
+});
+
+it("Post /Register ==> 400 if Username already in use ", () => {
+  return request(app)
+    .post("/api/v1/auth/register")
+    .send({
+      name: "JohnDoe",
+      email: "JohnDoe111@gmail.com",
+
+      usertype: "individaul",
+      username: "JohnDoe",
+      password: "neymar123",
+    })
+    .expect(400)
+    .then((response) => {
+      expect(response.body).toEqual(
+        expect.objectContaining({
+          msg: "Username already in use",
+        })
+      );
+    });
+});
+
+// it("Post / 201 on success register ", () => {
+//   return request(app)
+//     .post("/api/v1/auth/register")
+//     .send({
+//       name: "JohnD2oe2212",
+//       usertype: "individaul",
+//       username: "Joh2nDoe2122",
+//       email: "JohnDo2e2122@gmail.com",
+//       password: "john2doe22",
+//     })
+//     .expect("Content-Type", /json/)
+//     .expect(201)
+//     .then((response) => {
+//       expect(response.body).toEqual(
+//         expect.objectContaining({
+//           user: expect.any(Object),
+//           token: expect.any(String),
+//         })
+//       );
+//     });
+// });
+
+it("Post / Login ===> 200 on success ", () => {
+  return request(app)
+    .post("/api/v1/auth/login")
+    .send({
+      email: "cristiano1@gmail.com",
+      password: "cristiano",
+    })
+    .expect("Content-Type", /json/)
+    .expect(200)
+    .then((response) => {
+      expect(response.body).toEqual(
+        expect.objectContaining({
+          user: expect.any(Object),
+          token: expect.any(String),
+        })
+      );
+    });
+});
+
+it("Post / Login ===> 400 if not all value provided ", () => {
+  return request(app)
+    .post("/api/v1/auth/login")
+    .send({
+      password: "cristiano",
+    })
+    .expect("Content-Type", /json/)
+    .expect(400)
+    .then((response) => {
+      expect(response.body).toEqual(
+        expect.objectContaining({
+          msg: "Please provide all values",
+        })
+      );
+    });
+});
+
+it("Post / Login ===> 401 if Email is incorrect ", () => {
+  return request(app)
+    .post("/api/v1/auth/login")
+    .send({
+      email: "cristiano22@gmail.com",
+      password: "cristiano",
+    })
+    .expect("Content-Type", /json/)
+    .expect(401)
+    .then((response) => {
+      expect(response.body).toEqual(
+        expect.objectContaining({
+          msg: "Invalid Email",
+        })
+      );
+    });
+});
+
+
+it("Post / Login ===> 401 if Password is incorrect ", () => {
+  return request(app)
+    .post("/api/v1/auth/login")
+    .send({
+      email: "cristiano1@gmail.com",
+      password: "cristiano22",
+    })
+    .expect("Content-Type", /json/)
+    .expect(401)
+    .then((response) => {
+      expect(response.body).toEqual(
+        expect.objectContaining({
+          msg: "Invalid Password",
+        })
+      );
+    });
+});

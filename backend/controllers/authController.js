@@ -91,12 +91,12 @@ const login = async (req, res) => {
   const user = useremail ? useremail : username;
 
   if (!user) {
-    throw new UnAuthenticatedError("Invalid Credentials");
+    throw new UnAuthenticatedError("Invalid Email");
   }
   const isPasswordCorrect = await user.comparePassword(password);
 
   if (!isPasswordCorrect) {
-    throw new UnAuthenticatedError("Invalid Credentials");
+    throw new UnAuthenticatedError("Invalid Password");
   }
 
   const token = user.createJWT();
