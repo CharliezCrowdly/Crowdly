@@ -11,9 +11,8 @@ import { useAppContext } from "../../../context/appContext";
 import PostComment from "./PostComment";
 import Commentlst from "./Commentlst";
 
-
 const PostBox = React.memo(({ item }) => {
-  const { user } = useAppContext();
+  const { user, likepost } = useAppContext();
 
   const loadComment = useRef(false);
 
@@ -54,6 +53,25 @@ const PostBox = React.memo(({ item }) => {
   };
 
   const [postState, SetPost] = useState(initialState);
+  useEffect(() => {
+    if (item.likesid.find((like) => like === user._id)) {
+      SetPost({
+        ...postState,
+        liked: true,
+        likecount: item.likesid.length,
+        commentcount: item.commentsid.length,
+      });
+      // postState.liked= true
+    } else {
+      // postState.liked = false
+      SetPost({
+        ...postState,
+        liked: false,
+        likecount: item.likesid.length,
+        commentcount: item.commentsid.length,
+      });
+    }
+  }, [item.likesid, user._id]);
 
   const vidRef = useRef(null);
   const onentry = () => {
@@ -74,6 +92,8 @@ const PostBox = React.memo(({ item }) => {
         likecount: postState.likecount - 1,
       });
     } else {
+      likepost({ postid });
+
       SetPost({
         ...postState,
         liked: true,
@@ -270,9 +290,8 @@ const PostBox = React.memo(({ item }) => {
         </span>
       </div>
 
-
       <div className={postState.isComment ? "" : "d-none"}>
-      <Commentlst
+        <Commentlst
           loadComment={loadComment.current}
           postID={item._id}
           toggleCommentload={stopCommentload}
@@ -280,7 +299,7 @@ const PostBox = React.memo(({ item }) => {
       </div>
 
       <div className={postState.isPost ? "" : "d-none"}>
-      <PostComment startCommentload={startCommentload} postId={item._id} />
+        <PostComment startCommentload={startCommentload} postId={item._id} />
       </div>
     </Wrapper>
   );

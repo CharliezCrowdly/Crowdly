@@ -19,7 +19,7 @@ import {
   GET_POSTS_ERROR,
   CREATE_COMMENT_BEGIN,
   CREATE_COMMENT_SUCCESS,
-  CREATE_COMMENT_ERROR
+  CREATE_COMMENT_ERROR,
 } from "./action";
 
 import axios from "axios";
@@ -184,7 +184,7 @@ const AppProvider = ({ children }) => {
     try {
       const { userLocation, description, filetype, postfile } = userpost;
       let formData = new FormData();
-      console.log(userpost)
+      console.log(userpost);
       formData.append("location", userLocation);
       formData.append("description", description);
       formData.append("filetype", filetype);
@@ -207,7 +207,6 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
-
   const getallPosts = async () => {
     dispatch({ type: GET_POSTS_BEGIN });
     try {
@@ -223,29 +222,36 @@ const AppProvider = ({ children }) => {
     dispatch({ type: GET_POSTS_ERROR });
   };
 
-   const commentOnPost = async ({ commentInfo, postId }) => {
-     dispatch({ type: CREATE_COMMENT_BEGIN });
-     try {
-       await authFetch.post(`/comment/post`, { content: commentInfo, postId });
-       dispatch({ type: CREATE_COMMENT_SUCCESS });
-     } catch (e) {
-       console.log(e);
-       dispatch({ type: CREATE_COMMENT_ERROR });
-     }
-   };
-   const commentDelete = async ({ commentId }) => {
-     dispatch({ type: BEGIN });
-     try {
-       await authFetch.delete(`/comment/delete/${commentId}`);
-       dispatch({
-         type: SUCCESS,
-       });
-     } catch (e) {
-       dispatch({
-         type: ERROR,
-       });
-     }
-   };
+  const commentOnPost = async ({ commentInfo, postId }) => {
+    dispatch({ type: CREATE_COMMENT_BEGIN });
+    try {
+      await authFetch.post(`/comment/post`, { content: commentInfo, postId });
+      dispatch({ type: CREATE_COMMENT_SUCCESS });
+    } catch (e) {
+      console.log(e);
+      dispatch({ type: CREATE_COMMENT_ERROR });
+    }
+  };
+  const commentDelete = async ({ commentId }) => {
+    dispatch({ type: BEGIN });
+    try {
+      await authFetch.delete(`/comment/delete/${commentId}`);
+      dispatch({
+        type: SUCCESS,
+      });
+    } catch (e) {
+      dispatch({
+        type: ERROR,
+      });
+    }
+  };
+  const likepost = async ({ postid }) => {
+    try {
+      await authFetch.patch(`/posts/likepost/${postid}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <AppContext.Provider
@@ -257,6 +263,7 @@ const AppProvider = ({ children }) => {
         getallPosts,
         commentOnPost,
         commentDelete,
+        likepost,
       }}
     >
       {children}
