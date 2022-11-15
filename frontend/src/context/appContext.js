@@ -13,7 +13,10 @@ import {
   CREATE_POST_ERROR,
   GET_POSTS_BEGIN,
   GET_POSTS_SUCCESS,
-  GET_POSTS_ERROR
+  GET_POSTS_ERROR,
+  CREATE_COMMENT_BEGIN,
+  CREATE_COMMENT_SUCCESS,
+  CREATE_COMMENT_ERROR
 } from "./action";
 
 import axios from "axios";
@@ -217,6 +220,17 @@ const AppProvider = ({ children }) => {
     dispatch({ type: GET_POSTS_ERROR });
   };
 
+   const commentOnPost = async ({ commentInfo, postId }) => {
+     dispatch({ type: CREATE_COMMENT_BEGIN });
+     try {
+       await authFetch.post(`/comment/post`, { content: commentInfo, postId });
+       dispatch({ type: CREATE_COMMENT_SUCCESS });
+     } catch (e) {
+       console.log(e);
+       dispatch({ type: CREATE_COMMENT_ERROR });
+     }
+   };
+
   return (
     <AppContext.Provider
       value={{
@@ -224,7 +238,8 @@ const AppProvider = ({ children }) => {
         displayAlert,
         setupUser,
         createPost,
-        getallPosts
+        getallPosts,
+        commentOnPost
       }}
     >
       {children}

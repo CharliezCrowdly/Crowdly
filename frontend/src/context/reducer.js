@@ -12,6 +12,9 @@ import {
   GET_POSTS_BEGIN,
   GET_POSTS_SUCCESS,
   GET_POSTS_ERROR,
+  CREATE_COMMENT_BEGIN,
+  CREATE_COMMENT_ERROR,
+  CREATE_COMMENT_SUCCESS
 } from "./action";
 import { initialState } from "./appContext";
 
@@ -125,6 +128,24 @@ const reducer = (state, action) => {
   }
   if (action.type === GET_POSTS_ERROR) {
     return { ...state, isLoading: false };
+  }
+  if (action.type === CREATE_COMMENT_BEGIN) {
+    return {
+      ...state,
+      isEditing: true,
+    };
+  }
+  if (action.type === CREATE_COMMENT_SUCCESS) {
+    return {
+      ...state,
+      isEditing: false,
+    };
+  }
+  if (action.type === CREATE_COMMENT_ERROR) {
+    return {
+      ...state,
+      isEditing: false,
+    };
   }
 
   throw new Error(`no such action: ${action.type}`);

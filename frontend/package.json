@@ -26,12 +26,7 @@
     "eject": "react-scripts eject",
     "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\" --env=jsdom"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
+  
   "browserslist": {
     "production": [
       ">0.2%",
