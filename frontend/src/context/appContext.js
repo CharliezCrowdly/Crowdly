@@ -1,6 +1,9 @@
 import React, { useReducer, useContext } from "react";
 import reducer from "./reducer";
 import {
+  BEGIN,
+  ERROR,
+  SUCCESS,
   DISPLAY_ALERT,
   CLEAR_ALERT,
   SETUP_USER_BEGIN,
@@ -230,6 +233,19 @@ const AppProvider = ({ children }) => {
        dispatch({ type: CREATE_COMMENT_ERROR });
      }
    };
+   const commentDelete = async ({ commentId }) => {
+     dispatch({ type: BEGIN });
+     try {
+       await authFetch.delete(`/comment/delete/${commentId}`);
+       dispatch({
+         type: SUCCESS,
+       });
+     } catch (e) {
+       dispatch({
+         type: ERROR,
+       });
+     }
+   };
 
   return (
     <AppContext.Provider
@@ -239,7 +255,8 @@ const AppProvider = ({ children }) => {
         setupUser,
         createPost,
         getallPosts,
-        commentOnPost
+        commentOnPost,
+        commentDelete,
       }}
     >
       {children}

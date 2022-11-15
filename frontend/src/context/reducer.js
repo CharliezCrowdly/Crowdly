@@ -1,4 +1,7 @@
 import {
+  BEGIN,
+  SUCCESS,
+  ERROR,
   DISPLAY_ALERT,
   CLEAR_ALERT,
   SETUP_USER_BEGIN,
@@ -142,6 +145,24 @@ const reducer = (state, action) => {
     };
   }
   if (action.type === CREATE_COMMENT_ERROR) {
+    return {
+      ...state,
+      isEditing: false,
+    };
+  }
+  if (action.type === BEGIN) {
+    return {
+      ...state,
+      isEditing: true,
+    };
+  }
+  if (action.type === SUCCESS) {
+    return {
+      ...state,
+      isEditing: false,
+    };
+  }
+  if (action.type === ERROR) {
     return {
       ...state,
       isEditing: false,

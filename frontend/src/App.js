@@ -9,7 +9,14 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="login" element={<LoginPage />} />
-        <Route path="/" element={<h1>landing page</h1>} />
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <h1>landing page</h1>
+            </ProtectedRoute>
+          }
+        />
 
         <Route
           path="/user"
