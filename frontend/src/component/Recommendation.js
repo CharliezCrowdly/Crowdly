@@ -3,7 +3,7 @@ import Wrapper from "../wrappers/Recommendation"
 
 const Recommendation = ({item}) => {
 
-    const {id,username,mutual,profilePic} = item
+    const {username,mutual,profilePic} = item
   const [follow, setfollow] = useState(false);
 
   const togglefollow = () => {

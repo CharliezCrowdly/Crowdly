@@ -65,15 +65,59 @@ it("Post /Register ==> 400 if Username already in use ", () => {
     });
 });
 
+
+
+it("Post /Register 400 if name is too short ", () => {
+  return request(app)
+    .post("/api/v1/auth/register")
+    .send({
+      name: "we",
+      usertype: "individaul",
+      username: "webdev2122",
+      email: "webdev@gmail.com",
+      password: "webdev222",
+    })
+    .expect("Content-Type", /json/)
+    .expect(400)
+    .then((response) => {
+      expect(response.body).toEqual(
+        expect.objectContaining({
+          msg: "Name is too short",
+        })
+      );
+    });
+});
+
+it("Post /Register 400 if password is too short ", () => {
+  return request(app)
+    .post("/api/v1/auth/register")
+    .send({
+      name: "wewwww",
+      usertype: "individaul",
+      username: "webd2ev2122",
+      email: "webdev22@gmail.com",
+      password: "web",
+    })
+    .expect("Content-Type", /json/)
+    .expect(400)
+    .then((response) => {
+      expect(response.body).toEqual(
+        expect.objectContaining({
+          msg: "Password is too short",
+        })
+      );
+    });
+});
+
 // it("Post / 201 on success register ", () => {
 //   return request(app)
 //     .post("/api/v1/auth/register")
 //     .send({
-//       name: "JohnD2oe2212",
+//       name: "webdev",
 //       usertype: "individaul",
-//       username: "Joh2nDoe2122",
-//       email: "JohnDo2e2122@gmail.com",
-//       password: "john2doe22",
+//       username: "webdev2122",
+//       email: "webdev@gmail.com",
+//       password: "webdev222",
 //     })
 //     .expect("Content-Type", /json/)
 //     .expect(201)
@@ -123,7 +167,7 @@ it("Post / Login ===> 400 if not all value provided ", () => {
     });
 });
 
-it("Post / Login ===> 401 if Email is incorrect ", () => {
+it("Post / Login ===> 401 if Email or Username is incorrect ", () => {
   return request(app)
     .post("/api/v1/auth/login")
     .send({
@@ -135,7 +179,7 @@ it("Post / Login ===> 401 if Email is incorrect ", () => {
     .then((response) => {
       expect(response.body).toEqual(
         expect.objectContaining({
-          msg: "Invalid Email",
+          msg: "Invalid Email or Username",
         })
       );
     });
@@ -159,3 +203,5 @@ it("Post / Login ===> 401 if Password is incorrect ", () => {
       );
     });
 });
+
+

@@ -6,6 +6,7 @@ import {
   SUCCESS,
   DISPLAY_ALERT,
   CLEAR_ALERT,
+  TOGGLE_SIDEBAR,
   SETUP_USER_BEGIN,
   SETUP_USER_SUCCESS,
   SETUP_USER_ERROR,
@@ -261,6 +262,10 @@ const AppProvider = ({ children }) => {
       console.log(error);
     }
   };
+
+   const toggleSidebar = () => {
+     dispatch({ type: TOGGLE_SIDEBAR });
+   };
   return (
     <AppContext.Provider
       value={{
@@ -272,7 +277,8 @@ const AppProvider = ({ children }) => {
         commentOnPost,
         commentDelete,
         likepost,
-        unlikepost
+        unlikepost,
+        toggleSidebar
       }}
     >
       {children}

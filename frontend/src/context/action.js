@@ -8,6 +8,9 @@ export const BEGIN = "BEGIN";
 export const ERROR = "ERROR";
 
 
+export const TOGGLE_SIDEBAR = "TOGGLE_SIDEBAR";
+
+
 export const SETUP_USER_BEGIN = "SETUP_USER_BEGIN";
 export const SETUP_USER_SUCCESS = "SETUP_USER_SUCCESS";
 export const SETUP_USER_ERROR = "SETUP_uSER_ERROR";

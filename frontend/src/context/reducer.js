@@ -4,6 +4,7 @@ import {
   ERROR,
   DISPLAY_ALERT,
   CLEAR_ALERT,
+  TOGGLE_SIDEBAR,
   SETUP_USER_BEGIN,
   SETUP_USER_SUCCESS,
   SETUP_USER_ERROR,
@@ -56,6 +57,13 @@ const reducer = (state, action) => {
       status: "pending",
     };
     return { ...state, ...initialState };
+  }
+
+  if (action.type === TOGGLE_SIDEBAR) {
+    return {
+      ...state,
+      showSidebar: !state.showSidebar,
+    };
   }
   if (action.type === SETUP_USER_BEGIN) {
     return { ...state, isLoading: true };

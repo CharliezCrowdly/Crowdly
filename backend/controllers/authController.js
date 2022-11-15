@@ -9,6 +9,17 @@ const register = async (req, res) => {
   if (!name || !username || !email || !password || !usertype) {
     throw new BAD_REQUESTError("please provide all the values");
   }
+
+  if(name.length < 4){
+    throw new BAD_REQUESTError("Name is too short");
+
+  }
+
+  if (password.length < 4) {
+    throw new BAD_REQUESTError("Password is too short");
+  }
+
+
   const userAlreadyExists = await User.findOne({ email });
   if (userAlreadyExists) {
     throw new BAD_REQUESTError("Email already in use");
@@ -91,7 +102,7 @@ const login = async (req, res) => {
   const user = useremail ? useremail : username;
 
   if (!user) {
-    throw new UnAuthenticatedError("Invalid Email");
+    throw new UnAuthenticatedError("Invalid Email or Username");
   }
   const isPasswordCorrect = await user.comparePassword(password);
 

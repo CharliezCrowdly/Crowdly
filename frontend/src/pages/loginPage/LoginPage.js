@@ -114,10 +114,10 @@ const LoginPage = () => {
           )}
           <UnderlineInput
             handleChange={handleChange}
-            placeholder={"Enter Email"}
-            type={"email"}
+            placeholder={!values.isMember?"Enter Email":"Enter Email or Username"}
+            type={!values.isMember?"email":"text"}
             name={"email"}
-          />{" "}
+          />
           {!values.isMember ? <SingleSelectInput setUser={setUser} /> : ""}
           <UnderlineInput
             handleChange={handleChange}
