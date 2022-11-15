@@ -8,6 +8,9 @@ import disk from "../../../assets/images/disk.png";
 import Wrapper from "../wrapper/PostBox";
 import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 import { useAppContext } from "../../../context/appContext";
+import PostComment from "./PostComment";
+import Commentlst from "./Commentlst";
+
 
 const PostBox = React.memo(({ item }) => {
   const { user } = useAppContext();
@@ -267,9 +270,18 @@ const PostBox = React.memo(({ item }) => {
         </span>
       </div>
 
-      <div className={postState.isComment ? "" : "d-none"}></div>
 
-      <div className={postState.isPost ? "" : "d-none"}></div>
+      <div className={postState.isComment ? "" : "d-none"}>
+      <Commentlst
+          loadComment={loadComment.current}
+          postID={item._id}
+          toggleCommentload={stopCommentload}
+        />
+      </div>
+
+      <div className={postState.isPost ? "" : "d-none"}>
+      <PostComment startCommentload={startCommentload} postId={item._id} />
+      </div>
     </Wrapper>
   );
 });
