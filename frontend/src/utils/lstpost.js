@@ -1,6 +1,6 @@
 const lstpost = [
   {
-    id: 120202,
+    id: 1,
 
     location: "kathmandu",
 
@@ -19,7 +19,7 @@ const lstpost = [
   },
 
   {
-    id: 2240404,
+    id: 2,
 
     location: "kathmandu",
 
@@ -37,7 +37,7 @@ const lstpost = [
     },
   },
   {
-    id: 32505050,
+    id: 3,
 
     location: "kathmandu",
 
@@ -55,7 +55,7 @@ const lstpost = [
     },
   },
   {
-    id: 4260606,
+    id: 4,
 
     location: "kathmandu",
 
@@ -74,7 +74,7 @@ const lstpost = [
     },
   },
   {
-    id: 4260606,
+    id: 5,
 
     location: "kathmandu",
 
@@ -85,7 +85,7 @@ const lstpost = [
       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Atque, culpa, tenetur repudiandae dolor cupiditate perferendis, mollitia placeat sit ad dolore quasi dolores corporis iste autem eius numquam quia nostrum delectus!",
     createdAt: "",
     userid: {
-      _id: 4,
+      _id: 5,
 
       username: "johnDoe",
       profilePicture:
@@ -94,7 +94,7 @@ const lstpost = [
   },
 
   {
-    id: 42670606,
+    id: 6,
 
     location: "kathmandu",
 
@@ -105,7 +105,7 @@ const lstpost = [
       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Atque, culpa, tenetur repudiandae dolor cupiditate perferendis, mollitia placeat sit ad dolore quasi dolores corporis iste autem eius numquam quia nostrum delectus!",
     createdAt: "",
     userid: {
-      _id: 43,
+      _id: 6,
 
       username: "johnDoe",
       profilePicture:
@@ -114,7 +114,7 @@ const lstpost = [
   },
 
   {
-    id: 4662670606,
+    id: 7,
 
     location: "kathmandu",
 
@@ -125,7 +125,7 @@ const lstpost = [
       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Atque, culpa, tenetur repudiandae dolor cupiditate perferendis, mollitia placeat sit ad dolore quasi dolores corporis iste autem eius numquam quia nostrum delectus!",
     createdAt: "",
     userid: {
-      _id: 43,
+      _id: 7,
 
       username: "johnDoe",
       profilePicture:

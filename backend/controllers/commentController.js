@@ -2,7 +2,7 @@ const Post = require("../models/Post");
 const Comments = require("../models/Comment");
 const { StatusCodes } = require("http-status-codes");
 const NotFoundError = require("../errors/not-found");
-const checkPermissions = require("../utils/checkPermissions");
+const checkPermissions = require("../utils/checkPermission");
 
 const createComment = async (req, res) => {
   const { postId, content } = req.body;

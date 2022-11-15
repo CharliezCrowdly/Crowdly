@@ -8,11 +8,9 @@ import {
   SETUP_USER_ERROR,
   CLEAR_VALUES,
   LOGOUT_USER,
-
-
-  
-  
- 
+  CREATE_POST_BEGIN,
+  CREATE_POST_SUCCESS,
+  CREATE_POST_ERROR,
 } from "./action";
 
 import axios from "axios";
@@ -36,11 +34,8 @@ const initialState = {
   isSubmit: true,
   loadPost: true,
   userfeed: [],
-  explorelst:[],
-  searchList:[],
-
-
-  
+  explorelst: [],
+  searchList: [],
 };
 
 const AppContext = React.createContext();
@@ -175,8 +170,33 @@ const AppProvider = ({ children }) => {
     dispatch({ type: CLEAR_VALUES });
   };
 
-  
+  const createPost = async ({ userpost }) => {
+    dispatch({ type: CREATE_POST_BEGIN });
+    try {
+      const { userLocation, description, filetype, postfile } = userpost;
+      let formData = new FormData();
+      console.log(userpost)
+      formData.append("location", userLocation);
+      formData.append("description", description);
+      formData.append("filetype", filetype);
+      formData.append("postfile", postfile);
 
+      await authFetch.post("posts/upload", formData);
+      dispatch({
+        type: CREATE_POST_SUCCESS,
+      });
+
+      // dispatch({ type: CLEAR_VALUES });
+    } catch (error) {
+      console.log(error);
+      if (error.response.status === 401) return;
+      dispatch({
+        type: CREATE_POST_ERROR,
+        payload: { msg: error.response.data.msg, loadPost: false },
+      });
+    }
+    clearAlert();
+  };
 
   return (
     <AppContext.Provider
@@ -184,6 +204,7 @@ const AppProvider = ({ children }) => {
         ...state,
         displayAlert,
         setupUser,
+        createPost,
       }}
     >
       {children}

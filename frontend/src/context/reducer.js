@@ -6,7 +6,9 @@ import {
   SETUP_USER_ERROR,
   LOGOUT_USER,
   CLEAR_VALUES,
- 
+  CREATE_POST_BEGIN,
+  CREATE_POST_SUCCESS,
+  CREATE_POST_ERROR,
 } from "./action";
 import { initialState } from "./appContext";
 
@@ -74,6 +76,40 @@ const reducer = (state, action) => {
       alertText: action.payload.msg,
     };
   }
+
+
+  if (action.type === CREATE_POST_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+      isSubmit: true,
+      loadPost: true,
+    };
+  }
+  if (action.type === CREATE_POST_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      isSubmit: false,
+      alertType: "success",
+      alertText: "New POST Created!",
+      loadPost: false,
+    };
+  }
+  if (action.type === CREATE_POST_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      isSubmit: false,
+      alertType: "danger",
+      alertText: action.payload.msg,
+      loadPost: action.payload.loadPost,
+    };
+  }
+
+  
 
  
 

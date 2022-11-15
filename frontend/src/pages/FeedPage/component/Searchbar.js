@@ -4,6 +4,7 @@ import { HiLocationMarker } from "react-icons/hi";
 import { FcVideoFile } from "react-icons/fc";
 import { AiFillFile } from "react-icons/ai";
 import Wrapper from "../wrapper/Searchbar";
+import { useAppContext } from "../../../context/appContext";
 
 const uploadState = {
   location: false,
@@ -20,6 +21,8 @@ const uploadState = {
 const Searchbar = React.memo(({  toggleload }) => {
   const [upload, setUpload] = useState(uploadState);
   const [preview, setPreview] = useState("");
+ 
+  const { createPost, isSubmit } = useAppContext();
 
   const toggleLocation = (e) => {
     setUpload({ ...upload, location: !upload.location });
@@ -36,7 +39,10 @@ const Searchbar = React.memo(({  toggleload }) => {
 
     const userpost = { postfile, userLocation, description, filetype };
 
-   
+   createPost({ userpost });
+
+   setUpload(uploadState);
+   toggleload();
   
         
   };
