@@ -5,8 +5,6 @@ const { BAD_REQUESTError } = require("../errors/index");
 const { StatusCodes } = require("http-status-codes");
 const checkPermissions = require("../utils/checkPermission");
 
-
-
 const path = require("path");
 
 const postUpload = async (req, res, next) => {
@@ -46,13 +44,11 @@ const getPosts = async (req, res) => {
       .populate("userid likesid", "profilePicture username location")
       .sort("-createdAt");
 
-    if(posts.length < 1){
-
+    if (posts.length < 1) {
       const post = await Post.aggregate([{ $sample: { size: 27 } }]);
 
       const posts = await Post.populate(post, { path: "userid" });
       return res.status(StatusCodes.OK).json({ posts });
-
     }
 
     res.status(StatusCodes.OK).json({ posts });
@@ -62,6 +58,7 @@ const getPosts = async (req, res) => {
 };
 
 const likePosts = async (req, res) => {
+  console.log(req.params.id);
   const post = await Post.find({
     _id: req.params.id,
     likesid: req.user.userId,
