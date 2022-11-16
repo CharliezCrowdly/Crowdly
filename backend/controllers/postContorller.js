@@ -46,6 +46,15 @@ const getPosts = async (req, res) => {
       .populate("userid likesid", "profilePicture username location")
       .sort("-createdAt");
 
+    if(posts.length < 1){
+
+      const post = await Post.aggregate([{ $sample: { size: 27 } }]);
+
+      const posts = await Post.populate(post, { path: "userid" });
+      return res.status(StatusCodes.OK).json({ posts });
+
+    }
+
     res.status(StatusCodes.OK).json({ posts });
   } catch (error) {
     console.log(error);

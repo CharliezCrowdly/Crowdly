@@ -17,7 +17,8 @@ const Wrapper = styled.div`
         outline: none;
         border: none;
         height: 100%;
-        /* background-color: var(--blue-600); */
+        background-color: transparent;
+        text-transform: capitalize;
       }
 
       & > .icon {
