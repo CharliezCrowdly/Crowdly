@@ -7,8 +7,17 @@ import SmallNavBar from "./SmallNavBar";
 import SelectionOption from "./SelectionOption";
 import FilterContent from "./FilterContent";
 import SearchContainer from "./SearchContainer";
+import JobBox from "./JobBox";
 
 export {
-    Alert, Recommendation, UserInfoCard,
-    Logo, Navbar, SmallNavBar, FilterContent, SelectionOption, SearchContainer
+  Alert,
+  Recommendation,
+  UserInfoCard,
+  Logo,
+  Navbar,
+  SmallNavBar,
+  FilterContent,
+  SelectionOption,
+  SearchContainer,
+  JobBox,
 };

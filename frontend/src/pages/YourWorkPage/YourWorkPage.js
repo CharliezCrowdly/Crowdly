@@ -1,6 +1,7 @@
 import React from "react";
-import {FilterContent, SearchContainer } from "../../component";
+import { FilterContent, SearchContainer, } from "../../component";
 import Wrapper from "./wrapper/YourWorkPage";
+import JobLists from "./components/JobLists"
 
 import axios from "axios";
 
@@ -19,7 +20,8 @@ const YourWorkPage = () => {
     <Wrapper>
       <div className="YourWorkPage">
         <div className="middle-container">
-        <SearchContainer />
+          <SearchContainer />
+          <JobLists />
         </div>
 
         <div className="right-container">
