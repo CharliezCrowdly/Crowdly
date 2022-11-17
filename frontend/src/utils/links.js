@@ -8,7 +8,7 @@ const links = [
   {
     id: 1,
     text: "Find Work",
-    path: "/",
+    path: "/user/work",
     icon: <MdWork />,
   },
   {

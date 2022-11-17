@@ -4,6 +4,7 @@ import FeedPage from "./FeedPage/FeedPage";
 import SharedLayout from "./SharedLayout/SharedLayout";
 import Navbar from "../component/navbar";
 import SmallNavbar from "../component/navbar";
+import YourWorkPage from "./YourWorkPage/YourWorkPage";
 export {
   LoginPage,
   ProtectedRoute,
@@ -11,4 +12,5 @@ export {
   SharedLayout,
   Navbar,
   SmallNavbar,
+  YourWorkPage,
 };

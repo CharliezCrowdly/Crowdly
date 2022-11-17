@@ -2,7 +2,7 @@ import React from "react";
 import "./index.css";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { LoginPage, ProtectedRoute, FeedPage, SharedLayout } from "./pages";
+import { LoginPage, ProtectedRoute, FeedPage, SharedLayout, YourWorkPage } from "./pages";
 
 function App() {
   return (
@@ -26,6 +26,7 @@ function App() {
             </ProtectedRoute>
           }
         >
+          <Route path="work" element={<YourWorkPage />} />
           <Route path="feeds" element={<FeedPage />} />
         </Route>
 
