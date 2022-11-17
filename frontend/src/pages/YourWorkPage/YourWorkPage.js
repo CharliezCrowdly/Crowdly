@@ -1,5 +1,5 @@
 import React from "react";
-import {FilterContent, SelectionOption } from "../../component";
+import {FilterContent, SearchContainer } from "../../component";
 import Wrapper from "./wrapper/YourWorkPage";
 
 import axios from "axios";
@@ -19,7 +19,7 @@ const YourWorkPage = () => {
     <Wrapper>
       <div className="YourWorkPage">
         <div className="middle-container">
-        <SelectionOption />
+        <SearchContainer />
         </div>
 
         <div className="right-container">

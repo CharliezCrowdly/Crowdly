@@ -45,6 +45,7 @@ const initialState = {
   loadPost: true,
   userfeed: [],
   explorelst: [],
+  jobTypeOptions: ["full-time", "part-time", "remote", "internship"],
   searchList: [],
 };
 

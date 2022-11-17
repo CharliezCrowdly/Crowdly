@@ -6,7 +6,9 @@ import Navbar from "./navbar";
 import SmallNavBar from "./SmallNavBar";
 import SelectionOption from "./SelectionOption";
 import FilterContent from "./FilterContent";
+import SearchContainer from "./SearchContainer";
+
 export {
     Alert, Recommendation, UserInfoCard,
-    Logo, Navbar, SmallNavBar, FilterContent, SelectionOption
+    Logo, Navbar, SmallNavBar, FilterContent, SelectionOption, SearchContainer
 };
