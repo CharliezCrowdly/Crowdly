@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@cucumber/cucumber": "^8.8.0",
     "@cyntler/react-doc-viewer": "^1.8.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -26,7 +27,6 @@
     "eject": "react-scripts eject",
     "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\" --env=jsdom"
   },
-  
   "browserslist": {
     "production": [
       ">0.2%",

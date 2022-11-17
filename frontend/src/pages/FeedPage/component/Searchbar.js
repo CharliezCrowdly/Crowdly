@@ -128,7 +128,7 @@ const Searchbar = React.memo(({  toggleload }) => {
 
           <input
             type="textarea"
-            placeholder="enter description"
+            placeholder="Whats on your mind?"
             className="searchbar"
             name="description"
             value={upload.description}

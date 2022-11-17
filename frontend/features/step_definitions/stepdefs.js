@@ -25,6 +25,26 @@ When("I enter my email", async () => {
     .findElement(By.name("email"))
     .sendKeys("testuser122332@gmail.com");
 });
+When("I enter description", async () => {
+  let descriptionBox = driver.wait(
+    until.elementLocated(
+      By.xpath("//input[@placeholder='Whats on your mind?']")
+    )
+  );
+  descriptionBox.sendKeys("Test Post");
+});
+When("I click files", async () => {
+  let imageBox = driver.wait(
+    until.elementLocated(By.xpath("//input[@name='postfile']"))
+  );
+  imageBox.sendKeys("C:\\Users\\chira\\Downloads\\testimg.png");
+});
+When("I press post", async () => {
+  let sendBox = driver.wait(
+    until.elementLocated(By.xpath("//button[normalize-space()='send']"))
+  );
+  sendBox.click();
+});
 When("I select applicant", async () => {
   let element = driver.wait(
     until.elementLocated(By.xpath("//div[@class='singleselectinput']"))
@@ -44,7 +64,7 @@ When("I press submit", async () => {
   );
   submit.click();
 });
-When("I press login now", async () => {
+When("I press login now", { timeout: 1000 * 1000 }, async () => {
   let loginNow = driver.wait(
     until.elementLocated(By.xpath("//p[@class='toggle-account']"))
   );
@@ -111,5 +131,8 @@ Then("the post should be liked", function () {
 });
 Then("The post should be commented", function () {
   return "Commented";
+});
+Then("the post should be uploaded", function () {
+  return "Uploaded";
 });
 //
