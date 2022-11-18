@@ -3,8 +3,10 @@ import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
 import { HiLocationMarker } from "react-icons/hi";
 import { RiMoneyDollarCircleFill } from "react-icons/ri";
 import Wrapper from "../wrappers/JobBox";
+import { useNavigate } from "react-router-dom";
 
 const JobBox = () => {
+  const navigate = useNavigate();
   return (
     <Wrapper>
       <div className="jobbox glassmorphism">
@@ -46,7 +48,7 @@ const JobBox = () => {
         <div className="jobboxfooter">
           <div className="jobspecification">
             <div className="jobprice">
-              <RiMoneyDollarCircleFill className="blue-icon"/>
+              <RiMoneyDollarCircleFill className="blue-icon" />
               <p className="price">
                 $12k - 14K <span className="light-text">/Month</span>
               </p>
@@ -57,7 +59,9 @@ const JobBox = () => {
             </div>
           </div>
 
-          <button className="btn-apply">Apply Now</button>
+          <button className="btn-apply" onClick={()=>navigate("/job/jobdetail")}>
+            Learn More
+          </button>
         </div>
 
         {/* end */}

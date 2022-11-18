@@ -1,9 +1,16 @@
-import React from "react";
+import React ,{useState} from "react";
 import Wrapper from "../wrappers/FilterContent";
 import { BiSearch } from "react-icons/bi";
-import SelectOption from "./SelectionOption"
+import SelectOption from "./SelectionOption";
 
 const FilterContent = () => {
+
+  const [range,setRange] = useState(0)
+
+  const rangeChange = (e)=>{
+    setRange(e.target.value)
+
+  }
   return (
     <Wrapper>
       <div className="filter-content">
@@ -37,6 +44,23 @@ const FilterContent = () => {
         </div>
 
         {/* joblocation */}
+
+        <div className="slide-range glassmorphism">
+          <h4>Minimum wage</h4>
+          <div className="range-container">
+            <span>$ {range} </span>
+
+            <input
+              type="range"
+              name=""
+              id="vol"
+              min="0"
+              max="100000"
+              className="range"
+              onChange={rangeChange}
+            />
+          </div>
+        </div>
 
         {/* jobtype */}
         <div className="jobtype glassmorphism">

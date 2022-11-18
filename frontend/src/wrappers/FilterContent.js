@@ -7,6 +7,33 @@ const Wrapper = styled.aside`
     flex-direction: column;
     gap: 20px;
 
+    & > .slide-range {
+      padding: 2% 5%;
+      height: 100px;
+      border-radius: 15px;
+
+      & > h4 {
+        color: var(--blue-700);
+      }
+
+      & > .range-container {
+        margin-top: 20px;
+
+        & > input {
+          width: 100%;
+          background-color: var(--blue-700);
+        }
+
+        & > span {
+          width: 55px;
+          padding: 10px 10px;
+
+          text-align: center;
+          color: var(--blue-700);
+        }
+      }
+    }
+
     & > .job-filter {
       display: flex;
       align-items: center;

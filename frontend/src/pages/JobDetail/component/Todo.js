@@ -28,7 +28,7 @@ const Todo = () => {
           +
         </h4>
       </div>
-      <input type="text" placeholder="Enter note" onChange={handlechange} />
+      <input type="text" placeholder="Enter note" onChange={handlechange} value={text} />
 
       {note?.map((item, index) => {
         return (

@@ -7,6 +7,7 @@ import lstrecommendation from "../../utils/lstrecommendation";
 import { Recommendation,Alert } from "../../component";
 import { PostContainer } from "./component";
 import { useAppContext } from "../../context/appContext";
+import Todo from "../JobDetail/component/Todo";
 
 const FeedPage = () => {
 
@@ -34,6 +35,8 @@ const FeedPage = () => {
           {lstrecommendation.map((item) => (
             <Recommendation item={item} key={item.id} />
           ))}
+
+          <Todo/>
         </div>
       </div>
     </Wrapper>
