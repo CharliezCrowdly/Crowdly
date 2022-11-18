@@ -4,24 +4,33 @@ import Wrapper from "../wrappers/SelectionOption";
 const SelectionOption = () => {
   const options = [
     {
-      label: "first",
+      label: "Fashon",
       value: 12222222,
     },
     {
-      label: "second",
+      label: "IT",
       value: 233333333333,
     },
     {
-      label: "third",
+      label: "Medical",
       value: 34444444444,
     },
     {
-      label: "fourth",
+      label: "Entertainment",
       value: 4555555555555,
     },
     {
-      label: "fifth",
+      label: "Education",
       value: 577777777777,
+    },
+    {
+      label: "Repair",
+      value: 57777777,
+    },
+
+    {
+      label: "Law",
+      value: 572777777,
     },
   ];
 
@@ -108,7 +117,14 @@ const SelectionOption = () => {
   function selectOption(option) {
     if (multiple) {
       if (value.some((item) => item.label === option.label)) {
+        if(value.length === 1){
         onchange(value.filter((o) => o.label !== option.label));
+        setMultiple(false)
+
+        }else{
+
+          onchange(value.filter((o) => o.label !== option.label));
+        }
       } else {
         onchange(value.concat(option));
       }
@@ -127,7 +143,7 @@ const SelectionOption = () => {
   }
 
   return (
-    <Wrapper>
+    <Wrapper className="glassmorphism">
       <div
         tabIndex={0}
         ref={containerRef}
@@ -142,7 +158,7 @@ const SelectionOption = () => {
             ? value.map((v) => {
                 return (
                   <button
-                    className="option-badge"
+                    className="option-badge glassmorphism"
                     key={v.value}
                     onClick={(e) => {
                       e.stopPropagation();
@@ -153,7 +169,7 @@ const SelectionOption = () => {
                   </button>
                 );
               })
-            : "Enter value"}
+            : "Enter Category"}
         </span>
         <button
           onClick={(e) => {

@@ -1,6 +1,7 @@
 import React from "react";
 import Wrapper from "../wrappers/FilterContent";
 import { BiSearch } from "react-icons/bi";
+import SelectOption from "./SelectionOption"
 
 const FilterContent = () => {
   return (
@@ -10,6 +11,8 @@ const FilterContent = () => {
           <h2 className="filter-name">Job Filter</h2>
           <button className="btn-clear">clear all</button>
         </div>
+
+        <SelectOption />
 
         {/* skill level */}
         <div className="lvl glassmorphism">
@@ -35,35 +38,7 @@ const FilterContent = () => {
 
         {/* joblocation */}
 
-        <div className="joblocation glassmorphism">
-          <div className="jobheader">
-            <span className="heading4">Job Location</span>
-            <button className="btn-clear">clear all</button>
-          </div>
-
-          <div className="box">
-            <input type="checkbox" name="onsite" id="" />
-            <span className="label-content">Interdimate</span>
-          </div>
-
-          <div className="searchbar">
-            <BiSearch className="search-icon" />
-            <input
-              type="text"
-              name="location"
-              className="search-input"
-              placeholder="search location"
-            />
-          </div>
-
-          <div className="box">
-            <input type="checkbox" name="onsite" id="" />
-            <span className="label-content">Interdimate</span>
-          </div>
-        </div>
-
-
-      {/* jobtype */}
+        {/* jobtype */}
         <div className="jobtype glassmorphism">
           <div className="jobtypeheader">
             <span className="heading4">Job Type</span>
@@ -84,8 +59,6 @@ const FilterContent = () => {
             </div>
           </div>
         </div>
-
-
       </div>
     </Wrapper>
   );

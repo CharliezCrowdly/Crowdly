@@ -1,17 +1,17 @@
 import styled from "styled-components";
 
 const Wrapper = styled.aside`
+z-index: 2;
   .select-container {
     position: relative;
     width: 20em;
     min-height: 1.5em;
-    border: 0.05em solid #777;
     display: flex;
     align-items: center;
     gap: 0.5em;
     padding: 0.5em;
 
-    border-radius: 0.25em;
+    border-radius: 1.25em;
     outline: none;
   }
 
@@ -53,6 +53,7 @@ const Wrapper = styled.aside`
   .select {
     display: flex;
     gap: 2%;
+    flex-wrap: wrap;
   }
 
   .options {
@@ -98,10 +99,12 @@ const Wrapper = styled.aside`
     align-items: center;
     border: 0.05em solid #777;
     padding: 0.15em 0.25em;
+    
     gap: 0.25em;
     cursor: pointer;
     background-color: none;
     outline: none;
+    color: var(--blue-900);
   }
 
   .option-badge:hover,
