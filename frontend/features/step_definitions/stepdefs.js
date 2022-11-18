@@ -64,7 +64,7 @@ When("I press submit", async () => {
   );
   submit.click();
 });
-When("I press login now", { timeout: 1000 * 1000 }, async () => {
+When("I press login now", async () => {
   let loginNow = driver.wait(
     until.elementLocated(By.xpath("//p[@class='toggle-account']"))
   );
@@ -73,19 +73,16 @@ When("I press login now", { timeout: 1000 * 1000 }, async () => {
 When("I Press Like", async () => {
   let like = driver.wait(
     until.elementLocated(
-      By.xpath(
-        "//body/div[@id='root']/aside[@class='sc-AHaJN egdmhq']/main[@class='dashboard']/div[@class='dashboard-content']/div[@class='dashboard-page']/div[@class='middle-content']/div[@class='sc-ftTHYK dJrNhp']/div[@class='feedPage']/div[@class='middle-container']/div[@class='list']/div[1]/div[1]/div[2]/div[1]//*[name()='svg']"
-      )
+      By.xpath("(//*[name()='svg'][@class='icon like-btn'])[1]")
     )
   );
   like.click();
+  console.log("Like Pressed");
 });
 When("I Press comment", async () => {
   let comment = driver.wait(
     until.elementLocated(
-      By.xpath(
-        "//body/div[@id='root']/aside[@class='sc-AHaJN egdmhq']/main[@class='dashboard']/div[@class='dashboard-content']/div[@class='dashboard-page']/div[@class='middle-content']/div[@class='sc-ftTHYK dJrNhp']/div[@class='feedPage']/div[@class='middle-container']/div[@class='list']/div[1]/div[1]/div[2]/div[1]//*[name()='svg']//*[name()='path' and contains(@d,'M256 32C11')]"
-      )
+      By.xpath("(//*[name()='svg'][@class='icon comment-btn'])[1]")
     )
   );
   comment.click();
@@ -96,7 +93,7 @@ When("I enter comment", async () => {
       By.xpath("(//input[@placeholder='Enter Description'])[1]")
     )
   );
-  comment.sendKeys("This is a comment");
+  comment.sendKeys("This is a comment test");
 });
 When("I Press post", async () => {
   let postBtn = driver.wait(
@@ -127,12 +124,15 @@ Then("I should be loggedin", async () => {
     });
 });
 Then("the post should be liked", function () {
+  // driver.quit();
   return "Liked";
 });
 Then("The post should be commented", function () {
+  // driver.quit();
   return "Commented";
 });
 Then("the post should be uploaded", function () {
+  // driver.quit();
   return "Uploaded";
 });
 //

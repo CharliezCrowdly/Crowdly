@@ -2,7 +2,14 @@ import React from "react";
 import "./index.css";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { LoginPage, ProtectedRoute, FeedPage, SharedLayout, YourWorkPage } from "./pages";
+import {
+  LoginPage,
+  ProtectedRoute,
+  FeedPage,
+  SharedLayout,
+  YourWorkPage,
+  JobDetail,
+} from "./pages";
 
 function App() {
   return (
@@ -28,6 +35,16 @@ function App() {
         >
           <Route path="work" element={<YourWorkPage />} />
           <Route path="feeds" element={<FeedPage />} />
+        </Route>
+        <Route
+          path="/job"
+          element={
+            <ProtectedRoute>
+              <SharedLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="jobDetail" element={<JobDetail />} />
         </Route>
 
         <Route path="*" element={<h2>error</h2>}></Route>

@@ -86,7 +86,7 @@ const PostBox = React.memo(({ item }) => {
     e.preventDefault();
     const postid = item._id;
     if (postState.liked) {
-      unlikepost({postid})
+      unlikepost({ postid });
       SetPost({
         ...postState,
         liked: false,
@@ -261,11 +261,11 @@ const PostBox = React.memo(({ item }) => {
         <div className="post-option">
           <div className="post-interaction">
             <AiFillHeart
-              className={postState.liked ? "icon red" : "icon"}
+              className={`${postState.liked ? "icon red" : "icon"} like-btn`}
               onClick={toggleLike}
             />
 
-            <FaComment className="icon" onClick={togglepostBar} />
+            <FaComment className="icon comment-btn" onClick={togglepostBar} />
             <FaShare className="icon" />
           </div>
 
