@@ -3,7 +3,7 @@ import styled from "styled-components";
 const Wrapper = styled.div`
   display: flex;
   gap: 5%;
-
+  position: relative;
   .right-section {
     height: max-content;
     width: 30%;

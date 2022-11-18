@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaBriefcase } from "react-icons/fa";
 import { BiBuilding } from "react-icons/bi";
+import SubmitProporsal from "./component/SubmitProposal";
 import Wrapper from "./wrappers/JobDetail";
 import joblists from "../../utils/job";
 import { RiMoneyDollarCircleLine } from "react-icons/ri";
@@ -14,6 +15,7 @@ const JobDetail = () => {
   const [isReadmore, setReadmore] = useState(false);
   const [save, setSave] = useState(false);
   const [dropdown, setDropdown] = useState(false);
+  const [ismodal, setModal] = useState(false);
   useEffect(() => {
     console.log(requirement);
   }, []);
@@ -26,8 +28,13 @@ const JobDetail = () => {
     }
   };
 
+    const onbid = () => {
+      setModal((ismodal) => !ismodal);
+    };
+
   return (
     <Wrapper className="">
+      <SubmitProporsal ismodal={ismodal} onbid={onbid} />
       <div className="left-section glassmorphism">
         <section className="one">
           <div className="title">
@@ -72,13 +79,13 @@ const JobDetail = () => {
             <span>Your profile match this job</span>
           </div>
           <div className="buttons">
-            <button className="btn-easy">Bid</button>
+            <button className="btn-easy" onClick={onbid}>Bid</button>
             <button className="btn-save" onClick={onsave}>
               {save ? (
                 "Save"
               ) : (
                 <span className="bookmark">
-                  Saved <BsBookmarkFill className="icon"/>
+                  Saved <BsBookmarkFill className="icon" />
                 </span>
               )}
             </button>
@@ -140,7 +147,6 @@ const JobDetail = () => {
         </div>
       </div>
       <div className="right-section ">
-        
         {lstrecommendation.map((item) => (
           <Recommendation item={item} key={item.id} />
         ))}
