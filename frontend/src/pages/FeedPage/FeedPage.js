@@ -32,9 +32,11 @@ const FeedPage = () => {
           <PostContainer postLoad={loadRef.current} toggleload={stopload} />
         </div>
         <div className="right-container">
-          {lstrecommendation.map((item) => (
-            <Recommendation item={item} key={item.id} />
-          ))}
+          <div className="users">
+            {lstrecommendation.map((item) => (
+              <Recommendation item={item} key={item.id} />
+            ))}
+          </div>
 
           <Todo/>
         </div>

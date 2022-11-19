@@ -10,9 +10,10 @@ import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 import { useAppContext } from "../../../context/appContext";
 import PostComment from "./PostComment";
 import Commentlst from "./Commentlst";
+import Bookmark from "./Bookmark";
 
 const PostBox = React.memo(({ item }) => {
-  const { user, likepost, unlikepost } = useAppContext();
+  const { user, likepost, unlikepost, savepost, unsavepost } = useAppContext();
 
   const loadComment = useRef(false);
 
@@ -103,10 +104,14 @@ const PostBox = React.memo(({ item }) => {
     }
   };
 
-  const togglesave = () => {
+  const togglesave = (e) => {
+    e.preventDefault();
+    const postid = item._id;
     if (postState.bookmarked) {
+      unsavepost({ postid });
       SetPost({ ...postState, bookmarked: false });
     } else {
+      savepost({ postid });
       SetPost({ ...postState, bookmarked: true });
     }
   };
@@ -269,21 +274,27 @@ const PostBox = React.memo(({ item }) => {
             <FaShare className="icon" />
           </div>
 
-          {postState.bookmarked ? (
+          <Bookmark saved={item.saved} postid={item._id} />
+
+          {/* {postState.bookmarked ? (
             <BsFillBookmarkFill className="icon black" onClick={togglesave} />
           ) : (
             <BsBookmark className="icon" onClick={togglesave} />
-          )}
+          )} */}
         </div>
         <div className="like-count">{postState.likecount} likes</div>
 
         <div className="post-description">
           <span className="username">{userid.username}</span>
           <span className="post-desc ">
-            {postState.isReadMore ? description : description.substring(0, 100)}
+            {description.substring(0, postState.isReadMore ? 600 : 100)}
           </span>
           <span className="more-less" onClick={toggleReadMore}>
-            {postState.isReadMore ? "...less" : "...more"}
+            {description.split(" ").length > 9
+              ? postState.isReadMore
+                ? "...less"
+                : "...more"
+              : null}
           </span>
         </div>
         <span className="view-comments" onClick={toggleComment}>

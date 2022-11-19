@@ -7,6 +7,7 @@ const Commentlst = React.memo(({ loadComment, postID, toggleCommentload }) => {
   const { token } = useAppContext();
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [length,setlength] = useState(0)
 
   const listOutComment = ({ comment }) => {
     setComments(comment);
@@ -21,6 +22,7 @@ const Commentlst = React.memo(({ loadComment, postID, toggleCommentload }) => {
       })
       .then((res) => {
         listOutComment({ comment: res.data.comment });
+        setlength(res.data.length)
         setLoading(false);
       });
   };
@@ -37,10 +39,15 @@ const Commentlst = React.memo(({ loadComment, postID, toggleCommentload }) => {
 
   if (!loading) {
     return (
+      <div>
+
+     
+
       <div className="comments-section glassmorphism">
         {comments.map((item) => {
           return <Comment item={item} key={item._id} />;
         })}
+      </div>
       </div>
     );
   } else {

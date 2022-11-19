@@ -14,7 +14,7 @@ const Recommendation = ({item}) => {
     }
   };
   return (
-    <Wrapper>
+    <Wrapper className="user-recommendation">
       <div className="recommendation glassmorphism">
         <div className="user-content">
         <img src={profilePic} className="profile-pic-sm" alt="" />

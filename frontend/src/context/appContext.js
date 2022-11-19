@@ -264,6 +264,24 @@ const AppProvider = ({ children }) => {
     }
   };
 
+
+  const savepost = async ({ postid }) => {
+    try {
+      await authFetch.patch(`/posts/savepost/${postid}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const unsavepost = async ({ postid }) => {
+    try {
+      await authFetch.patch(`/posts/unsavepost/${postid}`);
+      console.log(postid);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
    const toggleSidebar = () => {
      dispatch({ type: TOGGLE_SIDEBAR });
    };
@@ -279,7 +297,9 @@ const AppProvider = ({ children }) => {
         commentDelete,
         likepost,
         unlikepost,
-        toggleSidebar
+        toggleSidebar,
+        savepost,
+        unsavepost
       }}
     >
       {children}

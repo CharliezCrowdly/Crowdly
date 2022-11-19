@@ -21,7 +21,7 @@ const Todo = () => {
 
   }
   return (
-    <Wrapper className="glassmorphism">
+    <Wrapper className="glassmorphism todo-box">
       <div className="todo">
         <h4>To do</h4>
         <h4 onClick={onAdd} className="add">

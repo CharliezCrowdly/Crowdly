@@ -170,10 +170,10 @@ const Wrapper = styled.div`
         margin-left: 2.5%;
         font-size: 0.8rem;
 
-        & > .more-less {
-          color: var(--black-500);
-          cursor: pointer;
-        }
+      }
+      & > .more-less {
+        color: var(--black-500);
+        cursor: pointer;
       }
     }
 

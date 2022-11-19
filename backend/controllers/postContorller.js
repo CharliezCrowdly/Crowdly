@@ -94,9 +94,49 @@ const unlikePost = async (req, res) => {
   }
 };
 
+const savePosts = async (req, res) => {
+  const post = await Post.find({
+    _id: req.params.id,
+    saved: req.user.userId,
+  });
+
+  if (post.length === 0) {
+    const bookmark = await Post.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        $push: { saved: req.user.userId },
+      },
+      { new: true }
+    );
+    res.status(StatusCodes.OK).json({ bookmark });
+  }
+  res.status(StatusCodes.OK).json({ post });
+};
+
+const unsavePosts = async (req, res) => {
+  const post = await Post.find({
+    _id: req.params.id,
+    saved: req.user.userId,
+  });
+
+  if (post.length > 0) {
+    const bookmark = await Post.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        $pull: { saved: req.user.userId },
+      },
+      { new: true }
+    );
+    res.status(StatusCodes.OK).json({ bookmark });
+  }
+  res.status(StatusCodes.OK).json({ post });
+};
+
 module.exports = {
   postUpload,
   getPosts,
   likePosts,
   unlikePost,
+  savePosts,
+  unsavePosts
 };
