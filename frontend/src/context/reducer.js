@@ -21,7 +21,10 @@ import {
   CREATE_COMMENT_SUCCESS,
   GET_POST_BEGIN,
   GET_POST_SUCCESS,
-  GET_POST_ERROR
+  GET_POST_ERROR,
+  UPDATE_POST_BEGIN,
+  UPDATE_POST_SUCCESS,
+  UPDATE_POST_ERROR
 } from "./action";
 import { initialState } from "./appContext";
 
@@ -191,12 +194,33 @@ const reducer = (state, action) => {
     return {
       ...state,
       isLoading: false,
+      postdetail:action.payload.postdetail
     };
   }
-  if (action.type === ERROR) {
+  if (action.type ===  GET_POST_ERROR) {
     return {
       ...state,
-      isLoading: GET_POST_ERROR,
+      isLoading: false,
+    };
+  }
+
+
+  if (action.type === UPDATE_POST_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+  if (action.type === UPDATE_POST_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+    };
+  }
+  if (action.type === UPDATE_POST_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
     };
   }
 

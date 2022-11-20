@@ -3,7 +3,7 @@ import styled from "styled-components";
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-
+  transform: translateZ(9rem);
   label {
     text-transform: capitalize;
     margin-block: 2px;

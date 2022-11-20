@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Wrapper from "./wrapper/PostEditPage";
 import PostInput from "./component/PostInput";
 import { IoMdResize } from "react-icons/io";
 import { RiImageAddFill } from "react-icons/ri";
+import { useAppContext } from "../../context/appContext";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const uploadState = {
   location: false,
@@ -10,27 +13,72 @@ const uploadState = {
   video: false,
   audio: false,
   other: false,
-  userLocation: "",
+  location: "",
   postfile: "",
   description: "",
   filetype: "video/mp4",
 };
+const options = {
+  description: "",
+  location: "",
+  File: "",
+  fullscreen: false,
+};
 const PostEditPage = () => {
-  const options = {
-    description: "",
-    location: "",
-    File: "",
-    fullscreen: false,
-  };
-
+  const load = useRef(true);
+  const { user, token, updatePost, isLoading } = useAppContext();
   const [value, setValue] = useState(options);
   const [upload, setUpload] = useState(uploadState);
   const [preview, setPreview] = useState(
     "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80"
   );
+  const { id } = useParams();
+
+  useEffect(() => {
+    const fetch = async () => {
+      if (load.current === true) {
+        await axios
+          .get(`/api/v1/posts/postdetail/${id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((res) => {
+            const { post } = res.data;
+            setUpload({
+              location: false,
+              image: false,
+              video: false,
+              audio: false,
+              other: false,
+              postfile: post.postfile,
+              location: post.location,
+              description: post.description,
+              filetype: post.filetype,
+            });
+            setPreview(post.postfile);
+          });
+      }
+    };
+    fetch();
+
+    return () => (load.current = false);
+  }, [id]);
+
+  const handleChange = (e) => {
+    setValue({ ...value, [e.target.name]: e.target.value });
+  };
 
   const togglefullscreen = () => {
     setValue({ ...value, fullscreen: !value.fullscreen });
+  };
+
+  const onsubmit = () => {
+    updatePost({
+      postid: id,
+      description: upload.description,
+      location: upload.location,
+    });
   };
 
   const onFileSelection = (e) => {
@@ -100,14 +148,18 @@ const PostEditPage = () => {
     }
   };
 
+  if (isLoading) {
+    return <div>... Loading</div>;
+  }
+
   return (
     <Wrapper className="">
       <div className="card-content">
-        <div className="card-front glassmorphism">
+        <div className="card-front ">
           <h3 className={value.fullscreen ? "d-none " : ""}>Edit Post</h3>
           <div className={value.fullscreen ? "edit-img active" : "edit-img"}>
             <label htmlFor="">Edit image</label>
-            {upload.filetype.substring(0, upload.filetype.indexOf("/")) ===
+            {upload.filetype?.substring(0, upload.filetype?.indexOf("/")) ===
               "video" && (
               <video
                 className={
@@ -120,7 +172,7 @@ const PostEditPage = () => {
                 <source type="video/mp4" src={preview} />
               </video>
             )}
-            {upload.filetype.substring(0, upload.filetype.indexOf("/")) ===
+            {upload.filetype?.substring(0, upload.filetype?.indexOf("/")) ===
               "image" && (
               <img
                 src={preview}
@@ -130,34 +182,31 @@ const PostEditPage = () => {
                 }
               />
             )}
-            <div className="fileupload">
-              <input
-                type="file"
-                name="postfile"
-                className="uploadfile"
-                id=""
-                onChange={onFileSelection}
-              />
-              <RiImageAddFill className="icon" />
-            </div>
-            <IoMdResize className="icon" onClick={togglefullscreen} />
           </div>
           <PostInput
             name={"description"}
             placeholder={"Enter your Description"}
-            value={options.description}
+            value={upload.description}
             type={"text"}
+            handleChange={handleChange}
           />
           <PostInput
             name={"location"}
             placeholder={"Enter your Location"}
-            value={options.location}
+            value={upload.location}
             type={"text"}
+            handleChange={handleChange}
           />
           <button className="btn-submit">Save</button>
         </div>
 
-        <div className="card-back glassmorphism"></div>
+        <div className="card-back">
+          <p className="card-body">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit iste
+            sequi architecto amet nihil nesciunt dolore voluptatum quasi,
+            maiores eveniet! Dolorem, et.
+          </p>
+        </div>
       </div>
     </Wrapper>
   );

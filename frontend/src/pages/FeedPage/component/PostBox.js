@@ -11,11 +11,13 @@ import { useAppContext } from "../../../context/appContext";
 import PostComment from "./PostComment";
 import Commentlst from "./Commentlst";
 import Bookmark from "./Bookmark";
+import { useNavigate } from "react-router-dom";
 
 const PostBox = React.memo(({ item }) => {
   const { user, likepost, unlikepost, savepost, unsavepost } = useAppContext();
 
   const loadComment = useRef(false);
+  const navigate = useNavigate()
 
   const stopCommentload = () => {
     loadComment.current = false;
@@ -30,6 +32,7 @@ const PostBox = React.memo(({ item }) => {
   const {
     userid,
     location,
+    _id,
 
     filetype,
     postfile,
@@ -186,7 +189,7 @@ const PostBox = React.memo(({ item }) => {
                   postState.isoption ? "edit-option glassmorphism" : "d-none"
                 }
               >
-                <AiFillEdit className="icon" />
+                <AiFillEdit className="icon" onClick={()=>navigate(`/crowdly/postedit/${_id}`)} />
                 <MdDelete className="icon" onClick={deletePost} />
               </div>
             </div>

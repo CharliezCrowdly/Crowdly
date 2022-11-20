@@ -24,9 +24,13 @@ import {
   GET_POST_BEGIN,
   GET_POST_SUCCESS,
   GET_POST_ERROR,
+  UPDATE_POST_BEGIN,
+  UPDATE_POST_ERROR,
+  UPDATE_POST_SUCCESS,
 } from "./action";
 
 import axios from "axios";
+import { Action } from "@remix-run/router";
 
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
@@ -50,6 +54,7 @@ const initialState = {
   explorelst: [],
   jobTypeOptions: ["full-time", "part-time", "remote", "internship"],
   searchList: [],
+  postdetail: "",
 };
 
 const AppContext = React.createContext();
@@ -285,12 +290,32 @@ const AppProvider = ({ children }) => {
   };
 
   const getpostdetail = async ({ postid }) => {
-    dispatch({ GET_POST_BEGIN });
+    dispatch({type: GET_POST_BEGIN });
     try {
-      await authFetch.patch(`/posts/postdetail/${postid}`);
-      dispatch({ GET_POST_SUCCESS });
+      const response = await authFetch.get(`/posts/postdetail/${postid}`);
+      console.log(response.data)
+      dispatch({ type: GET_POST_SUCCESS, payload: { postdetail: response.data.post } });
     } catch (error) {
-      dispatch({ GET_POST_ERROR });
+      dispatch({ type: GET_POST_ERROR });
+
+    }
+  };
+
+  const updatePost = async ({ postid, description, location, filePath }) => {
+    dispatch({type: UPDATE_POST_BEGIN });
+    try {
+
+      let formData = new FormData();
+
+      formData.append("location", location);
+      formData.append("description", description);
+      formData.append("filetype", filetype);
+      formData.append("filePath", filePath);
+      const {post} = await authFetch.patch(`/posts/updatepost/${postid}`,formData);
+      dispatch({ type:UPDATE_POST_SUCCESS});
+    } catch (error) {
+      console.log(error)
+      dispatch({ type:UPDATE_POST_ERROR });
     }
   };
 
@@ -313,6 +338,7 @@ const AppProvider = ({ children }) => {
         savepost,
         unsavepost,
         getpostdetail,
+        updatePost,
       }}
     >
       {children}

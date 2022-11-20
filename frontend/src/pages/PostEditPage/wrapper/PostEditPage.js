@@ -5,9 +5,9 @@ const Wrapper = styled.div`
   margin: 0 auto;
   height: 600px;
 
-  &:hover .card-content {
+  /* &:hover .card-content {
     transform: rotateY(0.5turn);
-  }
+  } */
 
   & > .card-content {
     height: 100%;
@@ -23,9 +23,17 @@ const Wrapper = styled.div`
       backface-visibility: hidden;
       transform-style: preserve-3d;
       transform: rotateY(0.5turn);
-      color: var(--clr);
+      background: rgba(255, 255, 255, 1);
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
       height: 100%;
       width: 100%;
+
+      & > .card-body {
+        transform: translateZ(6rem);
+        font-size: 1.5rem;
+        line-height: 1.6;
+      }
     }
 
     & > .card-front {
@@ -33,11 +41,12 @@ const Wrapper = styled.div`
       top: 0;
       left: 0;
       backface-visibility: hidden;
-      transform-style: preserve-3d !important;
+      transform-style: preserve-3d;
       display: flex;
       flex-direction: column;
       height: 100%;
-
+      background: rgba(255, 255, 255, 1);
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
       padding: 2%;
 
       border-radius: 15px;
@@ -45,10 +54,10 @@ const Wrapper = styled.div`
         inset -20px -20px 60px inset -20px -20px 60px rgba(255, 255, 255, 0.61);
 
       border: 2px solid var(--blue-700);
-      overflow: hidden;
 
       .edit-img {
         position: relative;
+        transform: translateZ(200px);
 
         & > .fileupload {
           width: 32px;
@@ -85,8 +94,6 @@ const Wrapper = styled.div`
           padding: 2%;
           border-radius: 15px;
           transition: 2s;
-          transform: translateZ(200px) !important;
-          -webkit-transform: translateZ(200px) !important ;
         }
 
         & > video {
@@ -159,7 +166,8 @@ const Wrapper = styled.div`
         color: white;
         font-weight: bold;
         border: none;
-        transform: translateZ(200px) !important;
+        transform: translateZ(100px);
+        cursor:pointer;
       }
 
       & > h3 {
@@ -167,18 +175,18 @@ const Wrapper = styled.div`
         font-size: 1.5rem;
         text-transform: capitalize;
         color: var(--blue-700);
-        transform: translateZ(200px) !important;
-      }
-    }
-
-    @keyframes fullscreen {
-      to {
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 100%;
+        transform: translateZ(200px);
       }
     }
   }
+
+  /* @keyframes fullscreen {
+    to {
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+    }
+  } */
 `;
 export default Wrapper;

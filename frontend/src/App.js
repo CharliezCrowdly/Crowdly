@@ -58,7 +58,7 @@ function App() {
             </ProtectedRoute>
           }
         >
-          <Route path="postedit" element={<PostEditPage />} />
+          <Route path="postedit/:id" element={<PostEditPage />} />
         </Route>
 
         <Route path="*" element={<h2>error</h2>}></Route>
