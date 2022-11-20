@@ -9,6 +9,9 @@ import {
   SharedLayout,
   YourWorkPage,
   JobDetail,
+  PostEditPage,
+  SharedLayout2
+
 } from "./pages";
 
 function App() {
@@ -45,6 +48,17 @@ function App() {
           }
         >
           <Route path="jobDetail" element={<JobDetail />} />
+        </Route>
+
+        <Route
+          path="/crowdly"
+          element={
+            <ProtectedRoute>
+              <SharedLayout2 />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="postedit" element={<PostEditPage />} />
         </Route>
 
         <Route path="*" element={<h2>error</h2>}></Route>

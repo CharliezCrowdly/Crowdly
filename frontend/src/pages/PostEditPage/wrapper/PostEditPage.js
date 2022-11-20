@@ -1,0 +1,184 @@
+import styled from "styled-components";
+
+const Wrapper = styled.div`
+  max-width: 500px;
+  margin: 0 auto;
+  height: 600px;
+
+  &:hover .card-content {
+    transform: rotateY(0.5turn);
+  }
+
+  & > .card-content {
+    height: 100%;
+    width: 100%;
+    transition: transform 3s;
+    // background: pink;
+    transform-style: preserve-3d;
+
+    & > .card-back {
+      position: absolute;
+      top: 0;
+      left: 0;
+      backface-visibility: hidden;
+      transform-style: preserve-3d;
+      transform: rotateY(0.5turn);
+      color: var(--clr);
+      height: 100%;
+      width: 100%;
+    }
+
+    & > .card-front {
+      position: absolute;
+      top: 0;
+      left: 0;
+      backface-visibility: hidden;
+      transform-style: preserve-3d !important;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+
+      padding: 2%;
+
+      border-radius: 15px;
+      box-shadow: inset 20px 20px 60px #bebebe,
+        inset -20px -20px 60px inset -20px -20px 60px rgba(255, 255, 255, 0.61);
+
+      border: 2px solid var(--blue-700);
+      overflow: hidden;
+
+      .edit-img {
+        position: relative;
+
+        & > .fileupload {
+          width: 32px;
+          overflow: hidden;
+          position: absolute;
+          top: 9%;
+          left: 5%;
+          z-index: 4;
+
+          & > .icon {
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: white;
+            font-size: 1.5rem;
+            z-index: -1;
+          }
+
+          & > .uploadfile {
+            opacity: 0;
+            z-index: 2;
+            cursor: pointer;
+          }
+        }
+
+        & > label {
+          font-weight: bold;
+          color: black;
+        }
+        & > img {
+          height: 300px;
+          object-fit: cover;
+          margin: 0 auto;
+          padding: 2%;
+          border-radius: 15px;
+          transition: 2s;
+          transform: translateZ(200px) !important;
+          -webkit-transform: translateZ(200px) !important ;
+        }
+
+        & > video {
+          height: 300px;
+          object-fit: cover;
+          margin: 0 auto;
+          padding: 2%;
+          border-radius: 15px;
+          transition: 2s;
+          width: 100%;
+        }
+
+        & > .icon {
+          position: absolute;
+          top: 15%;
+          right: 5%;
+          font-weight: bolder;
+          color: white;
+          cursor: pointer;
+          z-index: 3;
+        }
+
+        &.active {
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 590px;
+          width: 100%;
+          & > .icon {
+            position: absolute;
+            right: 5%;
+            top: 5%;
+          }
+
+          & > img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+
+            &.active {
+              height: 100%;
+              width: 100%;
+
+              object-fit: cover;
+            }
+          }
+
+          & > video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+
+            &.active {
+              height: 100%;
+              width: 100%;
+
+              object-fit: cover;
+            }
+          }
+        }
+      }
+      & > .btn-submit {
+        width: 150px;
+        border-radius: 25px;
+        height: 30px;
+        margin: 0 auto;
+        background-color: var(--blue-700);
+        color: white;
+        font-weight: bold;
+        border: none;
+        transform: translateZ(200px) !important;
+      }
+
+      & > h3 {
+        margin: 0 auto;
+        font-size: 1.5rem;
+        text-transform: capitalize;
+        color: var(--blue-700);
+        transform: translateZ(200px) !important;
+      }
+    }
+
+    @keyframes fullscreen {
+      to {
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+      }
+    }
+  }
+`;
+export default Wrapper;

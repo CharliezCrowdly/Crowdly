@@ -132,11 +132,54 @@ const unsavePosts = async (req, res) => {
   res.status(StatusCodes.OK).json({ post });
 };
 
+const postDetail = async (req, res) => {
+  const { id: postId } = req.params;
+  const post = await Post.findById({ _id: postId })
+    .populate("userid likesid", "profilePicture username location")
+    .sort("-createdAt");
+
+  if (!post) {
+    throw new BAD_REQUESTError("no such post");
+  }
+
+  res.status(StatusCodes.OK).json({ post });
+};
+
+const UpdatePost = async (req, res) => {
+  const { id: postId } = req.params;
+
+  const { description, location } = req.body;
+
+  const post = await Post.findOne({ _id: postId });
+
+  if (!post) {
+    throw new NotFoundError(`No post with id ${postId}`);
+  }
+
+  if (req.files) {
+    const { file } = req.files;
+    const {filetype} = req.body;
+    post.filetype = filetype
+    post.postfile = file;
+  }
+
+  // check permissions
+
+  post.location = location;
+  post.description = description;
+
+  await post.save();
+
+  res.status(StatusCodes.OK).json({ post });
+};
+
 module.exports = {
   postUpload,
   getPosts,
   likePosts,
   unlikePost,
   savePosts,
-  unsavePosts
+  unsavePosts,
+  postDetail,
+  UpdatePost
 };

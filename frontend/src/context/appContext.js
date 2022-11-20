@@ -21,6 +21,9 @@ import {
   CREATE_COMMENT_BEGIN,
   CREATE_COMMENT_SUCCESS,
   CREATE_COMMENT_ERROR,
+  GET_POST_BEGIN,
+  GET_POST_SUCCESS,
+  GET_POST_ERROR,
 } from "./action";
 
 import axios from "axios";
@@ -264,7 +267,6 @@ const AppProvider = ({ children }) => {
     }
   };
 
-
   const savepost = async ({ postid }) => {
     try {
       await authFetch.patch(`/posts/savepost/${postid}`);
@@ -282,9 +284,19 @@ const AppProvider = ({ children }) => {
     }
   };
 
-   const toggleSidebar = () => {
-     dispatch({ type: TOGGLE_SIDEBAR });
-   };
+  const getpostdetail = async ({ postid }) => {
+    dispatch({ GET_POST_BEGIN });
+    try {
+      await authFetch.patch(`/posts/postdetail/${postid}`);
+      dispatch({ GET_POST_SUCCESS });
+    } catch (error) {
+      dispatch({ GET_POST_ERROR });
+    }
+  };
+
+  const toggleSidebar = () => {
+    dispatch({ type: TOGGLE_SIDEBAR });
+  };
   return (
     <AppContext.Provider
       value={{
@@ -299,7 +311,8 @@ const AppProvider = ({ children }) => {
         unlikepost,
         toggleSidebar,
         savepost,
-        unsavepost
+        unsavepost,
+        getpostdetail,
       }}
     >
       {children}
