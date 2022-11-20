@@ -157,10 +157,20 @@ const UpdatePost = async (req, res) => {
   }
 
   if (req.files) {
-    const { file } = req.files;
+    const { filePath } = req.files;
+
+   
+    const src = `/posts/${filePath.name}`;
+
+    const imagePath = path.join(
+      __dirname,
+      "../public/posts/" + `${filePath.name}`
+    );
+    await filePath.mv(imagePath);
     const {filetype} = req.body;
     post.filetype = filetype
-    post.postfile = file;
+    post.postfile = src;
+    
   }
 
   // check permissions
