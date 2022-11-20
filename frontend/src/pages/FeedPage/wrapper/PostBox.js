@@ -73,6 +73,7 @@ const Wrapper = styled.div`
             & > .icon {
               font-size: 1.5rem;
               margin-inline: auto;
+              cursor: pointer;
             }
           }
         }

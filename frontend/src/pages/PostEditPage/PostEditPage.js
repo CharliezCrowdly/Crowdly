@@ -6,6 +6,7 @@ import { RiImageAddFill } from "react-icons/ri";
 import { useAppContext } from "../../context/appContext";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { Alert } from "../../component";
 
 const uploadState = {
   location: false,
@@ -16,7 +17,8 @@ const uploadState = {
   location: "",
   postfile: "",
   description: "",
-  filetype: "video/mp4",
+  filetype: null,
+  preview:"",
 };
 const options = {
   description: "",
@@ -26,7 +28,7 @@ const options = {
 };
 const PostEditPage = () => {
   const load = useRef(true);
-  const { user, token, updatePost, isLoading } = useAppContext();
+  const { user, token, updatePost, isLoading, showAlert } = useAppContext();
   const [value, setValue] = useState(options);
   const [upload, setUpload] = useState(uploadState);
   const [preview, setPreview] = useState(
@@ -55,6 +57,7 @@ const PostEditPage = () => {
               location: post.location,
               description: post.description,
               filetype: post.filetype,
+              preview:post.postfile,
             });
             setPreview(post.postfile);
           });
@@ -63,21 +66,23 @@ const PostEditPage = () => {
     fetch();
 
     return () => (load.current = false);
-  }, [id]);
+  }, [id,preview]);
 
   const handleChange = (e) => {
-    setValue({ ...value, [e.target.name]: e.target.value });
+    setUpload({ ...upload, [e.target.name]: e.target.value });
   };
 
   const togglefullscreen = () => {
     setValue({ ...value, fullscreen: !value.fullscreen });
   };
 
-  const onsubmit = () => {
+  const onSubmit = () => {
     updatePost({
       postid: id,
       description: upload.description,
       location: upload.location,
+      filePath: upload.postfile,
+      filetype: upload.filetype,
     });
   };
 
@@ -89,7 +94,7 @@ const PostEditPage = () => {
     if (file.type.match("video.*")) {
       setUpload({
         ...upload,
-        [e.target.name]: file,
+        postfile: file,
         filetype: e.target.files[0].type,
         image: false,
         video: true,
@@ -101,7 +106,7 @@ const PostEditPage = () => {
     if (file.type.match("image.*")) {
       setUpload({
         ...upload,
-        [e.target.name]: file,
+        postfile: file,
         filetype: e.target.files[0].type,
 
         image: true,
@@ -154,58 +159,74 @@ const PostEditPage = () => {
 
   return (
     <Wrapper className="">
-      <div className="card-content">
-        <div className="card-front ">
-          <h3 className={value.fullscreen ? "d-none " : ""}>Edit Post</h3>
-          <div className={value.fullscreen ? "edit-img active" : "edit-img"}>
-            <label htmlFor="">Edit image</label>
-            {upload.filetype?.substring(0, upload.filetype?.indexOf("/")) ===
-              "video" && (
-              <video
-                className={
-                  value.fullscreen ? "glassmorphism active" : "glassmorphism"
-                }
-                muted
-                loop
-                controls={true}
-              >
-                <source type="video/mp4" src={preview} />
-              </video>
-            )}
-            {upload.filetype?.substring(0, upload.filetype?.indexOf("/")) ===
-              "image" && (
-              <img
-                src={preview}
-                alt=""
-                className={
-                  value.fullscreen ? "glassmorphism active" : "glassmorphism"
-                }
-              />
-            )}
-          </div>
-          <PostInput
-            name={"description"}
-            placeholder={"Enter your Description"}
-            value={upload.description}
-            type={"text"}
-            handleChange={handleChange}
-          />
-          <PostInput
-            name={"location"}
-            placeholder={"Enter your Location"}
-            value={upload.location}
-            type={"text"}
-            handleChange={handleChange}
-          />
-          <button className="btn-submit">Save</button>
-        </div>
+      {showAlert && <Alert />}
 
-        <div className="card-back">
-          <p className="card-body">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit iste
-            sequi architecto amet nihil nesciunt dolore voluptatum quasi,
-            maiores eveniet! Dolorem, et.
-          </p>
+      <div className="card">
+        <div className="card-content">
+          <div className="card-front ">
+            <h3 className={value.fullscreen ? "d-none " : ""}>Edit Post</h3>
+            <div className={value.fullscreen ? "edit-img active" : "edit-img"}>
+              <label htmlFor="">Edit image</label>
+              {upload.filetype?.substring(0, upload.filetype?.indexOf("/")) ===
+                "video" && (
+                <video
+                  className={
+                    value.fullscreen ? "glassmorphism active" : "glassmorphism"
+                  }
+                  muted
+                  loop
+                  controls={true}
+                >
+                  <source type={upload.filetype} src={preview} />
+                </video>
+              )}
+              {upload.filetype?.substring(0, upload.filetype?.indexOf("/")) ===
+                "image" && (
+                <img
+                  src={preview}
+                  alt=""
+                  className={
+                    value.fullscreen ? "glassmorphism active" : "glassmorphism"
+                  }
+                />
+              )}
+              <div className="fileupload">
+                <input
+                  type="file"
+                  name="postfile"
+                  className="uploadfile"
+                  id=""
+                  onChange={onFileSelection}
+                />
+                <RiImageAddFill className="icon" />
+              </div>
+              <IoMdResize className="icon" onClick={togglefullscreen} />
+            </div>
+            <PostInput
+              name={"description"}
+              placeholder={"Enter your Description"}
+              value={upload.description}
+              type={"text"}
+              handleChange={handleChange}
+            />
+            <PostInput
+              name={"location"}
+              placeholder={"Enter your Location"}
+              value={upload.location}
+              type={"text"}
+              handleChange={handleChange}
+            />
+            <button className="btn-submit" onClick={onSubmit}>
+              Save
+            </button>
+          </div>
+          <div className="card-back">
+            <p className="card-body">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit
+              iste sequi architecto amet nihil nesciunt dolore voluptatum quasi,
+              maiores eveniet! Dolorem, et.
+            </p>
+          </div>
         </div>
       </div>
     </Wrapper>

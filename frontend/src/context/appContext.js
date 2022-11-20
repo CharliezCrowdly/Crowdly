@@ -290,33 +290,42 @@ const AppProvider = ({ children }) => {
   };
 
   const getpostdetail = async ({ postid }) => {
-    dispatch({type: GET_POST_BEGIN });
+    dispatch({ type: GET_POST_BEGIN });
     try {
       const response = await authFetch.get(`/posts/postdetail/${postid}`);
-      console.log(response.data)
-      dispatch({ type: GET_POST_SUCCESS, payload: { postdetail: response.data.post } });
+      console.log(response.data);
+      dispatch({
+        type: GET_POST_SUCCESS,
+        payload: { postdetail: response.data.post },
+      });
     } catch (error) {
       dispatch({ type: GET_POST_ERROR });
-
     }
   };
 
-  const updatePost = async ({ postid, description, location, filePath }) => {
-    dispatch({type: UPDATE_POST_BEGIN });
+  const updatePost = async ({ postid, description, location, filePath,filetype }) => {
+    dispatch({ type: UPDATE_POST_BEGIN });
     try {
-
       let formData = new FormData();
 
       formData.append("location", location);
       formData.append("description", description);
       formData.append("filetype", filetype);
       formData.append("filePath", filePath);
-      const {post} = await authFetch.patch(`/posts/updatepost/${postid}`,formData);
-      dispatch({ type:UPDATE_POST_SUCCESS});
+      const { post } = await authFetch.patch(
+        `/posts/updatepost/${postid}`,
+        formData
+      );
+      dispatch({ type: UPDATE_POST_SUCCESS });
     } catch (error) {
-      console.log(error)
-      dispatch({ type:UPDATE_POST_ERROR });
+      console.log(error);
+
+      dispatch({
+        type: UPDATE_POST_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
     }
+    clearAlert();
   };
 
   const toggleSidebar = () => {
