@@ -150,7 +150,9 @@ const UpdatePost = async (req, res) => {
 
   const { description, location } = req.body;
 
-  const post = await Post.findOne({ _id: postId });
+  const post = await Post.findOne({ _id: postId })
+    .populate("userid likesid", "profilePicture username location")
+    .sort("-createdAt");
 
   if (!post) {
     throw new NotFoundError(`No post with id ${postId}`);
@@ -159,7 +161,6 @@ const UpdatePost = async (req, res) => {
   if (req.files) {
     const { filePath } = req.files;
 
-   
     const src = `/posts/${filePath.name}`;
 
     const imagePath = path.join(
@@ -167,10 +168,9 @@ const UpdatePost = async (req, res) => {
       "../public/posts/" + `${filePath.name}`
     );
     await filePath.mv(imagePath);
-    const {filetype} = req.body;
-    post.filetype = filetype
+    const { filetype } = req.body;
+    post.filetype = filetype;
     post.postfile = src;
-    
   }
 
   // check permissions
@@ -191,5 +191,5 @@ module.exports = {
   savePosts,
   unsavePosts,
   postDetail,
-  UpdatePost
+  UpdatePost,
 };

@@ -18,7 +18,8 @@ const uploadState = {
   postfile: "",
   description: "",
   filetype: null,
-  preview:"",
+  preview: "",
+  item: "",
 };
 const options = {
   description: "",
@@ -34,6 +35,7 @@ const PostEditPage = () => {
   const [preview, setPreview] = useState(
     "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80"
   );
+
   const { id } = useParams();
 
   useEffect(() => {
@@ -57,16 +59,18 @@ const PostEditPage = () => {
               location: post.location,
               description: post.description,
               filetype: post.filetype,
-              preview:post.postfile,
+              preview: post.postfile,
+              item: post,
             });
             setPreview(post.postfile);
+            console.log(post);
           });
       }
     };
     fetch();
 
     return () => (load.current = false);
-  }, [id,preview]);
+  }, [id, upload.preview]);
 
   const handleChange = (e) => {
     setUpload({ ...upload, [e.target.name]: e.target.value });
@@ -87,9 +91,17 @@ const PostEditPage = () => {
   };
 
   const onFileSelection = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     var file = e.target.files[0];
     console.log(e.target.files[0].type.substring(0, file.type.indexOf("/")));
     console.log(e.target.files[0].type);
+
+    if (e.target.files && e.target.files[0]) {
+      let file = e.target.files[0];
+      let blobURL = URL.createObjectURL(file);
+      setPreview(blobURL);
+    }
 
     if (file.type.match("video.*")) {
       setUpload({
@@ -145,12 +157,6 @@ const PostEditPage = () => {
         other: true,
       });
     }
-
-    if (e.target.files && e.target.files[0]) {
-      let file = e.target.files[0];
-      let blobURL = URL.createObjectURL(file);
-      setPreview(blobURL);
-    }
   };
 
   if (isLoading) {
@@ -161,14 +167,14 @@ const PostEditPage = () => {
     <Wrapper className="">
       {showAlert && <Alert />}
 
-      <div className="card">
+      <div className="card ">
         <div className="card-content">
           <div className="card-front ">
             <h3 className={value.fullscreen ? "d-none " : ""}>Edit Post</h3>
             <div className={value.fullscreen ? "edit-img active" : "edit-img"}>
               <label htmlFor="">Edit image</label>
               {upload.filetype?.substring(0, upload.filetype?.indexOf("/")) ===
-                "video" && (
+              "video" ? (
                 <video
                   className={
                     value.fullscreen ? "glassmorphism active" : "glassmorphism"
@@ -177,9 +183,9 @@ const PostEditPage = () => {
                   loop
                   controls={true}
                 >
-                  <source type={upload.filetype} src={preview} />
+                  <source type={"video/mp4"} src={preview} />
                 </video>
-              )}
+              ) : null}
               {upload.filetype?.substring(0, upload.filetype?.indexOf("/")) ===
                 "image" && (
                 <img
@@ -222,9 +228,9 @@ const PostEditPage = () => {
           </div>
           <div className="card-back">
             <p className="card-body">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit
-              iste sequi architecto amet nihil nesciunt dolore voluptatum quasi,
-              maiores eveniet! Dolorem, et.
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam
+              omnis voluptatem dolorem alias perferendis veritatis dignissimos
+              nostrum mollitia praesentium laudantium, porro laborum!
             </p>
           </div>
         </div>

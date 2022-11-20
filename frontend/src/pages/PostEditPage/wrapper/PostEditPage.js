@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
 const Wrapper = styled.div`
+  & > .alert {
+    max-width: 500px;
+    margin: 0 auto;
+  }
   .card {
     max-width: 500px;
     margin: 0 auto;

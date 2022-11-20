@@ -21,7 +21,6 @@ const Wrapper = styled.div`
       font-weight: bolder;
       font-size: 29px;
       color: var(--blue-1100);
-
     }
   }
   & > input {
@@ -35,7 +34,6 @@ const Wrapper = styled.div`
     margin-bottom: 9px;
 
     &:focus {
-      
     }
   }
 
@@ -46,6 +44,15 @@ const Wrapper = styled.div`
     justify-content: space-between;
     /* font: var(--sticky-font); */
     text-transform: capitalize;
+
+    & > span {
+      cursor: pointer;
+    }
+
+    & > .done {
+      text-decoration-line: line-through;
+      text-decoration-color: var(--blue-1100);
+    }
 
     & > .delete {
       color: var(--black-550);

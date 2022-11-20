@@ -169,18 +169,18 @@ const PostBox = React.memo(({ item }) => {
           <div className="post-header ">
             <div className="userInfo">
               <img
-                src={userid.profilePicture}
+                src={userid?.profilePicture}
                 alt=""
                 className="profile-pic-sm"
               />
               <div className="username-location">
-                <span className="username">{userid.username}</span>
+                <span className="username">{userid?.username}</span>
                 <p className="location">{location}</p>
               </div>
             </div>
             <div className="post-edit">
               <BsThreeDots
-                className={userid._id === user._id ? "icon" : "d-none"}
+                className={userid?._id === user._id ? "icon" : "d-none"}
                 onClick={toggleOption}
               />
 
@@ -195,7 +195,7 @@ const PostBox = React.memo(({ item }) => {
             </div>
           </div>
           <div className="post-image-section">
-            {filetype.substring(0, filetype.indexOf("/")) === "image" ? (
+            {filetype?.substring(0, filetype.indexOf("/")) === "image" ? (
               <img
                 onDoubleClick={toggleLike}
                 className="post-img"
@@ -206,7 +206,7 @@ const PostBox = React.memo(({ item }) => {
               ""
             )}
 
-            {filetype.substring(0, filetype.indexOf("/")) === "video" ? (
+            {filetype?.substring(0, filetype.indexOf("/")) === "video" ? (
               <video
                 className="post-img"
                 muted
@@ -222,7 +222,7 @@ const PostBox = React.memo(({ item }) => {
               ""
             )}
 
-            {filetype.substring(0, filetype.indexOf("/")) === "audio" ? (
+            {filetype?.substring(0, filetype.indexOf("/")) === "audio" ? (
               <div
                 className="post-img"
                 onMouseEnter={onentry}
@@ -242,7 +242,7 @@ const PostBox = React.memo(({ item }) => {
               ""
             )}
 
-            {filetype.substring(
+            {filetype?.substring(
               0,
               filetype.indexOf("/") === "application" ? (
                 <div className="post-img">
@@ -259,7 +259,7 @@ const PostBox = React.memo(({ item }) => {
           </div>
           {/* absolute */}
           <span className="post-description ">
-            {postState.isReadMore ? description : desc.substring(0, 100)}
+            {postState.isReadMore ? description : desc?.substring(0, 100)}
           </span>
           <span className="more-less">
             {postState.isReadMore ? "...less" : "...more"}
@@ -288,12 +288,12 @@ const PostBox = React.memo(({ item }) => {
         <div className="like-count">{postState.likecount} likes</div>
 
         <div className="post-description">
-          <span className="username">{userid.username}</span>
+          <span className="username">{userid?.username}</span>
           <span className="post-desc ">
-            {description.substring(0, postState.isReadMore ? 600 : 100)}
+            {description?.substring(0, postState.isReadMore ? 600 : 100)}
           </span>
           <span className="more-less" onClick={toggleReadMore}>
-            {description.split(" ").length > 9
+            {description?.split(" ").length > 9
               ? postState.isReadMore
                 ? "...less"
                 : "...more"
