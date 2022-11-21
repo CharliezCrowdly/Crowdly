@@ -1,21 +1,36 @@
 import React, { useReducer, useContext } from "react";
 import reducer from "./reducer";
 import {
+  BEGIN,
+  ERROR,
+  SUCCESS,
   DISPLAY_ALERT,
   CLEAR_ALERT,
+  TOGGLE_SIDEBAR,
   SETUP_USER_BEGIN,
   SETUP_USER_SUCCESS,
   SETUP_USER_ERROR,
   CLEAR_VALUES,
   LOGOUT_USER,
-
-
-  
-  
- 
+  CREATE_POST_BEGIN,
+  CREATE_POST_SUCCESS,
+  CREATE_POST_ERROR,
+  GET_POSTS_BEGIN,
+  GET_POSTS_SUCCESS,
+  GET_POSTS_ERROR,
+  CREATE_COMMENT_BEGIN,
+  CREATE_COMMENT_SUCCESS,
+  CREATE_COMMENT_ERROR,
+  GET_POST_BEGIN,
+  GET_POST_SUCCESS,
+  GET_POST_ERROR,
+  UPDATE_POST_BEGIN,
+  UPDATE_POST_ERROR,
+  UPDATE_POST_SUCCESS,
 } from "./action";
 
 import axios from "axios";
+import { Action } from "@remix-run/router";
 
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
@@ -36,11 +51,10 @@ const initialState = {
   isSubmit: true,
   loadPost: true,
   userfeed: [],
-  explorelst:[],
-  searchList:[],
-
-
-  
+  explorelst: [],
+  jobTypeOptions: ["full-time", "part-time", "remote", "internship"],
+  searchList: [],
+  postdetail: "",
 };
 
 const AppContext = React.createContext();
@@ -175,15 +189,165 @@ const AppProvider = ({ children }) => {
     dispatch({ type: CLEAR_VALUES });
   };
 
-  
+  const createPost = async ({ userpost }) => {
+    dispatch({ type: CREATE_POST_BEGIN });
+    try {
+      const { userLocation, description, filetype, postfile } = userpost;
+      let formData = new FormData();
+      console.log(userpost);
+      formData.append("location", userLocation);
+      formData.append("description", description);
+      formData.append("filetype", filetype);
+      formData.append("postfile", postfile);
 
+      await authFetch.post("posts/upload", formData);
+      dispatch({
+        type: CREATE_POST_SUCCESS,
+      });
 
+      // dispatch({ type: CLEAR_VALUES });
+    } catch (error) {
+      console.log(error);
+      if (error.response.status === 401) return;
+      dispatch({
+        type: CREATE_POST_ERROR,
+        payload: { msg: error.response.data.msg, loadPost: false },
+      });
+    }
+    clearAlert();
+  };
+
+  const getallPosts = async () => {
+    dispatch({ type: GET_POSTS_BEGIN });
+    try {
+      const response = await authFetch("/posts/getposts");
+      const { posts } = response.data;
+
+      dispatch({ type: GET_POSTS_SUCCESS, payload: { userfeed: posts } });
+    } catch (error) {
+      console.log(error.response);
+    }
+    clearAlert();
+
+    dispatch({ type: GET_POSTS_ERROR });
+  };
+
+  const commentOnPost = async ({ commentInfo, postId }) => {
+    dispatch({ type: CREATE_COMMENT_BEGIN });
+    try {
+      await authFetch.post(`/comment/post`, { content: commentInfo, postId });
+      dispatch({ type: CREATE_COMMENT_SUCCESS });
+    } catch (e) {
+      console.log(e);
+      dispatch({ type: CREATE_COMMENT_ERROR });
+    }
+  };
+  const commentDelete = async ({ commentId }) => {
+    dispatch({ type: BEGIN });
+    try {
+      await authFetch.delete(`/comment/delete/${commentId}`);
+      dispatch({
+        type: SUCCESS,
+      });
+    } catch (e) {
+      dispatch({
+        type: ERROR,
+      });
+    }
+  };
+  const likepost = async ({ postid }) => {
+    try {
+      await authFetch.patch(`/posts/likepost/${postid}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const unlikepost = async ({ postid }) => {
+    try {
+      await authFetch.patch(`/posts/unlikepost/${postid}`);
+      console.log(postid);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const savepost = async ({ postid }) => {
+    try {
+      await authFetch.patch(`/posts/savepost/${postid}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const unsavepost = async ({ postid }) => {
+    try {
+      await authFetch.patch(`/posts/unsavepost/${postid}`);
+      console.log(postid);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getpostdetail = async ({ postid }) => {
+    dispatch({ type: GET_POST_BEGIN });
+    try {
+      const response = await authFetch.get(`/posts/postdetail/${postid}`);
+      console.log(response.data);
+      dispatch({
+        type: GET_POST_SUCCESS,
+        payload: { postdetail: response.data.post },
+      });
+    } catch (error) {
+      dispatch({ type: GET_POST_ERROR });
+    }
+  };
+
+  const updatePost = async ({ postid, description, location, filePath,filetype }) => {
+    dispatch({ type: UPDATE_POST_BEGIN });
+    try {
+      let formData = new FormData();
+
+      formData.append("location", location);
+      formData.append("description", description);
+      formData.append("filetype", filetype);
+      formData.append("filePath", filePath);
+      const { post } = await authFetch.patch(
+        `/posts/updatepost/${postid}`,
+        formData
+      );
+      dispatch({ type: UPDATE_POST_SUCCESS });
+    } catch (error) {
+      console.log(error);
+
+      dispatch({
+        type: UPDATE_POST_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
+  };
+
+  const toggleSidebar = () => {
+    dispatch({ type: TOGGLE_SIDEBAR });
+  };
   return (
     <AppContext.Provider
       value={{
         ...state,
         displayAlert,
         setupUser,
+        createPost,
+        getallPosts,
+        commentOnPost,
+        commentDelete,
+        likepost,
+        unlikepost,
+        toggleSidebar,
+        savepost,
+        unsavepost,
+        getpostdetail,
+        updatePost,
       }}
     >
       {children}

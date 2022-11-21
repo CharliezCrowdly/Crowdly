@@ -3,7 +3,7 @@ import Wrapper from "../wrappers/Recommendation"
 
 const Recommendation = ({item}) => {
 
-    const {id,username,mutual,profilePic} = item
+    const {username,mutual,profilePic} = item
   const [follow, setfollow] = useState(false);
 
   const togglefollow = () => {
@@ -14,7 +14,7 @@ const Recommendation = ({item}) => {
     }
   };
   return (
-    <Wrapper>
+    <Wrapper className="user-recommendation">
       <div className="recommendation glassmorphism">
         <div className="user-content">
         <img src={profilePic} className="profile-pic-sm" alt="" />

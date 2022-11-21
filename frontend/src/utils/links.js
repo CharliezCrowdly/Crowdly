@@ -8,13 +8,13 @@ const links = [
   {
     id: 1,
     text: "Find Work",
-    path: "/",
+    path: "/user/work",
     icon: <MdWork />,
   },
   {
     id: 2,
     text: "Messages",
-    path: "/user",
+    path: "/user/message",
     icon: <AiFillMessage />,
   },
   {
@@ -26,7 +26,7 @@ const links = [
   {
     id: 4,
     text: "Overview",
-    path: "/Overview",
+    path: "/user/feeds",
     icon: <FaPhotoVideo />,
   },
 ];

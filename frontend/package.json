@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@cucumber/cucumber": "^8.8.0",
     "@cyntler/react-doc-viewer": "^1.8.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "axios": "^1.1.3",
+    "axios": "^0.27.2",
     "chromedriver": "^107.0.3",
     "g": "^2.0.1",
     "moment": "^2.29.4",
@@ -25,12 +26,6 @@
     "build": "react-scripts build",
     "eject": "react-scripts eject",
     "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\" --env=jsdom"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [

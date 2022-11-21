@@ -1,6 +1,8 @@
 import React from "react";
 import Wrapper from "../wrappers/UserInfoCard";
+import { useAppContext } from "../context/appContext";
 const UserInfoCard = () => {
+  const {user} = useAppContext()
   return (
     <Wrapper>
       <div className="info-card glassmorphism">
@@ -11,7 +13,7 @@ const UserInfoCard = () => {
             alt=""
           />
         </div>
-        <div className="username">Andrew Rashford</div>
+        <div className="username">{user.username}</div>
         <div className="userskill">FrontEnd Developer</div>
         <div className="edit-profile">Edit Profile</div>
       </div>

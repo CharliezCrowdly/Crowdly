@@ -10,6 +10,16 @@ const Wrapper = styled.div`
 
     & > .right-container {
       width: 35%;
+
+      & > .users {
+        position: sticky;
+        top: 70px;
+      }
+
+      & > .todo-box {
+        position: sticky;
+        top: 380px;
+      }
     }
   }
 

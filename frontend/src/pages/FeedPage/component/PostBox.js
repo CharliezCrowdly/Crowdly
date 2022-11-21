@@ -8,11 +8,16 @@ import disk from "../../../assets/images/disk.png";
 import Wrapper from "../wrapper/PostBox";
 import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 import { useAppContext } from "../../../context/appContext";
+import PostComment from "./PostComment";
+import Commentlst from "./Commentlst";
+import Bookmark from "./Bookmark";
+import { useNavigate } from "react-router-dom";
 
 const PostBox = React.memo(({ item }) => {
-  const { user } = useAppContext();
+  const { user, likepost, unlikepost, savepost, unsavepost } = useAppContext();
 
   const loadComment = useRef(false);
+  const navigate = useNavigate()
 
   const stopCommentload = () => {
     loadComment.current = false;
@@ -27,6 +32,7 @@ const PostBox = React.memo(({ item }) => {
   const {
     userid,
     location,
+    _id,
 
     filetype,
     postfile,
@@ -51,6 +57,25 @@ const PostBox = React.memo(({ item }) => {
   };
 
   const [postState, SetPost] = useState(initialState);
+  useEffect(() => {
+    if (item.likesid.find((like) => like === user._id)) {
+      SetPost({
+        ...postState,
+        liked: true,
+        likecount: item.likesid.length,
+        commentcount: item.commentsid.length,
+      });
+      // postState.liked= true
+    } else {
+      // postState.liked = false
+      SetPost({
+        ...postState,
+        liked: false,
+        likecount: item.likesid.length,
+        commentcount: item.commentsid.length,
+      });
+    }
+  }, [item.likesid, user._id]);
 
   const vidRef = useRef(null);
   const onentry = () => {
@@ -65,12 +90,15 @@ const PostBox = React.memo(({ item }) => {
     e.preventDefault();
     const postid = item._id;
     if (postState.liked) {
+      unlikepost({ postid });
       SetPost({
         ...postState,
         liked: false,
         likecount: postState.likecount - 1,
       });
     } else {
+      likepost({ postid });
+
       SetPost({
         ...postState,
         liked: true,
@@ -79,10 +107,14 @@ const PostBox = React.memo(({ item }) => {
     }
   };
 
-  const togglesave = () => {
+  const togglesave = (e) => {
+    e.preventDefault();
+    const postid = item._id;
     if (postState.bookmarked) {
+      unsavepost({ postid });
       SetPost({ ...postState, bookmarked: false });
     } else {
+      savepost({ postid });
       SetPost({ ...postState, bookmarked: true });
     }
   };
@@ -137,18 +169,18 @@ const PostBox = React.memo(({ item }) => {
           <div className="post-header ">
             <div className="userInfo">
               <img
-                src={userid.profilePicture}
+                src={userid?.profilePicture}
                 alt=""
                 className="profile-pic-sm"
               />
               <div className="username-location">
-                <span className="username">{userid.username}</span>
+                <span className="username">{userid?.username}</span>
                 <p className="location">{location}</p>
               </div>
             </div>
             <div className="post-edit">
               <BsThreeDots
-                className={userid._id === user._id ? "icon" : "d-none"}
+                className={userid?._id === user._id ? "icon" : "d-none"}
                 onClick={toggleOption}
               />
 
@@ -157,13 +189,13 @@ const PostBox = React.memo(({ item }) => {
                   postState.isoption ? "edit-option glassmorphism" : "d-none"
                 }
               >
-                <AiFillEdit className="icon" />
+                <AiFillEdit className="icon" onClick={()=>navigate(`/crowdly/postedit/${_id}`)} />
                 <MdDelete className="icon" onClick={deletePost} />
               </div>
             </div>
           </div>
           <div className="post-image-section">
-            {filetype.substring(0, filetype.indexOf("/")) === "image" ? (
+            {filetype?.substring(0, filetype.indexOf("/")) === "image" ? (
               <img
                 onDoubleClick={toggleLike}
                 className="post-img"
@@ -174,7 +206,7 @@ const PostBox = React.memo(({ item }) => {
               ""
             )}
 
-            {filetype.substring(0, filetype.indexOf("/")) === "video" ? (
+            {filetype?.substring(0, filetype.indexOf("/")) === "video" ? (
               <video
                 className="post-img"
                 muted
@@ -190,7 +222,7 @@ const PostBox = React.memo(({ item }) => {
               ""
             )}
 
-            {filetype.substring(0, filetype.indexOf("/")) === "audio" ? (
+            {filetype?.substring(0, filetype.indexOf("/")) === "audio" ? (
               <div
                 className="post-img"
                 onMouseEnter={onentry}
@@ -210,7 +242,7 @@ const PostBox = React.memo(({ item }) => {
               ""
             )}
 
-            {filetype.substring(
+            {filetype?.substring(
               0,
               filetype.indexOf("/") === "application" ? (
                 <div className="post-img">
@@ -227,7 +259,7 @@ const PostBox = React.memo(({ item }) => {
           </div>
           {/* absolute */}
           <span className="post-description ">
-            {postState.isReadMore ? description : desc.substring(0, 100)}
+            {postState.isReadMore ? description : desc?.substring(0, 100)}
           </span>
           <span className="more-less">
             {postState.isReadMore ? "...less" : "...more"}
@@ -237,29 +269,35 @@ const PostBox = React.memo(({ item }) => {
         <div className="post-option">
           <div className="post-interaction">
             <AiFillHeart
-              className={postState.liked ? "icon red" : "icon"}
+              className={`${postState.liked ? "icon red" : "icon"} like-btn`}
               onClick={toggleLike}
             />
 
-            <FaComment className="icon" onClick={togglepostBar} />
+            <FaComment className="icon comment-btn" onClick={togglepostBar} />
             <FaShare className="icon" />
           </div>
 
-          {postState.bookmarked ? (
+          <Bookmark saved={item.saved} postid={item._id} />
+
+          {/* {postState.bookmarked ? (
             <BsFillBookmarkFill className="icon black" onClick={togglesave} />
           ) : (
             <BsBookmark className="icon" onClick={togglesave} />
-          )}
+          )} */}
         </div>
         <div className="like-count">{postState.likecount} likes</div>
 
         <div className="post-description">
-          <span className="username">{userid.username}</span>
+          <span className="username">{userid?.username}</span>
           <span className="post-desc ">
-            {postState.isReadMore ? description : description.substring(0, 100)}
+            {description?.substring(0, postState.isReadMore ? 600 : 100)}
           </span>
           <span className="more-less" onClick={toggleReadMore}>
-            {postState.isReadMore ? "...less" : "...more"}
+            {description?.split(" ").length > 9
+              ? postState.isReadMore
+                ? "...less"
+                : "...more"
+              : null}
           </span>
         </div>
         <span className="view-comments" onClick={toggleComment}>
@@ -267,9 +305,17 @@ const PostBox = React.memo(({ item }) => {
         </span>
       </div>
 
-      <div className={postState.isComment ? "" : "d-none"}></div>
+      <div className={postState.isComment ? "" : "d-none"}>
+        <Commentlst
+          loadComment={loadComment.current}
+          postID={item._id}
+          toggleCommentload={stopCommentload}
+        />
+      </div>
 
-      <div className={postState.isPost ? "" : "d-none"}></div>
+      <div className={postState.isPost ? "" : "d-none"}>
+        <PostComment startCommentload={startCommentload} postId={item._id} />
+      </div>
     </Wrapper>
   );
 });
