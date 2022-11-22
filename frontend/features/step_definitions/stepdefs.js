@@ -11,19 +11,20 @@ Given(
   }
 );
 When("I enter my fullname", async () => {
-  await driver
-    .findElement(By.xpath("//input[@placeholder='Enter Fullname']"))
-    .sendKeys("Test User");
+  let element = driver.wait(
+    until.elementLocated(By.xpath("//input[@placeholder='Enter Fullname']"))
+  );
+  element.sendKeys("Test User");
 });
 When("I enter my username", async () => {
-  await driver
-    .findElement(By.xpath("//input[@placeholder='Enter Username']"))
-    .sendKeys("TestUser122323");
+  let element = driver.wait(
+    until.elementLocated(By.xpath("//input[@placeholder='Enter Username']"))
+  );
+  element.sendKeys("TestUser122323");
 });
 When("I enter my email", async () => {
-  await driver
-    .findElement(By.name("email"))
-    .sendKeys("testuser122332@gmail.com");
+  let element = driver.wait(until.elementLocated(By.name("email")));
+  element.sendKeys("testuser122332@gmail.com");
 });
 When("I enter description", async () => {
   let descriptionBox = driver.wait(
@@ -56,7 +57,8 @@ When("I select applicant", async () => {
   candidate.click();
 });
 When("I enter my password", async () => {
-  await driver.findElement(By.name("password")).sendKeys("password");
+  let element = driver.wait(until.elementLocated(By.name("password")));
+  element.sendKeys("password");
 });
 When("I press submit", async () => {
   let submit = driver.wait(
