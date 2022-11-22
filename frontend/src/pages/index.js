@@ -8,6 +8,7 @@ import YourWorkPage from "./YourWorkPage/YourWorkPage";
 import JobDetail from "./JobDetail/JobDetail";
 import PostEditPage from "./PostEditPage/PostEditPage";
 import SharedLayout2 from "./SharedLayout2/SharedLayout2";
+import LandingPage from "./LandingPage/Landing";
 export {
   LoginPage,
   ProtectedRoute,
@@ -18,5 +19,6 @@ export {
   YourWorkPage,
   JobDetail,
   PostEditPage,
-  SharedLayout2
+  SharedLayout2,
+  LandingPage
 };
