@@ -1,26 +1,27 @@
-import React, { useState, useEffect, userRef } from "react";
+import React, { useState, useEffect,  } from "react";
 import Wrapper from "../wrapper/searchBar";
+import { useAppContext } from "../../../context/appContext";
 import { FaSearch } from "react-icons/fa";
-import { Link } from "react-router-dom";
 import { useRef } from "react";
+import {Link } from "react-router-dom";
 
 const SearchBar = () => {
   const [search, setSearch] = useState("");
+    const { searchProfile, searchList } = useAppContext();
   const showSearch = useRef(false);
 
-  // useEffect(() => {
-  //   if (search) {
-  //     showSearch.current = true;
-  //     const timoutId = setTimeout(() => {
-  //       searchProfile(`search?username=${search}`);
-  //     }, 2000);
+  useEffect(() => {
+    if (search) {
+      showSearch.current = true;
+      const timoutId = setTimeout(() => {
+        searchProfile(`search?username=${search}`);
+      }, 2000);
 
-  //     return () => clearTimeout(timoutId);
-  //   } else {
-  //     return () => (showSearch.current = false);
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [search]);
+      return () => clearTimeout(timoutId);
+    } else {
+      return () => (showSearch.current = false);
+    }
+  }, [search]);
 
   const onChange = (e) => {
     setSearch(e.target.value.toLowerCase().replace(/ /g, ""));
@@ -41,7 +42,7 @@ const SearchBar = () => {
       </div>
 
       <div className={showSearch.current ? "search_result" : "d-none"}>
-        {/* {searchList.map((item, index) => {
+        {searchList.map((item, index) => {
           return (
             <Link
               to={`/user/profile/${item._id}`}
@@ -61,7 +62,7 @@ const SearchBar = () => {
               </div>
             </Link>
           );
-        })} */}
+        })}
       </div>
     </Wrapper>
   );

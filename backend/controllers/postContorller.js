@@ -145,6 +145,13 @@ const postDetail = async (req, res) => {
   res.status(StatusCodes.OK).json({ post });
 };
 
+const explorePost = async (req, res) => {
+  const post = await Post.aggregate([{ $sample: { size: 27 } }]);
+
+  const posts = await Post.populate(post, { path: "userid" });
+  res.status(StatusCodes.OK).json({ posts });
+};
+
 const UpdatePost = async (req, res) => {
   const { id: postId } = req.params;
 
@@ -192,4 +199,5 @@ module.exports = {
   unsavePosts,
   postDetail,
   UpdatePost,
+  explorePost,
 };

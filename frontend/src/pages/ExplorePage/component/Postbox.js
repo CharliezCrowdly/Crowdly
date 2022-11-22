@@ -12,9 +12,12 @@ const Postbox = ({ postfile, filetype, index, openmodel }) => {
   };
   return (
     <div className="post-container">
-      <img className="post-img" src={postfile} alt="" />
-
-      {/* {filetype.substring(0, filetype.indexOf("/")) === "video" ? (
+      {filetype.substring(0, filetype.indexOf("/")) === "image" ? (
+        <img className="post-img" src={postfile} alt="" />
+      ) : (
+        ""
+      )}
+      {filetype.substring(0, filetype.indexOf("/")) === "video" ? (
         <div className="video-container">
           <FaPlay className="play-icon" />
 
@@ -32,7 +35,7 @@ const Postbox = ({ postfile, filetype, index, openmodel }) => {
         </div>
       ) : (
         ""
-      )} */}
+      )}
     </div>
   );
 };
