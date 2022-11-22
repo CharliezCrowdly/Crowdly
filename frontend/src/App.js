@@ -11,8 +11,8 @@ import {
   JobDetail,
   PostEditPage,
   SharedLayout2,
-  LandingPage
-
+  LandingPage,
+  ExplorePage,
 } from "./pages";
 
 function App() {
@@ -24,7 +24,7 @@ function App() {
           path="/"
           element={
             <ProtectedRoute>
-              <LandingPage/>
+              <LandingPage />
             </ProtectedRoute>
           }
         />
@@ -39,6 +39,7 @@ function App() {
         >
           <Route path="work" element={<YourWorkPage />} />
           <Route path="feeds" element={<FeedPage />} />
+          <Route path="explore" element={<ExplorePage />} />
         </Route>
         <Route
           path="/job"

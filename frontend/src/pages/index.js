@@ -9,6 +9,7 @@ import JobDetail from "./JobDetail/JobDetail";
 import PostEditPage from "./PostEditPage/PostEditPage";
 import SharedLayout2 from "./SharedLayout2/SharedLayout2";
 import LandingPage from "./LandingPage/Landing";
+import ExplorePage from "./ExplorePage/ExplorePage";
 export {
   LoginPage,
   ProtectedRoute,
@@ -20,5 +21,6 @@ export {
   JobDetail,
   PostEditPage,
   SharedLayout2,
-  LandingPage
+  LandingPage,
+  ExplorePage,
 };
