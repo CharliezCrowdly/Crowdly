@@ -17,6 +17,7 @@ const initialState = {
   email: "",
   profilePicture: null,
   password: "",
+  cpassword: "",
   isMember: false,
   location: "",
   usertype: null,
@@ -49,6 +50,7 @@ const LoginPage = () => {
       location,
       username,
       usertype,
+      cpassword
     } = values;
 
     const currentUser = {
@@ -59,9 +61,8 @@ const LoginPage = () => {
       profilePicture,
       username,
       usertype,
+      cpassword,
     };
-
-   
 
     if (isMember) {
       setupUser({
@@ -114,8 +115,10 @@ const LoginPage = () => {
           )}
           <UnderlineInput
             handleChange={handleChange}
-            placeholder={!values.isMember?"Enter Email":"Enter Email or Username"}
-            type={!values.isMember?"email":"text"}
+            placeholder={
+              !values.isMember ? "Enter Email" : "Enter Email or Username"
+            }
+            type={!values.isMember ? "email" : "text"}
             name={"email"}
           />
           {!values.isMember ? <SingleSelectInput setUser={setUser} /> : ""}
@@ -124,7 +127,15 @@ const LoginPage = () => {
             placeholder={"Enter Password"}
             type={"password"}
             name="password"
-          />{" "}
+          />
+          {!values.isMember ? (
+            <UnderlineInput
+              handleChange={handleChange}
+              placeholder={"Verify Password"}
+              type={"password"}
+              name="cpassword"
+            />
+          ) : null}
           {values.isMember ? (
             <p
               className="toggle-account"
@@ -147,7 +158,12 @@ const LoginPage = () => {
               Already have a account? <span>Login</span>{" "}
             </p>
           )}
-          <button data-testid="btn-submit"  type="submit" disabled={isLoading} className="btn-submit">
+          <button
+            data-testid="btn-submit"
+            type="submit"
+            disabled={isLoading}
+            className="btn-submit"
+          >
             Submit
           </button>
         </form>

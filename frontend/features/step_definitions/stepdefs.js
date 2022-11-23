@@ -38,7 +38,7 @@ When("I click files", async () => {
   let imageBox = driver.wait(
     until.elementLocated(By.xpath("//input[@name='postfile']"))
   );
-  imageBox.sendKeys("C:\\Users\\chira\\Downloads\\testimg.png");
+  imageBox.sendKeys("C:Users\\Dell\\Desktop\\testimg.jpg");
 });
 When("I press post", async () => {
   let sendBox = driver.wait(

@@ -129,7 +129,7 @@ const AppProvider = ({ children }) => {
   const setupUser = async ({ currentUser, endPoint, alertText }) => {
     dispatch({ type: SETUP_USER_BEGIN });
 
-    const { name, email, password, profilePicture, username, usertype } =
+    const { name, email, password, profilePicture, username, usertype,cpassword } =
       currentUser;
 
     let formData = new FormData();
@@ -141,6 +141,8 @@ const AppProvider = ({ children }) => {
     formData.append("email", email);
     formData.append("password", password);
     formData.append("profilePicture", profilePicture);
+    formData.append("cpassword",cpassword);
+
 
     try {
       const { data } = await axios.post(`/api/v1/auth/${endPoint}`, formData);

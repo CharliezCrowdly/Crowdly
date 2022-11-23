@@ -3,7 +3,6 @@ import Spline from "@splinetool/react-spline";
 
 import Wrapper from "./wrapper/Landing";
 
-
 import miles from "../../assets/images/miles.jpg";
 import wolverine from "../../assets/images/wolverine0.jpg";
 import ironfist from "../../assets/images/ironfist.jpg";
@@ -17,7 +16,6 @@ import cocacola from "../../assets/images/cocacola.webp";
 import ikea from "../../assets/images/ikea.webp";
 import samsung from "../../assets/images/samsung.webp";
 import fourf from "../../assets/images/4f.webp";
-
 
 import barcode from "../../assets/images/barcode.webp";
 
@@ -37,8 +35,8 @@ const LandingPage = () => {
           <ul className="d-flex navbar-link">
             <li>Get Started</li>
             <li className="logo">
-              <span className="circle-border">N</span>{" "}
-              <span>WINKLE'S MEDIA</span>
+              <span className="circle-border">C</span>{" "}
+              <span>Crowdly'S MEDIA</span>
             </li>
             <li>About</li>
           </ul>
