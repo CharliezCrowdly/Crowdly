@@ -23,8 +23,8 @@ it("Post /Register ==> 400 if all value is not provided ", () => {
     });
 });
 
-it("Post /Register ==> 400 if email already in use ", () => {
-  return request(app)
+it("Post /Register ==> 400 if email already in use ", async () => {
+  const response = await request(app)
     .post("/api/v1/auth/register")
     .send({
       name: "JohnDoe",
@@ -34,18 +34,16 @@ it("Post /Register ==> 400 if email already in use ", () => {
       username: "JohnDwwoe",
       password: "neymar123",
     })
-    .expect(400)
-    .then((response) => {
-      expect(response.body).toEqual(
-        expect.objectContaining({
-          msg: "Email already in use",
-        })
-      );
-    });
+    .expect(400);
+  expect(response.body).toEqual(
+    expect.objectContaining({
+      msg: "Email already in use",
+    })
+  );
 });
 
-it("Post /Register ==> 400 if Username already in use ", () => {
-  return request(app)
+it("Post /Register ==> 400 if Username already in use ", async () => {
+  const response = await request(app)
     .post("/api/v1/auth/register")
     .send({
       name: "JohnDoe",
@@ -55,14 +53,12 @@ it("Post /Register ==> 400 if Username already in use ", () => {
       username: "JohnDoe",
       password: "neymar123",
     })
-    .expect(400)
-    .then((response) => {
-      expect(response.body).toEqual(
-        expect.objectContaining({
-          msg: "Username already in use",
-        })
-      );
-    });
+    .expect(400);
+  expect(response.body).toEqual(
+    expect.objectContaining({
+      msg: "Username already in use",
+    })
+  );
 });
 
 
