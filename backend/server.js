@@ -20,6 +20,7 @@ const authRouter = require("./routes/authRoute");
 const postRouter = require("./routes/postRoute");
 const commentRouter = require("./routes/commentRoute");
 const profileRouter = require("./routes/profileRoute");
+const todoRouter = require("./routes/todoRoute");
 
 // middleware import
 const errorHandlerMiddleware = require("./middleware/error-handler");
@@ -42,6 +43,7 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/posts", authenticateUser, postRouter);
 app.use("/api/v1/comment", authenticateUser, commentRouter);
 app.use("/api/v1/profile", authenticateUser, profileRouter);
+app.use("/api/v1/todo", authenticateUser, todoRouter);
 
 
 app.use(errorHandlerMiddleware);
