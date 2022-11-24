@@ -4,14 +4,17 @@ const TodoSchema = new mongoose.Schema(
   {
     tasktype: {
       type: String,
-      required: true,
+      default: "pending",
     },
 
     text: {
       type: String,
       default: null,
     },
-   
+    userid: {
+      type: mongoose.Types.ObjectId,
+      ref: "User",
+    },
   },
   {
     timestamps: true,
