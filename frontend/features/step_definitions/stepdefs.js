@@ -10,6 +10,10 @@ Given(
     await driver.get("http://localhost:3000/login");
   }
 );
+When("I visit explore page", { timeout: 1000 * 1000 }, async () => {
+  await driver.get("http://localhost:3000/user/explore");
+});
+
 When("I enter my fullname", async () => {
   let element = driver.wait(
     until.elementLocated(By.xpath("//input[@placeholder='Enter Fullname']"))
@@ -158,6 +162,25 @@ Then("the todo should be added", function () {
   );
   todo.getText().then((text) => {
     if (text === "Automated Test Todo") {
+      console.log(text);
+      return true;
+    } else {
+      console.log("Fail");
+      return false;
+    }
+  });
+});
+Then("I should be able to see other posts", function () {
+  // driver.quit();
+  let searchPost = driver.wait(
+    until.elementLocated(
+      By.xpath(
+        "//div[@class='search-container glassmorphism']//button[@class='btn-post'][normalize-space()='post']"
+      )
+    )
+  );
+  searchPost.getText().then((text) => {
+    if (text === "post") {
       console.log(text);
       return true;
     } else {
