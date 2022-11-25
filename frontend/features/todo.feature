@@ -1,0 +1,11 @@
+Feature: Add a Todo
+  Is a todo added successfully?
+  Scenario: Like a post
+    Given I visit Crowdly Registration Page
+    When I press login now
+    When I enter my email
+    When I enter my password
+    When I press login
+    When I Press enter todo
+    When I Press add
+    Then the todo should be added
