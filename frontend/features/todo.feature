@@ -6,6 +6,6 @@ Feature: Add a Todo
     When I enter my email
     When I enter my password
     When I press login
-    When I Press enter todo
+    When I enter todo
     When I Press add
     Then the todo should be added

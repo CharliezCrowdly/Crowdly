@@ -97,11 +97,23 @@ When("I enter comment", async () => {
   );
   comment.sendKeys("This is a comment test");
 });
+When("I enter todo", async () => {
+  let comment = driver.wait(
+    until.elementLocated(By.xpath("//input[@placeholder='Enter note']"))
+  );
+  comment.sendKeys("Automated Test Todo");
+});
 When("I Press post", async () => {
   let postBtn = driver.wait(
     until.elementLocated(
       By.xpath("(//button[@type='submit'][normalize-space()='post'])[1]")
     )
+  );
+  postBtn.click();
+});
+When("I Press add", async () => {
+  let postBtn = driver.wait(
+    until.elementLocated(By.xpath("//h4[normalize-space()='+']"))
   );
   postBtn.click();
 });
@@ -136,5 +148,22 @@ Then("The post should be commented", function () {
 Then("the post should be uploaded", function () {
   // driver.quit();
   return "Uploaded";
+});
+Then("the todo should be added", function () {
+  // driver.quit();
+  let todo = driver.wait(
+    until.elementLocated(
+      By.xpath("//span[normalize-space()='Automated Test Todo']")
+    )
+  );
+  todo.getText().then((text) => {
+    if (text === "Automated Test Todo") {
+      console.log(text);
+      return true;
+    } else {
+      console.log("Fail");
+      return false;
+    }
+  });
 });
 //
