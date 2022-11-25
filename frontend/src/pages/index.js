@@ -10,6 +10,8 @@ import PostEditPage from "./PostEditPage/PostEditPage";
 import SharedLayout2 from "./SharedLayout2/SharedLayout2";
 import LandingPage from "./LandingPage/Landing";
 import ExplorePage from "./ExplorePage/ExplorePage";
+import MessagePage from "./MessagePage/MessagePage"
+import SharedLayout3 from "./SharedLayouts3/SharedLayout3";
 export {
   LoginPage,
   ProtectedRoute,
@@ -23,4 +25,6 @@ export {
   SharedLayout2,
   LandingPage,
   ExplorePage,
+  MessagePage,
+  SharedLayout3
 };

@@ -13,6 +13,8 @@ import {
   SharedLayout2,
   LandingPage,
   ExplorePage,
+  MessagePage,
+  SharedLayout3
 } from "./pages";
 
 function App() {
@@ -41,6 +43,17 @@ function App() {
           <Route path="feeds" element={<FeedPage />} />
           <Route path="explore" element={<ExplorePage />} />
         </Route>
+        <Route
+          path="/user"
+          element={
+            <ProtectedRoute>
+              <SharedLayout3 />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="message" element={<MessagePage />} />
+        </Route>
+        
         <Route
           path="/job"
           element={
