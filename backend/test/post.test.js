@@ -3,7 +3,7 @@ const request = require("supertest");
 // const file = require("../public/uploads/download.jpg");
 
 const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzZhMzYwYWYxY2RjNTFjYjM3OTc5MmIiLCJpYXQiOjE2NjkwOTM0MTMsImV4cCI6MTY2OTE3OTgxM30.sQYm0oNc0IAU4F7yR0SqXZBMD44UAX1ZJe4JvBJhumA";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzZhMzYwYWYxY2RjNTFjYjM3OTc5MmIiLCJpYXQiOjE2NjkzNjI3MTUsImV4cCI6MTY2OTQ0OTExNX0.NorytCfr0S4op760jasrH2a3joHmAesEemFGCGLy3tE";
 
 it("Post / upload ===> 400 on missing input", () => {
   return request(app)
