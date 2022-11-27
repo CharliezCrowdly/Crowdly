@@ -2,25 +2,5 @@
   "cucumber-quick": {
     "tool": "cucumberjs",
     "script": "npx cucumber-js frontend/features/**/*.feature --require frontend/features/**/*.js"
-  },
-  "workbench.colorCustomizations": {
-    "activityBar.activeBackground": "#64fcf0",
-    "activityBar.background": "#64fcf0",
-    "activityBar.foreground": "#15202b",
-    "activityBar.inactiveForeground": "#15202b99",
-    "activityBarBadge.background": "#f063fc",
-    "activityBarBadge.foreground": "#15202b",
-    "commandCenter.border": "#15202b99",
-    "sash.hoverBorder": "#64fcf0",
-    "statusBar.background": "#32fbeb",
-    "statusBar.foreground": "#15202b",
-    "statusBarItem.hoverBackground": "#05f5e2",
-    "statusBarItem.remoteBackground": "#32fbeb",
-    "statusBarItem.remoteForeground": "#15202b",
-    "titleBar.activeBackground": "#32fbeb",
-    "titleBar.activeForeground": "#15202b",
-    "titleBar.inactiveBackground": "#32fbeb99",
-    "titleBar.inactiveForeground": "#15202b99"
-  },
-  "peacock.color": "#32fbeb"
+  }
 }
