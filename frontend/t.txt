@@ -1,0 +1,11 @@
+
+node .\node_modules\@cucumber\cucumber\bin\cucumber.js .\features\login.feature
+node .\node_modules\@cucumber\cucumber\bin\cucumber.js .\features\comment.feature
+node .\node_modules\@cucumber\cucumber\bin\cucumber.js .\features\like.feature
+node .\node_modules\@cucumber\cucumber\bin\cucumber.js .\features\post.feature
+node .\node_modules\@cucumber\cucumber\bin\cucumber.js .\features\register.feature
+
+
+
+
+

@@ -10,8 +10,11 @@ import {
   YourWorkPage,
   JobDetail,
   PostEditPage,
-  SharedLayout2
-
+  SharedLayout2,
+  LandingPage,
+  ExplorePage,
+  MessagePage,
+  SharedLayout3
 } from "./pages";
 
 function App() {
@@ -23,7 +26,7 @@ function App() {
           path="/"
           element={
             <ProtectedRoute>
-              <h1>landing page</h1>
+              <LandingPage />
             </ProtectedRoute>
           }
         />
@@ -38,7 +41,19 @@ function App() {
         >
           <Route path="work" element={<YourWorkPage />} />
           <Route path="feeds" element={<FeedPage />} />
+          <Route path="explore" element={<ExplorePage />} />
         </Route>
+        <Route
+          path="/user"
+          element={
+            <ProtectedRoute>
+              <SharedLayout3 />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="message" element={<MessagePage />} />
+        </Route>
+        
         <Route
           path="/job"
           element={

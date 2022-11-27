@@ -4,21 +4,26 @@ const User = require("../models/user");
 const { BAD_REQUESTError, UnAuthenticatedError } = require("../errors/index");
 
 const register = async (req, res) => {
-  const { name, email, password, username, usertype } = req.body;
+  const { name, email, password, username, usertype, cpassword } = req.body;
 
   if (!name || !username || !email || !password || !usertype) {
     throw new BAD_REQUESTError("please provide all the values");
   }
+  var isNumber = /[0-9]/.test(name);
 
-  if(name.length < 4){
+  if(isNumber){
+    throw new BAD_REQUESTError("Name can't contain number");
+
+  }
+
+
+  if (name.length < 4) {
     throw new BAD_REQUESTError("Name is too short");
-
   }
 
   if (password.length < 4) {
     throw new BAD_REQUESTError("Password is too short");
   }
-
 
   const userAlreadyExists = await User.findOne({ email });
   if (userAlreadyExists) {
@@ -29,6 +34,10 @@ const register = async (req, res) => {
   if (usernameAlreadyExists) {
     throw new BAD_REQUESTError("Username already in use");
   }
+
+   if (password !== cpassword) {
+     throw new BAD_REQUESTError("confrim password fail");
+   }
 
   if (req.files) {
     const profilePath = req.files.profilePicture;
@@ -89,7 +98,6 @@ const register = async (req, res) => {
   }
 };
 
-
 const login = async (req, res) => {
   const { email, password } = req.body;
 
@@ -115,7 +123,4 @@ const login = async (req, res) => {
   res.status(StatusCodes.OK).json({ user, token, location: user.location });
 };
 
-
-
-
-module.exports = { register ,login };
+module.exports = { register, login };

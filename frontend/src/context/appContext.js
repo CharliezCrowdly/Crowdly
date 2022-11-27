@@ -17,6 +17,9 @@ import {
   CREATE_POST_ERROR,
   GET_POSTS_BEGIN,
   GET_POSTS_SUCCESS,
+  GET_EXPLORE_ERROR,
+  GET_EXPLORE_BEGIN,
+  GET_EXPLORE_SUCCESS,
   GET_POSTS_ERROR,
   CREATE_COMMENT_BEGIN,
   CREATE_COMMENT_SUCCESS,
@@ -27,6 +30,7 @@ import {
   UPDATE_POST_BEGIN,
   UPDATE_POST_ERROR,
   UPDATE_POST_SUCCESS,
+  SEARCH_SUCCESS
 } from "./action";
 
 import axios from "axios";
@@ -125,7 +129,7 @@ const AppProvider = ({ children }) => {
   const setupUser = async ({ currentUser, endPoint, alertText }) => {
     dispatch({ type: SETUP_USER_BEGIN });
 
-    const { name, email, password, profilePicture, username, usertype } =
+    const { name, email, password, profilePicture, username, usertype,cpassword } =
       currentUser;
 
     let formData = new FormData();
@@ -137,6 +141,8 @@ const AppProvider = ({ children }) => {
     formData.append("email", email);
     formData.append("password", password);
     formData.append("profilePicture", profilePicture);
+    formData.append("cpassword",cpassword);
+
 
     try {
       const { data } = await axios.post(`/api/v1/auth/${endPoint}`, formData);
@@ -328,6 +334,34 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+   const searchProfile = async (url) => {
+     try {
+       const res = await authFetch.get(`/profile/${url}`);
+       const { users } = res.data;
+
+       dispatch({ type: SEARCH_SUCCESS, payload: { users } });
+     } catch (e) {
+       console.log(e);
+     }
+   };
+
+   const explorePage = async () => {
+     dispatch({ type: GET_EXPLORE_BEGIN });
+
+     try {
+       const { data } = await authFetch.get("/posts/explorepost");
+       const { posts } = data;
+       dispatch({
+         type: GET_EXPLORE_SUCCESS,
+         payload: { posts },
+       });
+     } catch (e) {
+       dispatch({
+         type: GET_EXPLORE_ERROR,
+       });
+     }
+   };
+
   const toggleSidebar = () => {
     dispatch({ type: TOGGLE_SIDEBAR });
   };
@@ -348,12 +382,16 @@ const AppProvider = ({ children }) => {
         unsavepost,
         getpostdetail,
         updatePost,
+        explorePage,
+        searchProfile,
       }}
     >
       {children}
     </AppContext.Provider>
   );
 };
+
+
 
 const useAppContext = () => {
   return useContext(AppContext);

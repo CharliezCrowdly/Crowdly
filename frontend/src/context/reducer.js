@@ -14,6 +14,10 @@ import {
   CREATE_POST_SUCCESS,
   CREATE_POST_ERROR,
   GET_POSTS_BEGIN,
+  GET_EXPLORE_BEGIN,
+  GET_EXPLORE_SUCCESS,
+  GET_EXPLORE_ERROR,
+  SEARCH_SUCCESS,
   GET_POSTS_SUCCESS,
   GET_POSTS_ERROR,
   CREATE_COMMENT_BEGIN,
@@ -25,6 +29,7 @@ import {
   UPDATE_POST_BEGIN,
   UPDATE_POST_SUCCESS,
   UPDATE_POST_ERROR,
+  
 } from "./action";
 import { initialState } from "./appContext";
 
@@ -183,6 +188,13 @@ const reducer = (state, action) => {
     };
   }
 
+  if (action.type === SEARCH_SUCCESS) {
+    return {
+      ...state,
+      searchList: action.payload.users,
+    };
+  }
+
   if (action.type === GET_POST_BEGIN) {
     return {
       ...state,
@@ -226,6 +238,21 @@ const reducer = (state, action) => {
       alertType: "danger",
       alertText: action.payload.msg,
     };
+  }
+
+  if (action.type === GET_EXPLORE_BEGIN) {
+    return { ...state, isLoading: true };
+  }
+  if (action.type === GET_EXPLORE_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      explorelst: action.payload.posts,
+    };
+  }
+
+  if (action.type === GET_EXPLORE_ERROR) {
+    return { ...state, isLoading: false };
   }
 
   throw new Error(`no such action: ${action.type}`);

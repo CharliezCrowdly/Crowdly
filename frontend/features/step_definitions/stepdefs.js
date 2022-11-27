@@ -10,20 +10,25 @@ Given(
     await driver.get("http://localhost:3000/login");
   }
 );
+When("I visit explore page", { timeout: 1000 * 1000 }, async () => {
+  await driver.get("http://localhost:3000/user/explore");
+});
+
 When("I enter my fullname", async () => {
-  await driver
-    .findElement(By.xpath("//input[@placeholder='Enter Fullname']"))
-    .sendKeys("Test User");
+  let element = driver.wait(
+    until.elementLocated(By.xpath("//input[@placeholder='Enter Fullname']"))
+  );
+  element.sendKeys("Test User");
 });
 When("I enter my username", async () => {
-  await driver
-    .findElement(By.xpath("//input[@placeholder='Enter Username']"))
-    .sendKeys("TestUser122323");
+  let element = driver.wait(
+    until.elementLocated(By.xpath("//input[@placeholder='Enter Username']"))
+  );
+  element.sendKeys("TestUser122323");
 });
 When("I enter my email", async () => {
-  await driver
-    .findElement(By.name("email"))
-    .sendKeys("testuser122332@gmail.com");
+  let element = driver.wait(until.elementLocated(By.name("email")));
+  element.sendKeys("testuser122332@gmail.com");
 });
 When("I enter description", async () => {
   let descriptionBox = driver.wait(
@@ -37,7 +42,7 @@ When("I click files", async () => {
   let imageBox = driver.wait(
     until.elementLocated(By.xpath("//input[@name='postfile']"))
   );
-  imageBox.sendKeys("C:\\Users\\chira\\Downloads\\testimg.png");
+  imageBox.sendKeys("C:Users\\Dell\\Desktop\\testimg.jpg");
 });
 When("I press post", async () => {
   let sendBox = driver.wait(
@@ -56,7 +61,8 @@ When("I select applicant", async () => {
   candidate.click();
 });
 When("I enter my password", async () => {
-  await driver.findElement(By.name("password")).sendKeys("password");
+  let element = driver.wait(until.elementLocated(By.name("password")));
+  element.sendKeys("password");
 });
 When("I press submit", async () => {
   let submit = driver.wait(
@@ -95,11 +101,23 @@ When("I enter comment", async () => {
   );
   comment.sendKeys("This is a comment test");
 });
+When("I enter todo", async () => {
+  let comment = driver.wait(
+    until.elementLocated(By.xpath("//input[@placeholder='Enter note']"))
+  );
+  comment.sendKeys("Automated Test Todo");
+});
 When("I Press post", async () => {
   let postBtn = driver.wait(
     until.elementLocated(
       By.xpath("(//button[@type='submit'][normalize-space()='post'])[1]")
     )
+  );
+  postBtn.click();
+});
+When("I Press add", async () => {
+  let postBtn = driver.wait(
+    until.elementLocated(By.xpath("//h4[normalize-space()='+']"))
   );
   postBtn.click();
 });
@@ -134,5 +152,41 @@ Then("The post should be commented", function () {
 Then("the post should be uploaded", function () {
   // driver.quit();
   return "Uploaded";
+});
+Then("the todo should be added", function () {
+  // driver.quit();
+  let todo = driver.wait(
+    until.elementLocated(
+      By.xpath("//span[normalize-space()='Automated Test Todo']")
+    )
+  );
+  todo.getText().then((text) => {
+    if (text === "Automated Test Todo") {
+      console.log(text);
+      return true;
+    } else {
+      console.log("Fail");
+      return false;
+    }
+  });
+});
+Then("I should be able to see other posts", function () {
+  // driver.quit();
+  let searchPost = driver.wait(
+    until.elementLocated(
+      By.xpath(
+        "//div[@class='search-container glassmorphism']//button[@class='btn-post'][normalize-space()='post']"
+      )
+    )
+  );
+  searchPost.getText().then((text) => {
+    if (text === "post") {
+      console.log(text);
+      return true;
+    } else {
+      console.log("Fail");
+      return false;
+    }
+  });
 });
 //
