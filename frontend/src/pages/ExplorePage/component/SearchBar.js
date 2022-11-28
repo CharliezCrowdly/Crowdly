@@ -17,7 +17,7 @@ const SearchBar = () => {
 
       const timoutId = setTimeout(() => {
         searchProfile(`search?username=${search}`);
-      }, 2000);
+      }, 1000);
 
       return () => clearTimeout(timoutId);
     } else {
@@ -40,7 +40,7 @@ const SearchBar = () => {
           className="searchbar"
           onChange={onChange}
         />
-        <button className="btn-post">post</button>
+        <button className="btn-post">search</button>
       </div>
 
       <div

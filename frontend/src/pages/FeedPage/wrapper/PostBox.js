@@ -13,7 +13,7 @@ const Wrapper = styled.div`
     padding-inline: max(25px, 4%);
     padding-block: 2.5%;
     border-radius: 25px;
-    width: 460px;
+    max-width: 560px;
 
     align-content: stretch;
 
@@ -91,7 +91,7 @@ const Wrapper = styled.div`
 
       & > .post-image-section {
         & > .post-img {
-          width: 408px;
+          width: 100%;
           height: 472px;
           border-radius: 25px;
           object-fit: cover;

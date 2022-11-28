@@ -43,7 +43,7 @@ const Wrapper = styled.aside`
     margin-top: 25px;
 
     & > .left-content {
-      width: 25%;
+      width: 30%;
      
     }
     & > .middle-content {
