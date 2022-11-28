@@ -14,7 +14,7 @@ import {
   LandingPage,
   ExplorePage,
   MessagePage,
-  SharedLayout3
+  SharedLayout3,
 } from "./pages";
 
 function App() {
@@ -22,14 +22,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="login" element={<LoginPage />} />
-        <Route
-          path="/"
-          element={
-            <ProtectedRoute>
-              <LandingPage />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/" element={<LandingPage />} />
 
         <Route
           path="/user"
@@ -53,7 +46,7 @@ function App() {
         >
           <Route path="message" element={<MessagePage />} />
         </Route>
-        
+
         <Route
           path="/job"
           element={
