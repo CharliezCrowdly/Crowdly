@@ -15,7 +15,6 @@ module.exports.addJob = async (req, res, next) => {
       requirements,
       responsibilities,
       closeTime,
-      company,
       sector,
     } = req.body;
     const job = new Job({
@@ -26,7 +25,7 @@ module.exports.addJob = async (req, res, next) => {
       requirements: requirements,
       responsibilities: responsibilities,
       //   closeDate: closeTime,
-      company: company,
+      company: req.user.userId,
       sector: sector,
     });
     job.save().then((result) => {
@@ -44,40 +43,10 @@ module.exports.addJob = async (req, res, next) => {
   }
 };
 
-module.exports.getCompanyJobs = async (req, res, next) => {
-  try {
-    Company.findById(req.query.user)
-      .select("jobs")
-      .then((result) => {
-        const jobArray = result["jobs"];
-        Job.find({ _id: { $in: jobArray } })
-          .then((result) => {
-            return res.json({
-              success: true,
-              data: result,
-            });
-          })
-          .catch((err) => {
-            return res.json({
-              success: false,
-              msg: err,
-            });
-          });
-      });
-  } catch (error) {
-    return res.json({
-      success: false,
-      error: error,
-      msg: error,
-    });
-  }
-};
-
 module.exports.getAllJobs = async (req, res, next) => {
   try {
     Job.find()
       .populate("company")
-      .populate("sector")
       .then((result) => {
         return res.json({
           success: true,
@@ -86,7 +55,6 @@ module.exports.getAllJobs = async (req, res, next) => {
       })
       .catch((err) => {
         console.log(err);
-
         return res.json({
           success: false,
           msg: err,
@@ -97,22 +65,6 @@ module.exports.getAllJobs = async (req, res, next) => {
     return res.json({
       success: false,
       error: error,
-      msg: error,
-    });
-  }
-};
-
-module.exports.getJobsForSpecificSector = async (req, res, next) => {
-  try {
-    const jobs = await Job.find({ sector: req.query.sector });
-    return res.json({
-      success: true,
-      data: jobs,
-    });
-  } catch (error) {
-    console.log(error);
-    return res.json({
-      success: false,
       msg: error,
     });
   }
@@ -358,68 +310,3 @@ module.exports.getSavedJobs = asyncHandler(async (req, res, next) => {
     res.status(200).send(jobs);
   }
 });
-
-module.exports.getAppliedJobsApp = asyncHandler(async (req, res, next) => {
-  const usr = await req.user._id;
-  var jobs = await userModel
-    .findById(usr)
-    .select("appliedJobs")
-    .populate({
-      path: "appliedJobs.job",
-      populate: {
-        path: "company",
-      },
-    });
-
-  if (!jobs) {
-    return res.status(400).json({ success: false });
-  } else {
-    return res.status(200).json({ data: jobs, success: true });
-  }
-});
-
-module.exports.editJob = async (req, res, next) => {
-  try {
-    const {
-      title,
-      about,
-      sallary,
-      description,
-      skills,
-      requirements,
-      responsibilities,
-      closeTime,
-      _id,
-    } = req.body;
-
-    const job = await Job.findById(_id);
-
-    await job.updateOne({
-      title: title,
-      about: about,
-      sallary: sallary,
-      description: description,
-      skills: skills,
-      requirements: requirements,
-      responsibilities: responsibilities,
-      closeDate: closeTime,
-    });
-    job.save();
-
-    const updatedJob = await Job.findById(_id);
-    console.log("updatedJob");
-    console.log(updatedJob);
-    return res.status(200).json({
-      success: true,
-      data: updatedJob,
-      msg: "The Job was updated successfully",
-    });
-  } catch (error) {
-    console.log(error);
-    return res.status(400).json({
-      success: false,
-      error: error,
-      msg: "Something went wrong",
-    });
-  }
-};

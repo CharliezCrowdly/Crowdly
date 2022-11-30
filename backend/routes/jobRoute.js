@@ -1,6 +1,5 @@
 const {
   addJob,
-  getCompanyJobs,
   getAllJobs,
   getJobsForSpecificSector,
   getJob,
@@ -17,14 +16,14 @@ const {
 
 const router = require("express").Router();
 
+router.get("/getCompanyJobs", getAllJobs);
 router.post("/addJob", addJob);
-//   router.get("/getCompanyJobs", getCompanyJobs);
+router.get("/getJob", getJob);
 //   router.get("/getCompanyJobDetail", getCompanyJobDetail);
 //   router.route("/getCompanyJobDetailApp").get(protect, getCompanyJobDetailApp);
 // router.get("/getCompanyJobDetailApp", getCompanyJobDetailApp);
 //   router.get("/getAllJobs", getAllJobs);
 //   router.get("/getSectorJob", getJobsForSpecificSector);
-//   router.get("/getJob", getJob);
 //   router.post("/updateJobStatus", updateJobStatus);
 
 //   router.route("/savedJobs").get(protect, getSavedJobs);

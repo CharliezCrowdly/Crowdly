@@ -45,7 +45,7 @@ app.use("/api/v1/posts", authenticateUser, postRouter);
 app.use("/api/v1/comment", authenticateUser, commentRouter);
 app.use("/api/v1/profile", authenticateUser, profileRouter);
 app.use("/api/v1/todo", authenticateUser, todoRouter);
-app.use("/api/v1/job", jobRouter);
+app.use("/api/v1/job", authenticateUser, jobRouter);
 
 app.use(errorHandlerMiddleware);
 
