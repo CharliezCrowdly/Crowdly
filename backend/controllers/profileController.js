@@ -1,15 +1,10 @@
-const Post = require( "../models/Post");
-const User = require( "../models/user");
+const Post = require("../models/Post");
+const User = require("../models/UserModel");
 
 const { BAD_REQUESTError } = require("../errors/index");
 const { StatusCodes } = require("http-status-codes");
 
-
-const path = require( "path");
-
-
-
-
+const path = require("path");
 
 const searchProfile = async (req, res) => {
   const users = await User.find({ username: { $regex: req.query.username } })
@@ -23,10 +18,6 @@ const searchProfile = async (req, res) => {
   res.status(StatusCodes.OK).json({ users });
 };
 
-
-
 module.exports = {
-  
   searchProfile,
-
 };

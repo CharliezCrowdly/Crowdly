@@ -1,5 +1,5 @@
 const Post = require("../models/Post");
-const User = require("../models/user");
+const User = require("../models/UserModel");
 
 const { BAD_REQUESTError } = require("../errors/index");
 const { StatusCodes } = require("http-status-codes");

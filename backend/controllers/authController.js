@@ -1,5 +1,5 @@
 const { StatusCodes } = require("http-status-codes");
-const User = require("../models/user");
+const User = require("../models/UserModel");
 
 const { BAD_REQUESTError, UnAuthenticatedError } = require("../errors/index");
 
@@ -11,11 +11,9 @@ const register = async (req, res) => {
   }
   var isNumber = /[0-9]/.test(name);
 
-  if(isNumber){
+  if (isNumber) {
     throw new BAD_REQUESTError("Name can't contain number");
-
   }
-
 
   if (name.length < 4) {
     throw new BAD_REQUESTError("Name is too short");
@@ -35,9 +33,9 @@ const register = async (req, res) => {
     throw new BAD_REQUESTError("Username already in use");
   }
 
-   if (password !== cpassword) {
-     throw new BAD_REQUESTError("confrim password fail");
-   }
+  if (password !== cpassword) {
+    throw new BAD_REQUESTError("confrim password fail");
+  }
 
   if (req.files) {
     const profilePath = req.files.profilePicture;
