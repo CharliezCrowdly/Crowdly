@@ -40,13 +40,7 @@ const SearchContainer = () => {
             />
           </div>
           <div className="sort-by">
-            <DropdownInput
-              labelText={"Sort"}
-              name="searchType"
-              value={searchType}
-              handleChange={handleSearch}
-              list={["all", ...jobTypeOptions]}
-            />
+            <button>GG</button>
           </div>
         </div>
       </div>
