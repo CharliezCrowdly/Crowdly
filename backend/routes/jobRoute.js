@@ -15,8 +15,7 @@ const {
 // const { protect } = require("../middleware/authMiddleware");
 
 const router = require("express").Router();
-
-router.get("/getCompanyJobs", getAllJobs);
+router.get("/getAllJobs", getAllJobs);
 router.post("/addJob", addJob);
 router.get("/getJob", getJob);
 //   router.get("/getCompanyJobDetail", getCompanyJobDetail);

@@ -5,7 +5,8 @@ import { RiMoneyDollarCircleFill } from "react-icons/ri";
 import Wrapper from "../wrappers/JobBox";
 import { useNavigate } from "react-router-dom";
 
-const JobBox = () => {
+const JobBox = (job) => {
+  
   const navigate = useNavigate();
   return (
     <Wrapper>
@@ -20,8 +21,8 @@ const JobBox = () => {
               alt=""
             />
             <div className="jobfield">
-              <span className="jobname">Junior Ui/ UX Developer</span>
-              <p className="companyname">company name</p>
+              <span className="jobname">{job.job.title}</span>
+              <p className="companyname">{job.job.company.name}</p>
             </div>
           </div>
           <div className="savejob">
@@ -32,15 +33,11 @@ const JobBox = () => {
 
         {/* body */}
 
-        <div className="jobdetail">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id eligendi
-          adipisci ab doloremque consequatur, quam ipsum temporibus natus,
-          voluptate vitae, explicabo cupiditate!
-        </div>
+        <div className="jobdetail">{job.job.description}</div>
 
         <div className="jobtype">
           <p className="fulltime bluebox">FullTime</p>
-          <p className="jobfield bluebox">IT</p>
+          <p className="jobfield bluebox">{job.job.sector}</p>
           <p className="jobfield bluebox">Remote</p>
         </div>
         {/* footer */}
@@ -50,7 +47,7 @@ const JobBox = () => {
             <div className="jobprice">
               <RiMoneyDollarCircleFill className="blue-icon" />
               <p className="price">
-                $12k - 14K <span className="light-text">/Month</span>
+                ${job.job.sallary} <span className="light-text">/Month</span>
               </p>
             </div>
             <div className="jobLocation">
@@ -59,7 +56,10 @@ const JobBox = () => {
             </div>
           </div>
 
-          <button className="btn-apply" onClick={()=>navigate("/job/jobdetail")}>
+          <button
+            className="btn-apply"
+            onClick={() => navigate("/job/jobdetail")}
+          >
             Learn More
           </button>
         </div>
