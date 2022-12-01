@@ -11,7 +11,7 @@ const jobSchema = new mongoose.Schema({
     type: String,
     required: true,
     enum: [
-      "Information Technology",
+      "IT",
       "Finance",
       "Entertainment",
       "Health",
