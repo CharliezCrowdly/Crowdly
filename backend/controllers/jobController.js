@@ -24,7 +24,7 @@ module.exports.addJob = async (req, res, next) => {
       skills: skills,
       requirements: requirements,
       responsibilities: responsibilities,
-      //   closeDate: closeTime,
+      closeDate: closeTime,
       company: req.user.userId,
       sector: sector,
     });

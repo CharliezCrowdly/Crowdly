@@ -10,7 +10,16 @@ const jobSchema = new mongoose.Schema({
   sector: {
     type: String,
     required: true,
-    enum: ["IT", "Finance", "Health", "Education", "Engineering", "Others"],
+    enum: [
+      "Information Technology",
+      "Finance",
+      "Entertainment",
+      "Health",
+      "Education",
+      "Real Estate",
+      "Engineering",
+      "Others",
+    ],
     // type: String,
   },
   skills: [

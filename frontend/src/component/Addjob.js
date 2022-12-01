@@ -2,15 +2,18 @@ import AddButton from "@material-ui/icons/Add";
 import RemoveButton from "@material-ui/icons/Remove";
 import { IconButton, MenuItem, TextField } from "@mui/material";
 import React, { useState } from "react";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
 import DateTimePicker from "react-datetime-picker";
-import {AiFillCloseCircle} from "react-icons/ai";
+import { AiFillCloseCircle } from "react-icons/ai";
 import "./style.css";
+import axios from "axios";
+import { toast } from "react-toastify";
+
+var skills = [];
+var requirements = [];
+var responsibilities = [];
 
 // const job = {
 //   title: "",
-//   about: "",
 //   sallary: "",
 //   description: "",
 //   sector: "",
@@ -45,10 +48,17 @@ const sectors = [
   },
 ];
 
-export const Addjob = ({closemodal}) => {
+export const Addjob = ({ closemodal }) => {
+  const toastOptions = {
+    position: "bottom-right",
+    autoClose: 8000,
+    pauseOnHover: true,
+    draggable: true,
+    theme: "dark",
+  };
+
   const [addJob, setAddJob] = useState({
     title: "",
-    about: "",
     sallary: "",
     description: "",
     sector: "",
@@ -148,7 +158,6 @@ export const Addjob = ({closemodal}) => {
   const validateInputedData = () => {
     if (
       addJob.title === "" ||
-      addJob.about === "" ||
       addJob.sallary === "" ||
       addJob.description === "" ||
       skills.length === 0 ||
@@ -165,33 +174,49 @@ export const Addjob = ({closemodal}) => {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const token = localStorage.getItem("token");
+    console.log(token);
+
     extractSkills();
     extractRequirements();
     extractResponsibilities();
     const title = addJob.title;
-    const about = addJob.about;
     const sallary = addJob.sallary;
     const description = addJob.description;
     const closeTime = addJob.closeTime;
     const sector = addJob.sector;
     if (validateInputedData()) {
-      const response = await axios.post(addNewJob, {
+      console.log(
         title,
-        about,
         sallary,
         description,
         skills,
         requirements,
         responsibilities,
         closeTime,
-        company,
-        sector,
-      });
+        sector
+      );
+      const response = await axios.post(
+        "http://localhost:5000/api/v1/job/addJob",
+        {
+          title,
+          sallary,
+          description,
+          skills,
+          requirements,
+          responsibilities,
+          closeTime,
+          sector,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       if (response.data.success) {
         toast.success(response.data.msg, toastOptions);
         setAddJob({
           title: "",
-          about: "",
+
           sallary: "",
           description: "",
           sector: "",
@@ -389,25 +414,7 @@ export const Addjob = ({closemodal}) => {
             );
           })}
         </div>
-        <div>
-          <h4 style={{ marginBottom: 0, color: "#ccc" }} className="mb-2">
-            About this Job
-          </h4>
-          <TextField
-            required
-            id="outlined-multiline-flexible1"
-            label="About This Job"
-            name="about"
-            multiline
-            minRows={6}
-            style={{ width: "100%" }}
-            value={addJob.about}
-            onChange={handleJobInput}
-            InputLabelProps={{
-              style: { color: "black", borderColor: "#fff" },
-            }}
-          />
-        </div>
+
         <div>
           <h4 style={{ marginBottom: 0, color: "#ccc" }} className="mb-2">
             Describe this Job
@@ -437,7 +444,7 @@ export const Addjob = ({closemodal}) => {
           Create
         </button>
       </form>
-        <AiFillCloseCircle className="icon-close" onClick={closemodal}/>
+      <AiFillCloseCircle className="icon-close" onClick={closemodal} />
     </div>
   );
 };
