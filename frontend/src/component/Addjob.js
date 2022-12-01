@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import DateTimePicker from "react-datetime-picker";
-
+import {AiFillCloseCircle} from "react-icons/ai";
 import "./style.css";
 
 // const job = {
@@ -45,7 +45,7 @@ const sectors = [
   },
 ];
 
-export const Addjob = () => {
+export const Addjob = ({closemodal}) => {
   const [addJob, setAddJob] = useState({
     title: "",
     about: "",
@@ -210,227 +210,234 @@ export const Addjob = () => {
   };
 
   return (
-    <form>
-      <div className="ModalHead d-flex justify-content-center align-items-center">
-        <h1 style={{ color: "white" }}>Create a New Job</h1>
-      </div>
-
-      <div>
-        <h4 style={{ marginBottom: 0, color: "#ccc" }} className="mb-2">
-          Basic Information
-        </h4>
-        <TextField
-          required
-          id="outlined-multiline-flexible1"
-          label="Job Title"
-          name="title"
-          style={{
-            width: "100%",
-            marginBottom: "1rem",
-            borderColor: "#fff !important",
-          }}
-          value={addJob.title}
-          onChange={handleJobInput}
-          InputLabelProps={{
-            style: {
-              color: "#fff",
-              borderColor: "#fff",
-            },
-          }}
-        />
-        <TextField
-          type="number"
-          required
-          id="outlined-multiline-flexible1"
-          label="Sallary"
-          name="sallary"
-          style={{ width: "100%", marginBottom: "1rem" }}
-          value={addJob.sallary}
-          onChange={handleJobInput}
-          InputLabelProps={{
-            style: {
-              color: "#fff",
-              borderColor: "#fff",
-            },
-          }}
-        />
-        <TextField
-          id="outlined-select-type"
-          select
-          label="Job Sector"
-          name="sector"
-          value={addJob.sector}
-          onChange={handleJobInput}
-          variant="outlined"
-          style={{ width: "100%" }}
-          size="small"
-          InputLabelProps={{
-            style: {
-              color: "#fff",
-              borderColor: "#fff",
-            },
-          }}
-        >
-          {sectors.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </TextField>
+    <div className="form-containerss glassmorphism">
+      <form className="glassmorphism">
+        <div className="ModalHead d-flex justify-content-center align-items-center">
+          <h1 style={{ color: "black" }}>Create a New Job</h1>
+        </div>
         <div>
           <h4 style={{ marginBottom: 0, color: "#ccc" }} className="mb-2">
-            Expires On:
+            Basic Information
           </h4>
-          <DateTimePicker
-            onChange={handleDateInput}
-            value={addJob.closeTime}
-            name="closeTime"
-            style={{ width: "100%" }}
-            minDate={new Date()}
+          <TextField
+            required
+            id="outlined-multiline-flexible1"
+            label="Job Title"
+            name="title"
+            style={{
+              width: "100%",
+              marginBottom: "1rem",
+              borderColor: "#fff !important",
+            }}
+            value={addJob.title}
+            onChange={handleJobInput}
+            InputLabelProps={{
+              style: {
+                color: "black",
+                borderColor: "#fff",
+              },
+            }}
           />
+          <TextField
+            type="number"
+            required
+            id="outlined-multiline-flexible1"
+            label="Sallary"
+            name="sallary"
+            style={{ width: "100%", marginBottom: "1rem" }}
+            value={addJob.sallary}
+            onChange={handleJobInput}
+            InputLabelProps={{
+              style: {
+                color: "black",
+                borderColor: "#fff",
+              },
+            }}
+          />
+          <TextField
+            id="outlined-select-type"
+            select
+            label="Job Sector"
+            name="sector"
+            value={addJob.sector}
+            onChange={handleJobInput}
+            variant="outlined"
+            style={{ width: "100%" }}
+            size="small"
+            InputLabelProps={{
+              style: {
+                color: "#fff",
+                borderColor: "#fff",
+              },
+            }}
+          >
+            {sectors.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
+          <div>
+            <h4 style={{ marginBottom: 0, color: "#ccc" }} className="mb-2">
+              Expires On:
+            </h4>
+            <DateTimePicker
+              onChange={handleDateInput}
+              value={addJob.closeTime}
+              name="closeTime"
+              style={{ width: "100%" }}
+              minDate={new Date()}
+            />
+          </div>
         </div>
-      </div>
-      <div>
-        <h4 style={{ marginBottom: 0, color: "#ccc" }} className="mb-2">
-          Skills Required
-        </h4>
-        <div className="mb-2">
-          {/* <Skill style={{ background: "#0dcaf0" }}>Python</Skill> */}
-          {addJob.skillSet.map((skills, index) => {
+        <div>
+          <h4 style={{ marginBottom: 0, color: "#ccc" }} className="mb-2">
+            Skills Required
+          </h4>
+          <div className="mb-2">
+            {/* <Skill style={{ background: "#0dcaf0" }}>Python</Skill> */}
+            {addJob.skillSet.map((skills, index) => {
+              return (
+                <div style={{ display: "flex", marginBottom: "1rem" }}>
+                  <TextField
+                    required
+                    size="small"
+                    name="skill"
+                    label="Skill"
+                    value={skills.skill}
+                    onChange={(e) => {
+                      handleOnSkillChange(e, index);
+                    }}
+                    style={{ width: "90%", textTransform: "capitalize" }}
+                    InputLabelProps={{
+                      style: { color: "black" },
+                    }}
+                    sx={{ input: { color: "orange !important" } }}
+                  />
+                  <IconButton onClick={() => handleRemoveSkill(index)}>
+                    <RemoveButton style={{ color: "orange" }} />
+                  </IconButton>
+                  <IconButton onClick={handleAddSkill}>
+                    <AddButton style={{ color: "orange" }} />
+                  </IconButton>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+        <div>
+          <h4 style={{ marginBottom: 0, color: "#ccc" }} className="mb-2">
+            Job Requirements
+          </h4>
+          {addJob.requirementsSet.map((requirements, index) => {
             return (
               <div style={{ display: "flex", marginBottom: "1rem" }}>
                 <TextField
                   required
                   size="small"
-                  name="skill"
-                  label="Skill"
-                  value={skills.skill}
+                  name="requirement"
+                  label="requirement"
+                  value={requirements.requirement}
                   onChange={(e) => {
-                    handleOnSkillChange(e, index);
+                    handleOnRequirementChange(e, index);
                   }}
                   style={{ width: "90%", textTransform: "capitalize" }}
                   InputLabelProps={{
-                    style: { color: "#fff" },
+                    style: { color: "black" },
                   }}
                   sx={{ input: { color: "orange !important" } }}
                 />
-                <IconButton onClick={() => handleRemoveSkill(index)}>
+                <IconButton onClick={() => handleRemoveRequirement(index)}>
                   <RemoveButton style={{ color: "orange" }} />
                 </IconButton>
-                <IconButton onClick={handleAddSkill}>
+                <IconButton onClick={handleAddRequirement}>
                   <AddButton style={{ color: "orange" }} />
                 </IconButton>
               </div>
             );
           })}
         </div>
-      </div>
-      <div>
-        <h4 style={{ marginBottom: 0, color: "#ccc" }} className="mb-2">
-          Job Requirements
-        </h4>
-        {addJob.requirementsSet.map((requirements, index) => {
-          return (
-            <div style={{ display: "flex", marginBottom: "1rem" }}>
-              <TextField
-                required
-                size="small"
-                name="requirement"
-                label="requirement"
-                value={requirements.requirement}
-                onChange={(e) => {
-                  handleOnRequirementChange(e, index);
-                }}
-                style={{ width: "90%", textTransform: "capitalize" }}
-                InputLabelProps={{
-                  style: { color: "#fff" },
-                }}
-                sx={{ input: { color: "orange !important" } }}
-              />
-              <IconButton onClick={() => handleRemoveRequirement(index)}>
-                <RemoveButton style={{ color: "orange" }} />
-              </IconButton>
-              <IconButton onClick={handleAddRequirement}>
-                <AddButton style={{ color: "orange" }} />
-              </IconButton>
-            </div>
-          );
-        })}
-      </div>
-      <div>
-        <h4 style={{ marginBottom: 0, color: "#ccc" }} className="mb-2">
-          Job Responsibilities
-        </h4>
-        {addJob.responsibilitiesSet.map((responsibilities, index) => {
-          return (
-            <div style={{ display: "flex", marginBottom: "1rem" }}>
-              <TextField
-                required
-                size="small"
-                name="responsibility"
-                label="responsibility"
-                value={responsibilities.responsibility}
-                onChange={(e) => {
-                  handleOnResponsibilityChange(e, index);
-                }}
-                style={{ width: "90%", textTransform: "capitalize" }}
-                InputLabelProps={{
-                  style: { color: "#fff" },
-                }}
-                sx={{ input: { color: "orange !important" } }}
-              />
-              <IconButton onClick={() => handleRemoveResponsibility(index)}>
-                <RemoveButton style={{ color: "orange" }} />
-              </IconButton>
-              <IconButton onClick={handleAddResponsibility}>
-                <AddButton style={{ color: "orange" }} />
-              </IconButton>
-            </div>
-          );
-        })}
-      </div>
-      <div>
-        <h4 style={{ marginBottom: 0, color: "#ccc" }} className="mb-2">
-          About this Job
-        </h4>
-        <TextField
-          required
-          id="outlined-multiline-flexible1"
-          label="About This Job"
-          name="about"
-          multiline
-          minRows={6}
-          style={{ width: "100%" }}
-          value={addJob.about}
-          onChange={handleJobInput}
-          InputLabelProps={{
-            style: { color: "#fff", borderColor: "#fff" },
-          }}
-        />
-      </div>
-      <div>
-        <h4 style={{ marginBottom: 0, color: "#ccc" }} className="mb-2">
-          Describe this Job
-        </h4>
-        <TextField
-          required
-          id="outlined-multiline-flexible1"
-          label="Describe this Job"
-          name="description"
-          multiline
-          minRows={6}
-          style={{ width: "100%" }}
-          value={addJob.description}
-          onChange={handleJobInput}
-          InputLabelProps={{
-            style: { color: "#fff", borderColor: "#fff" },
-          }}
-        />
-      </div>
-
-      <Button variant="success" onClick={handleSubmit} size="md" type="submit">
-        Create
-      </Button>
-    </form>
+        <div>
+          <h4 style={{ marginBottom: 0, color: "#ccc" }} className="mb-2">
+            Job Responsibilities
+          </h4>
+          {addJob.responsibilitiesSet.map((responsibilities, index) => {
+            return (
+              <div style={{ display: "flex", marginBottom: "1rem" }}>
+                <TextField
+                  required
+                  size="small"
+                  name="responsibility"
+                  label="responsibility"
+                  value={responsibilities.responsibility}
+                  onChange={(e) => {
+                    handleOnResponsibilityChange(e, index);
+                  }}
+                  style={{ width: "90%", textTransform: "capitalize" }}
+                  InputLabelProps={{
+                    style: { color: "black" },
+                  }}
+                  sx={{ input: { color: "orange !important" } }}
+                />
+                <IconButton onClick={() => handleRemoveResponsibility(index)}>
+                  <RemoveButton style={{ color: "orange" }} />
+                </IconButton>
+                <IconButton onClick={handleAddResponsibility}>
+                  <AddButton style={{ color: "orange" }} />
+                </IconButton>
+              </div>
+            );
+          })}
+        </div>
+        <div>
+          <h4 style={{ marginBottom: 0, color: "#ccc" }} className="mb-2">
+            About this Job
+          </h4>
+          <TextField
+            required
+            id="outlined-multiline-flexible1"
+            label="About This Job"
+            name="about"
+            multiline
+            minRows={6}
+            style={{ width: "100%" }}
+            value={addJob.about}
+            onChange={handleJobInput}
+            InputLabelProps={{
+              style: { color: "black", borderColor: "#fff" },
+            }}
+          />
+        </div>
+        <div>
+          <h4 style={{ marginBottom: 0, color: "#ccc" }} className="mb-2">
+            Describe this Job
+          </h4>
+          <TextField
+            required
+            id="outlined-multiline-flexible1"
+            label="Describe this Job"
+            name="description"
+            multiline
+            minRows={6}
+            style={{ width: "100%" }}
+            value={addJob.description}
+            onChange={handleJobInput}
+            InputLabelProps={{
+              style: { color: "black", borderColor: "#fff" },
+            }}
+          />
+        </div>
+        <button
+          variant="success"
+          onClick={handleSubmit}
+          size="md"
+          type="submit"
+          className="btn btn-success"
+        >
+          Create
+        </button>
+      </form>
+        <AiFillCloseCircle className="icon-close" onClick={closemodal}/>
+    </div>
   );
 };

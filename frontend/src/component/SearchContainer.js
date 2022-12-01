@@ -1,31 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import { BiSearch } from "react-icons/bi";
-import  DropdownInput  from "./DropdownInput";
+import DropdownInput from "./DropdownInput";
 import Wrapper from "../wrappers/SearchContainer";
 import { useAppContext } from "../context/appContext";
 
 
-
 const SearchContainer = () => {
-    const {
-      isLoading,
-     
-      searchType,
-     
-      jobTypeOptions,
-      handleChange,
-      clearFilters,
-    } = useAppContext();
+  const {
+    isLoading,
 
+    searchType,
 
-    const handleSearch = (e) => {
-      if (isLoading) return;
-      handleChange({ name: e.target.name, value: e.target.value });
-    };
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      clearFilters();
-    };
+    jobTypeOptions,
+    handleChange,
+    clearFilters,
+  } = useAppContext();
+
+  const handleSearch = (e) => {
+    if (isLoading) return;
+    handleChange({ name: e.target.name, value: e.target.value });
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    clearFilters();
+  };
+
   return (
     <Wrapper>
       <div className="search-container glassmorphism">
@@ -40,7 +39,7 @@ const SearchContainer = () => {
             />
           </div>
           <div className="sort-by">
-            <button>GG</button>
+            <button onClick={() => setShow(true)}>search</button>
           </div>
         </div>
       </div>
