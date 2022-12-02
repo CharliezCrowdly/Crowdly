@@ -8,16 +8,47 @@ import { RiMoneyDollarCircleLine } from "react-icons/ri";
 import { BsBookmarkFill, BsThreeDots } from "react-icons/bs";
 import { AiTwotoneEdit, AiTwotoneDelete } from "react-icons/ai";
 import Todo from "./component/Todo";
-import {Recommendation} from "../../component"
+import { Recommendation } from "../../component";
 import lstrecommendation from "../../utils/lstrecommendation";
+import axios from "axios";
+import { useAppContext } from "../../context/appContext";
 const JobDetail = () => {
   const { requirement, company } = joblists;
   const [isReadmore, setReadmore] = useState(false);
   const [save, setSave] = useState(false);
   const [dropdown, setDropdown] = useState(false);
   const [ismodal, setModal] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [job, setJob] = useState("");
+  const { token } = useAppContext();
+
+  //get job id from params and fetch job detail
+  const fetch = async () => {
+    const id = window.location.pathname.split("/")[3];
+
+    await axios
+      .get(
+        `http://localhost:5000/api/v1/job/getJob/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+        {
+          params: {
+            id: id,
+          },
+        }
+      )
+      .then((res) => {
+        setJob(res.data.data);
+        setLoading(false);
+        console.log(res.data.data);
+      });
+  };
+
   useEffect(() => {
-    console.log(requirement);
+    fetch();
   }, []);
 
   const onsave = () => {
@@ -28,9 +59,9 @@ const JobDetail = () => {
     }
   };
 
-    const onbid = () => {
-      setModal((ismodal) => !ismodal);
-    };
+  const onbid = () => {
+    setModal((ismodal) => !ismodal);
+  };
 
   return (
     <Wrapper className="">
@@ -38,7 +69,11 @@ const JobDetail = () => {
       <div className="left-section glassmorphism">
         <section className="one">
           <div className="title">
-            <h1>Data Analyst / Reports / SQL Developer</h1>
+            {loading ? (
+              <h1>Data Analyst / Reports / SQL Developer</h1>
+            ) : (
+              <h1>{job.title}</h1>
+            )}
             <div className="dropdown">
               <BsThreeDots
                 onClick={() => setDropdown((dropdown) => !dropdown)}
@@ -68,7 +103,11 @@ const JobDetail = () => {
           </div>
           <div className="jobtype">
             <RiMoneyDollarCircleLine className="icon" />
-            <span>10000 - 15000 /Month</span>
+            {loading ? (
+              <span>Rs. 50000 - 100000</span>
+            ) : (
+              <span>Rs. {job.sallary}</span>
+            )}
           </div>
           <div className="recommend">
             <img
@@ -79,7 +118,9 @@ const JobDetail = () => {
             <span>Your profile match this job</span>
           </div>
           <div className="buttons">
-            <button className="btn-easy" onClick={onbid}>Bid</button>
+            <button className="btn-easy" onClick={onbid}>
+              Bid
+            </button>
             <button className="btn-save" onClick={onsave}>
               {save ? (
                 "Save"
@@ -92,28 +133,44 @@ const JobDetail = () => {
           </div>
         </section>
         <section className="two">
-          <p className="description">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis
-            doloremque fugiat, qui fugit ab accusamus, nobis tempora hic
-            asperiores sit ad quisquam!s
-          </p>
+          {loading ? (
+            <p className="description">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis
+              doloremque fugiat, qui fugit ab accusamus, nobis tempora hic
+              asperiores sit ad quisquam!s
+            </p>
+          ) : (
+            <p className="description">{job.description}</p>
+          )}
           <div className="responsiblity">
             <h3>Responsiblity</h3>
-            {requirement.map((item) => {
-              return <li key={item.id}>{item.content}</li>;
-            })}
+            {loading
+              ? requirement.map((item) => {
+                  return <li key={item.id}>{item.content}</li>;
+                })
+              : job.requirements.map((item) => {
+                  return <li key={item.id}>{item}</li>;
+                })}
           </div>
           <div className="responsiblity">
             <h3>Requirement</h3>
-            {requirement.map((item) => {
-              return <li key={item.id}>{item.content}</li>;
-            })}
+            {loading
+              ? requirement.map((item) => {
+                  return <li key={item.id}>{item.content}</li>;
+                })
+              : job.responsibilities.map((item) => {
+                  return <li key={item.id}>{item}</li>;
+                })}
           </div>
           <div className="responsiblity">
-            <h3>Benefit</h3>
-            {requirement.map((item) => {
-              return <li key={item.id}>{item.content}</li>;
-            })}
+            <h3>Skills Required</h3>
+            {loading
+              ? requirement.map((item) => {
+                  return <li key={item.id}>{item.content}</li>;
+                })
+              : job.skills.map((item) => {
+                  return <li key={item.id}>{item}</li>;
+                })}
           </div>
         </section>
         <div className="three">

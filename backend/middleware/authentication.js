@@ -8,6 +8,8 @@ const auth = async (req, res, next) => {
     throw new UnAuthenticatedError("Authentication invalid");
   }
   const token = authHeader.split(" ")[1];
+  console.log("Url: " + req.originalUrl);
+  console.log("Token: " + token);
 
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);

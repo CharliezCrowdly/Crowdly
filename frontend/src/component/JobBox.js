@@ -6,7 +6,6 @@ import Wrapper from "../wrappers/JobBox";
 import { useNavigate } from "react-router-dom";
 
 const JobBox = (job) => {
-  
   const navigate = useNavigate();
   return (
     <Wrapper>
@@ -58,7 +57,7 @@ const JobBox = (job) => {
 
           <button
             className="btn-apply"
-            onClick={() => navigate("/job/jobdetail")}
+            onClick={() => navigate(`/job/jobdetail/${job.job._id}`)}
           >
             Learn More
           </button>

@@ -24,7 +24,7 @@ function App() {
       <Routes>
         <Route path="login" element={<LoginPage />} />
         <Route path="/" element={<LandingPage />} />
-        <Route path="add" element={<Addjob/>} />
+        <Route path="add" element={<Addjob />} />
         <Route
           path="/user"
           element={
@@ -56,7 +56,7 @@ function App() {
             </ProtectedRoute>
           }
         >
-          <Route path="jobDetail" element={<JobDetail />} />
+          <Route path="jobDetail/:id" element={<JobDetail />} />
         </Route>
 
         <Route

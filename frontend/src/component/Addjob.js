@@ -175,7 +175,6 @@ export const Addjob = ({ closemodal }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const token = localStorage.getItem("token");
-    console.log(token);
 
     extractSkills();
     extractRequirements();

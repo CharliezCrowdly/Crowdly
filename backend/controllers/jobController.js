@@ -72,7 +72,8 @@ module.exports.getAllJobs = async (req, res, next) => {
 
 module.exports.getJob = async (req, res, next) => {
   try {
-    const job = await Job.findById(req.query.id).populate("company");
+    // console.log(req);
+    const job = await Job.findById(req.params.id).populate("company");
     return res.json({
       success: true,
       data: job,
@@ -310,3 +311,32 @@ module.exports.getSavedJobs = asyncHandler(async (req, res, next) => {
     res.status(200).send(jobs);
   }
 });
+
+module.exports.getCompanyJobs = async (req, res, next) => {
+  try {
+    Company.findById(req.query.user)
+      .select("jobs")
+      .then((result) => {
+        const jobArray = result["jobs"];
+        Job.find({ _id: { $in: jobArray } })
+          .then((result) => {
+            return res.json({
+              success: true,
+              data: result,
+            });
+          })
+          .catch((err) => {
+            return res.json({
+              success: false,
+              msg: err,
+            });
+          });
+      });
+  } catch (error) {
+    return res.json({
+      success: false,
+      error: error,
+      msg: error,
+    });
+  }
+};
