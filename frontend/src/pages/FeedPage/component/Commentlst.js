@@ -43,7 +43,7 @@ const Commentlst = React.memo(({ loadComment, postID, toggleCommentload }) => {
 
      
 
-      <div className="comments-section glassmorphism">
+      <div className="comments-section ">
         {comments.map((item) => {
           return <Comment item={item} key={item._id} />;
         })}

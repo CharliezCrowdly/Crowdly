@@ -4,10 +4,10 @@ const Wrapper = styled.div`
   .comment-lst {
     display: flex;
     justify-content: space-between;
-    width: 457px;
+    width: 100%;
     gap: 2%;
-    padding: 2%;
     align-items: center;
+    margin-bottom: 4px;
 
     & > .comment-header {
       display: flex;

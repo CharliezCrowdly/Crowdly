@@ -17,7 +17,7 @@ const PostBox = React.memo(({ item }) => {
   const { user, likepost, unlikepost, savepost, unsavepost } = useAppContext();
 
   const loadComment = useRef(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const stopCommentload = () => {
     loadComment.current = false;
@@ -189,7 +189,10 @@ const PostBox = React.memo(({ item }) => {
                   postState.isoption ? "edit-option glassmorphism" : "d-none"
                 }
               >
-                <AiFillEdit className="icon" onClick={()=>navigate(`/crowdly/postedit/${_id}`)} />
+                <AiFillEdit
+                  className="icon"
+                  onClick={() => navigate(`/crowdly/postedit/${_id}`)}
+                />
                 <MdDelete className="icon" onClick={deletePost} />
               </div>
             </div>
@@ -303,18 +306,17 @@ const PostBox = React.memo(({ item }) => {
         <span className="view-comments" onClick={toggleComment}>
           {postState.isComment ? "close all comments" : "view all comments"}
         </span>
-      </div>
+        <div className={postState.isComment ? "" : "d-none"}>
+          <Commentlst
+            loadComment={loadComment.current}
+            postID={item._id}
+            toggleCommentload={stopCommentload}
+          />
+        </div>
 
-      <div className={postState.isComment ? "" : "d-none"}>
-        <Commentlst
-          loadComment={loadComment.current}
-          postID={item._id}
-          toggleCommentload={stopCommentload}
-        />
-      </div>
-
-      <div className={postState.isPost ? "" : "d-none"}>
-        <PostComment startCommentload={startCommentload} postId={item._id} />
+        <div className={postState.isPost ? "" : "d-none"}>
+          <PostComment startCommentload={startCommentload} postId={item._id} />
+        </div>
       </div>
     </Wrapper>
   );
