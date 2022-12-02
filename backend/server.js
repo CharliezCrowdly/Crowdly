@@ -7,14 +7,20 @@ const http = require("http");
 
 const path = require("path");
 
+// const fileUpload = require("express-fileupload");
+
 const morgan = require("morgan");
 
 const connectDB = require("./db/connect");
-const fileUpload = require("express-fileupload");
+
 const authenticateUser = require("./middleware/authentication");
+const busboyBodyParser = require("busboy-body-parser");
+app.use(busboyBodyParser());
 
 const cors = require("cors");
-
+var bodyParser = require("body-parser");
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 //routes import
 const authRouter = require("./routes/authRoute");
 const postRouter = require("./routes/postRoute");
@@ -32,12 +38,20 @@ if (process.env.NODE_ENV !== "production") {
 //middleware
 
 app.use(cors());
+// app.use(fileUpload());
+var busboy = require("connect-busboy");
+//...
+app.use(busboy());
 
 app.use(express.static("./public"));
 
 app.use(express.json());
+// parse application/x-www-form-urlencoded
+// app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(fileUpload());
+// parse application/json
+// app.use(bodyParser.json());
+
 //routes
 
 app.use("/api/v1/auth", authRouter);

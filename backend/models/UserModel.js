@@ -69,6 +69,36 @@ const UserSchema = new mongoose.Schema({
     default: "/assest/sakura.gif",
   },
 
+  appliedJobs: [
+    {
+      job: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Job",
+      },
+      appliedDate: {
+        type: Date,
+        default: Date.now,
+      },
+      status: {
+        type: String,
+        default: "Under-Review",
+      },
+    },
+  ],
+
+  savedJobs: [
+    {
+      job: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Job",
+      },
+      savedDate: {
+        type: Date,
+        default: Date.now,
+      },
+    },
+  ],
+
   location: {
     type: String,
     trim: true,

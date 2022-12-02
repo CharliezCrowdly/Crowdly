@@ -4,6 +4,27 @@ const Job = require("../models/Job");
 const userModel = require("../models/UserModel");
 const util = require("util");
 const asyncHandler = require("express-async-handler");
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+  destination: "./uploads/files/proposals",
+  filename: (req, file, cb) => {
+    cb(null, `${file.fieldname}-${Date.now()}${file.originalname}`);
+  },
+});
+
+const uploadProposal = multer({
+  storage: storage,
+  fileFilter: (req, file, cb) => {
+    if (!file.originalname.match(/\.(pdf|docx)$/i)) {
+      return cb(new Error("Please upload an document"));
+    }
+    cb(null, true);
+  },
+  limits: {
+    fileSize: 10024 * 1024 * 5,
+  },
+});
 
 module.exports.addJob = async (req, res, next) => {
   try {
@@ -88,64 +109,70 @@ module.exports.getJob = async (req, res, next) => {
 };
 
 module.exports.applyForJob = async (req, res, next) => {
-  try {
-    // var appliedJobId = req.body.params.job;
-    const { job } = req.body;
-    // try {
-    //   const { job } = req.body.params;
-    //   appliedJobId = job;
-    // } catch (error) {}
-
-    // try {
-    //   const { job } = req.body;
-    //   appliedJobId = job;
-    // } catch (error) {}
-    // console.log(appliedJobId);
-
-    const user = req.user._id;
-    const appliedJob = await Job.findById(job);
-
-    const appliedUser = await userModel.findById(user);
-
-    if (appliedJob.applicants) {
-      const isApplyable = verifyNewApplicant(appliedJob, user);
-      console.log("Status: ");
-      console.log(isApplyable);
-      if (!isApplyable) {
-        console.log("Already Applied");
-
-        return res.status(500).json({
-          success: false,
-          msg: "You have already applied for this job",
-        });
-      } else {
-        console.log("Not Applied Yet");
-        appliedJob.applicants.push({
-          applicant: user,
-          status: "New",
-          appliedDate: new Date(),
-        });
-        appliedUser.appliedJobs.push({
-          job: appliedJob,
-          status: "New",
-          appliedDate: new Date(),
-        });
-        appliedJob.save();
-        appliedUser.save();
-        console.log("Successfully Applied");
-        return res.status(200).json({
-          success: true,
-          msg: "You have applied for this job",
-        });
-      }
+  // const { jobId } = req.body;
+  console.log(req.body);
+  // console.log(req.files);
+  uploadProposal.single("proposal")(req, res, async (err) => {
+    if (err) {
+      console.log(err);
     }
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({
-      success: false,
-      msg: error,
-    });
-  }
+  });
+
+  // try {
+  //   const job = jobId;
+  //   console.log(req.body);
+
+  //   const user = req.user._id;
+  //   const appliedJob = await Job.findById(job);
+
+  //   const appliedUser = await userModel.findById(user);
+
+  //   console.log(req.body);
+
+  //   const isApplyable = verifyNewApplicant(appliedJob, user);
+  //   console.log("Status: ");
+  //   console.log(isApplyable);
+  //   if (!isApplyable) {
+  //     console.log("Already Applied");
+
+  //     return res.status(500).json({
+  //       success: false,
+  //       msg: "You have already applied for this job",
+  //     });
+  //   } else {
+  //     console.log("Not Applied Yet");
+
+  uploadProposal.single("proposal")(req, res, async (err) => {
+    //       const proposal = req.file.path;
+    //       console.log(appliedJob);
+    //       appliedJob.applicants.push({
+    //         applicant: user,
+    //         status: "New",
+    //         appliedDate: new Date(),
+    //         proposal: proposal,
+    //         bid: req.body.bid,
+    //       });
+    //       appliedUser.appliedJobs.push({
+    //         job: appliedJob,
+    //         status: "New",
+    //         appliedDate: new Date(),
+    //       });
+    //       appliedJob.save();
+    //       appliedUser.save();
+    //       console.log("Successfully Applied");
+    //       return res.status(200).json({
+    //         success: true,
+    //         msg: "You have applied for this job",
+    //       });
+  });
+  //   }
+  // } catch (error) {
+  //   console.log(error);
+  //   return res.status(500).json({
+  //     success: false,
+  //     msg: error,
+  //   });
+  // }
 };
 
 const verifyNewApplicant = (appliedJob, user) => {

@@ -18,6 +18,7 @@ const router = require("express").Router();
 router.get("/getAllJobs", getAllJobs);
 router.post("/addJob", addJob);
 router.get("/getJob/:id", getJob);
+router.post("/applyForJob", applyForJob);
 //   router.get("/getCompanyJobDetail", getCompanyJobDetail);
 //   router.route("/getCompanyJobDetailApp").get(protect, getCompanyJobDetailApp);
 // router.get("/getCompanyJobDetailApp", getCompanyJobDetailApp);
