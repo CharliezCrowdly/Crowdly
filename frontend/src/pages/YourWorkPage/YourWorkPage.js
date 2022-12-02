@@ -26,11 +26,14 @@ const YourWorkPage = () => {
     jobtype: [],
     experiencelvl: [],
     category: [],
-    wage: "100",
+    wage: "",
   });
 
-  const listfilter = (name, value) => {
-    setsearch({ ...search, [name]: value });
+  const categoryfilter = (name) => {
+    var newsearch = search.category;
+    newsearch.push(name);
+
+    setsearch({ ...search, category: newsearch });
   };
 
   const fetch = async () => {
@@ -77,6 +80,14 @@ const YourWorkPage = () => {
       });
     }
 
+    if (search.category.length > 0) {
+      console.log("cate");
+
+      filterlist = filterlist.filter((item) => {
+        return search.category.includes(item.sector);
+      });
+    }
+
     if (search.wage) {
       console.log(search.wage);
       filterlist = filterlist.filter(
@@ -87,8 +98,6 @@ const YourWorkPage = () => {
   };
 
   const handleChange = (e) => {
-    search.category
-    
     setsearch({ ...search, [e.target.name]: e.target.value });
   };
 
@@ -112,7 +121,10 @@ const YourWorkPage = () => {
         </div>
 
         <div className="right-container">
-          <FilterContent handleChange={handleChange} listfilter={listfilter} />
+          <FilterContent
+            handleChange={handleChange}
+            categoryfilter={categoryfilter}
+          />
         </div>
       </div>
     </Wrapper>
