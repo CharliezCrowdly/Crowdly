@@ -20,6 +20,7 @@ const Wrapper = styled.aside`
         & > .jobfield {
           display: flex;
           flex-direction: column;
+          white-space: nowrap;
           & > .jobname {
             white-space: nowrap;
             color: var(--black-800);
@@ -56,7 +57,8 @@ const Wrapper = styled.aside`
         padding-block: 1%;
         padding-inline: 1%;
         text-align: center;
-        width: 20%;
+        width: max-content;
+        min-width: 20%;
         border-radius: 10px;
         color: var(--black-650);
         font-weight: 500;

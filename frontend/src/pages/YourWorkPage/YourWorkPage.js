@@ -1,4 +1,4 @@
-import React from "react";
+import React ,{ useEffect, useState } from "react";
 import { FilterContent, SearchContainer, } from "../../component";
 import Wrapper from "./wrapper/YourWorkPage";
 import JobLists from "./components/JobLists"
@@ -16,12 +16,35 @@ import axios from "axios";
 
 // const result = axios.request(options).then((res) => console.log(res.data));
 const YourWorkPage = () => {
+  const [joblists, setJobs] = useState("");
+  const [loading, setLoading] = useState(true);
+  const fetch = async () => {
+    const token = localStorage.getItem("token");
+    await axios
+      .get(`/api/v1/job/getAllJobs/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setJobs(res.data.data);
+        setLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    fetch();
+  }, []);
+
+  if(loading){
+    return <div></div>
+  }
   return (
     <Wrapper>
       <div className="YourWorkPage">
         <div className="middle-container">
-          <SearchContainer />
-          <JobLists />
+          <SearchContainer  />
+          <JobLists joblists = {joblists} />
         </div>
 
         <div className="right-container">
