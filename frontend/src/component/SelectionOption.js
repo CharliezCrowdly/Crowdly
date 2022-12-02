@@ -159,6 +159,7 @@ const SelectionOption = ({ categoryfilter }) => {
                     onClick={(e) => {
                       e.stopPropagation();
                       selectOption(v);
+                      categoryfilter(v.label);
                     }}
                   >
                     {v.label} <span className="btn-remove">&times;</span>

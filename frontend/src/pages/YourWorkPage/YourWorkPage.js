@@ -31,10 +31,16 @@ const YourWorkPage = () => {
 
   const categoryfilter = (name) => {
     var newsearch = search.category;
-    newsearch.push(name);
+    if (newsearch.includes(name)) {
+      newsearch.pop(name);
+    } else {
+      newsearch.push(name);
+    }
 
     setsearch({ ...search, category: newsearch });
   };
+
+  const removecategory = (name) => {};
 
   const fetch = async () => {
     const token = localStorage.getItem("token");
