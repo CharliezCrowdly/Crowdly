@@ -1,16 +1,15 @@
-import React ,{useState} from "react";
+import React, { useState } from "react";
 import Wrapper from "../wrappers/FilterContent";
 import { BiSearch } from "react-icons/bi";
 import SelectOption from "./SelectionOption";
 
-const FilterContent = () => {
+const FilterContent = ({ handleChange,listfilter }) => {
+  const [range, setRange] = useState(0);
 
-  const [range,setRange] = useState(0)
-
-  const rangeChange = (e)=>{
-    setRange(e.target.value)
-
-  }
+  const rangeChange = (e) => {
+    setRange(e.target.value);
+    handleChange(e);
+  };
   return (
     <Wrapper>
       <div className="filter-content">
@@ -52,7 +51,7 @@ const FilterContent = () => {
 
             <input
               type="range"
-              name=""
+              name="wage"
               id="vol"
               min="0"
               max="100000"
