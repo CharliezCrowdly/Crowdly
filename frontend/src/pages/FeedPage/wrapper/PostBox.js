@@ -94,6 +94,7 @@ const Wrapper = styled.div`
           width: 100%;
           height: 472px;
           border-radius: 25px;
+          aspect-ratio: 1/1;
           object-fit: cover;
 
           & > .music-img {
@@ -170,7 +171,6 @@ const Wrapper = styled.div`
         text-align: start;
         margin-left: 2.5%;
         font-size: 0.8rem;
-
       }
       & > .more-less {
         color: var(--black-500);
