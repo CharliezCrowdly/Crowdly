@@ -3,7 +3,7 @@ import Wrapper from "../wrappers/FilterContent";
 import { BiSearch } from "react-icons/bi";
 import SelectOption from "./SelectionOption";
 
-const FilterContent = ({ handleChange, categoryfilter }) => {
+const FilterContent = ({ handleChange, categoryfilter, clearcategory }) => {
   const [range, setRange] = useState(0);
 
   const rangeChange = (e) => {
@@ -18,7 +18,10 @@ const FilterContent = ({ handleChange, categoryfilter }) => {
           <button className="btn-clear">clear all</button>
         </div>
 
-        <SelectOption categoryfilter={categoryfilter} />
+        <SelectOption
+          categoryfilter={categoryfilter}
+          clearcategory={clearcategory}
+        />
 
         {/* skill level */}
         <div className="lvl glassmorphism">

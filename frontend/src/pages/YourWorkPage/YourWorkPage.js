@@ -40,7 +40,9 @@ const YourWorkPage = () => {
     setsearch({ ...search, category: newsearch });
   };
 
-  const removecategory = (name) => {};
+  const clearcategory = () => {
+    setsearch({ ...search, category: [] });
+  };
 
   const fetch = async () => {
     const token = localStorage.getItem("token");
@@ -130,6 +132,7 @@ const YourWorkPage = () => {
           <FilterContent
             handleChange={handleChange}
             categoryfilter={categoryfilter}
+            clearcategory={clearcategory}
           />
         </div>
       </div>

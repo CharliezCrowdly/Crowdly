@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useRef } from "react";
 import Wrapper from "../wrappers/SelectionOption";
-const SelectionOption = ({ categoryfilter }) => {
+const SelectionOption = ({ categoryfilter,clearcategory }) => {
   const options = [
     {
       label: "Fashon",
@@ -172,6 +172,7 @@ const SelectionOption = ({ categoryfilter }) => {
           onClick={(e) => {
             clearOptions();
             e.stopPropagation();
+            clearcategory()
           }}
           className="clear-btn"
         >
