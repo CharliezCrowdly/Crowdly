@@ -1,14 +1,16 @@
-import React,{ useState }  from "react";
+import React, { useState } from "react";
 import Wrapper from "../wrappers/UserInfoCard";
 import { useAppContext } from "../context/appContext";
 import { Addjob } from "./Addjob";
 
 const UserInfoCard = () => {
-  const {user} = useAppContext()
+  const { user } = useAppContext();
   const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(false);
+  console.log(user);
   return (
     <Wrapper>
-  {show && <Addjob closemodal={() => setShow(false)} />}
+      {show && <Addjob closemodal={() => setShow(false)} />}
 
       <div className="info-card glassmorphism">
         <div className="userimage">
@@ -20,7 +22,23 @@ const UserInfoCard = () => {
         </div>
         <div className="username">{user.username}</div>
         <div className="userskill">FrontEnd Developer</div>
-        <div className="edit-profile" onClick={()=>setShow(true)}>Add job</div>
+        {user.usertype == "individual" ? (
+          <div
+            className="edit-profile"
+            onClick={() => setShow(true)}
+            style={{ cursor: "pointer" }}
+          >
+            Edit Profile
+          </div>
+        ) : (
+          <div
+            className="edit-profile"
+            onClick={() => setShow(true)}
+            style={{ cursor: "pointer" }}
+          >
+            Add job
+          </div>
+        )}
       </div>
     </Wrapper>
   );
