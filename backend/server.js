@@ -10,7 +10,7 @@ const path = require("path");
 const morgan = require("morgan");
 
 const connectDB = require("./db/connect");
-// const fileUpload = require("express-fileupload");
+const fileUpload = require("express-fileupload");
 const authenticateUser = require("./middleware/authentication");
 
 const cors = require("cors");
@@ -21,6 +21,7 @@ const postRouter = require("./routes/postRoute");
 const commentRouter = require("./routes/commentRoute");
 const profileRouter = require("./routes/profileRoute");
 const todoRouter = require("./routes/todoRoute");
+const jobRouter = require("./routes/jobRoute");
 
 // middleware import
 const errorHandlerMiddleware = require("./middleware/error-handler");
@@ -36,7 +37,7 @@ app.use(express.static("./public"));
 
 app.use(express.json());
 
-// app.use(fileUpload());
+app.use(fileUpload());
 //routes
 
 app.use("/api/v1/auth", authRouter);
@@ -44,6 +45,7 @@ app.use("/api/v1/posts", authenticateUser, postRouter);
 app.use("/api/v1/comment", authenticateUser, commentRouter);
 app.use("/api/v1/profile", authenticateUser, profileRouter);
 app.use("/api/v1/todo", authenticateUser, todoRouter);
+app.use("/api/v1/job", authenticateUser, jobRouter);
 
 app.use(errorHandlerMiddleware);
 

@@ -47,7 +47,7 @@ const YourWorkPage = () => {
   const fetch = async () => {
     const token = localStorage.getItem("token");
     await axios
-      .get(`/api/v1/job/getAllJobs/`, {
+      .get(`http://localhost:5000/api/v1/job/getAllJobs/`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
