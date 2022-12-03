@@ -2,6 +2,7 @@ import React, { useEffect, useState, userRef, useRef } from "react";
 import { FilterContent, SearchContainer } from "../../component";
 import Wrapper from "./wrapper/YourWorkPage";
 import JobLists from "./components/JobLists";
+import { useAppContext } from "../../context/appContext";
 
 import axios from "axios";
 
@@ -28,6 +29,8 @@ const YourWorkPage = () => {
     category: [],
     wage: "",
   });
+  const { user } = useAppContext();
+  
 
   const categoryfilter = (name) => {
     var newsearch = search.category;
@@ -46,17 +49,32 @@ const YourWorkPage = () => {
 
   const fetch = async () => {
     const token = localStorage.getItem("token");
-    await axios
-      .get(`http://localhost:5000/api/v1/job/getAllJobs/`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        setJobs(res.data.data);
-        setfilterd(res.data.data);
-        setLoading(false);
-      });
+    if (user.usertype == "individual") {
+      await axios
+        .get(`http://localhost:5000/api/v1/job/getAllJobs/`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          setJobs(res.data.data);
+          setfilterd(res.data.data);
+          setLoading(false);
+        });
+    } else {
+      await axios
+        .get(`http://localhost:5000/api/v1/job/getCompanyJob`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          setJobs(res.data.data);
+          setfilterd(res.data.data);
+          setLoading(false);
+          console.log(res.data.data);
+        });
+    }
   };
 
   useEffect(() => {

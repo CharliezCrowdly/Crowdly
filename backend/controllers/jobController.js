@@ -348,23 +348,35 @@ module.exports.getSavedJobs = asyncHandler(async (req, res, next) => {
 
 module.exports.getCompanyJobs = async (req, res, next) => {
   try {
-    Company.findById(req.query.user)
-      .select("jobs")
+    Job.find({ company: req.user.userId })
+      .populate("company")
+      .populate("applicants.applicant")
       .then((result) => {
-        const jobArray = result["jobs"];
-        Job.find({ _id: { $in: jobArray } })
-          .then((result) => {
-            return res.json({
-              success: true,
-              data: result,
-            });
-          })
-          .catch((err) => {
-            return res.json({
-              success: false,
-              msg: err,
-            });
-          });
+        res.status(200).json({
+          success: true,
+          data: result,
+        });
+      });
+  } catch (error) {
+    return res.json({
+      success: false,
+      error: error,
+      msg: error,
+    });
+  }
+};
+
+module.exports.getApplicants = async (req, res, next) => {
+  try {
+    Job.findById(req.params.id)
+      .select("applicants")
+      .populate("applicants.applicant")
+      .then((result) => {
+        console.log(result);
+        res.status(200).json({
+          success: true,
+          data: result,
+        });
       });
   } catch (error) {
     return res.json({

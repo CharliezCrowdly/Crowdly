@@ -27,7 +27,7 @@ var responsibilities = [];
 // };
 const sectors = [
   {
-    value: "Information Technology",
+    value: "IT",
     label: "Information Technology",
   },
   {

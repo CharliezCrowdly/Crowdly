@@ -12,6 +12,7 @@ import { Recommendation } from "../../component";
 import lstrecommendation from "../../utils/lstrecommendation";
 import axios from "axios";
 import { useAppContext } from "../../context/appContext";
+import Table from "react-bootstrap/Table";
 const JobDetail = () => {
   const { requirement, company } = joblists;
   const [isReadmore, setReadmore] = useState(false);
@@ -21,6 +22,10 @@ const JobDetail = () => {
   const [loading, setLoading] = useState(true);
   const [job, setJob] = useState("");
   const { token } = useAppContext();
+  const { user } = useAppContext();
+  const [owner, setOwner] = useState(false);
+  const [applicants, setApplicants] = useState([]);
+  const [applicantsLoading, setApplicantsLoading] = useState(true);
 
   //get job id from params and fetch job detail
   const fetch = async () => {
@@ -43,7 +48,28 @@ const JobDetail = () => {
       .then((res) => {
         setJob(res.data.data);
         setLoading(false);
-        console.log(res.data.data);
+        setOwner(res.data.data.company._id == user._id);
+      });
+
+    await axios
+      .get(
+        `http://localhost:5000/api/v1/job/getApplicants/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+        {
+          params: {
+            id: id,
+          },
+        }
+      )
+      .then((res) => {
+        setApplicants(res.data.data.applicants);
+        setApplicantsLoading(false);
+        console.log("Applicants");
+        console.log(res.data.data.applicants);
       });
   };
 
@@ -109,28 +135,55 @@ const JobDetail = () => {
               <span>Rs. {job.sallary}</span>
             )}
           </div>
-          <div className="recommend">
-            <img
-              src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80"
-              alt=""
-              className="profile-pic-sm"
-            />
-            <span>Your profile match this job</span>
-          </div>
-          <div className="buttons">
-            <button className="btn-easy" onClick={onbid}>
-              Bid
-            </button>
-            <button className="btn-save" onClick={onsave}>
-              {save ? (
-                "Save"
-              ) : (
-                <span className="bookmark">
-                  Saved <BsBookmarkFill className="icon" />
-                </span>
-              )}
-            </button>
-          </div>
+          {owner ? (
+            <div>
+              <hr />
+            </div>
+          ) : (
+            <div className="recommend">
+              <img
+                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80"
+                alt=""
+                className="profile-pic-sm"
+              />
+              <span>Your profile match this job</span>
+            </div>
+          )}
+          {owner ? (
+            <div className="buttons">
+              <button
+                className="btn-easy"
+                onClick={onbid}
+                style={{ width: "auto" }}
+              >
+                Deactivate
+              </button>
+              <button className="btn-save" onClick={onsave}>
+                {save ? (
+                  "Save"
+                ) : (
+                  <span className="bookmark">
+                    Saved <BsBookmarkFill className="icon" />
+                  </span>
+                )}
+              </button>
+            </div>
+          ) : (
+            <div className="buttons">
+              <button className="btn-easy" onClick={onbid}>
+                Bid
+              </button>
+              <button className="btn-save" onClick={onsave}>
+                {save ? (
+                  "Save"
+                ) : (
+                  <span className="bookmark">
+                    Saved <BsBookmarkFill className="icon" />
+                  </span>
+                )}
+              </button>
+            </div>
+          )}
         </section>
         <section className="two">
           {loading ? (
@@ -173,35 +226,87 @@ const JobDetail = () => {
                 })}
           </div>
         </section>
-        <div className="three">
-          <h3>About Company</h3>
-          <div className="info-container">
-            <img src={company.profilepicture} alt="" className="company-pic" />
-            <div className="info">
-              <span className="username">{company.username}</span>
-              <span className="followercount">
-                {company.followers.length} followers
-              </span>
-            </div>
-            <button className="btn-follow">+ follow</button>
+        {owner ? (
+          <div>
+            <br />
+            <hr />
+            <br />
+            <h2>Applicants</h2>
+            <br />
+
+            <Table striped style={{ width: "100%" }}>
+              <thead>
+                <tr>
+                  <th>S.N.</th>
+                  <th>Name</th>
+                  <th>Bid</th>
+                  <th>Proposal</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {applicantsLoading ? (
+                  <tr>
+                    <td>Loading...</td>
+                  </tr>
+                ) : (
+                  applicants.map((item, index) => {
+                    let proposal = item.proposal;
+                    proposal = decodeURI(proposal);
+                    proposal = "http://localhost:5000/" + proposal;
+                    return (
+                      <tr key={item._id} style={{ textAlign: "center" }}>
+                        <td>{index + 1}</td>
+                        <td>{item.applicant.name}</td>
+                        <td>{item.bid}</td>
+                        <td>
+                          <a href={proposal}>Proposal</a>
+                        </td>
+                        <td>
+                          <button className="btn-easy">Hire</button>
+                        </td>
+                      </tr>
+                    );
+                  })
+                )}
+              </tbody>
+            </Table>
           </div>
-          <div className="company-employee">
-            IT Developer <span>.</span> <span>11 - 15 employees</span>
-          </div>
-          <div className="description">
-            {company.description.substring(0, isReadmore ? 600 : 200)}
-            {company.description.split(" ").length > 20 ? (
-              <div className={isReadmore ? "btn-box" : "btn-container"}>
-                <button
-                  className={isReadmore ? "readmore " : "readmore active"}
-                  onClick={() => setReadmore((isReadmore) => !isReadmore)}
-                >
-                  {isReadmore ? "Readless" : "Readmore"}
-                </button>
+        ) : (
+          <div className="three">
+            <h3>About Company</h3>
+            <div className="info-container">
+              <img
+                src={company.profilepicture}
+                alt=""
+                className="company-pic"
+              />
+              <div className="info">
+                <span className="username">{company.username}</span>
+                <span className="followercount">
+                  {company.followers.length} followers
+                </span>
               </div>
-            ) : null}
+              <button className="btn-follow">+ follow</button>
+            </div>
+            <div className="company-employee">
+              IT Developer <span>.</span> <span>11 - 15 employees</span>
+            </div>
+            <div className="description">
+              {company.description.substring(0, isReadmore ? 600 : 200)}
+              {company.description.split(" ").length > 20 ? (
+                <div className={isReadmore ? "btn-box" : "btn-container"}>
+                  <button
+                    className={isReadmore ? "readmore " : "readmore active"}
+                    onClick={() => setReadmore((isReadmore) => !isReadmore)}
+                  >
+                    {isReadmore ? "Readless" : "Readmore"}
+                  </button>
+                </div>
+              ) : null}
+            </div>
           </div>
-        </div>
+        )}
       </div>
       <div className="right-section ">
         {lstrecommendation.map((item) => (
