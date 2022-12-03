@@ -83,6 +83,14 @@ const UserSchema = new mongoose.Schema({
         type: String,
         default: "Under-Review",
       },
+      proposal: {
+        type: String,
+        default: "../public/uploads/default.pdf",
+      },
+      bid: {
+        type: Number,
+        default: 0,
+      },
     },
   ],
 

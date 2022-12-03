@@ -108,71 +108,78 @@ module.exports.getJob = async (req, res, next) => {
   }
 };
 
-module.exports.applyForJob = async (req, res, next) => {
-  // const { jobId } = req.body;
-  console.log(req.body);
-  // console.log(req.files);
+module.exports.submitProposal = async (req, res, next) => {
   uploadProposal.single("proposal")(req, res, async (err) => {
     if (err) {
       console.log(err);
+      return res.status(300).json({
+        success: false,
+        msg: "Some Error Occured",
+      });
+    } else {
+      return res.status(200).json({
+        success: true,
+        msg: "File Uploaded",
+        file: req.file.path,
+      });
     }
   });
+};
 
-  // try {
-  //   const job = jobId;
-  //   console.log(req.body);
+module.exports.applyForJob = async (req, res, next) => {
+  try {
+    const job = req.body.jobId;
+    const bid = req.body.bid;
+    const user = req.user.userId;
+    const appliedJob = await Job.findById(job);
 
-  //   const user = req.user._id;
-  //   const appliedJob = await Job.findById(job);
+    const appliedUser = await userModel.findById(user);
+    console.log(appliedUser);
 
-  //   const appliedUser = await userModel.findById(user);
+    const isApplyable = verifyNewApplicant(appliedJob, user);
+    console.log("Status: ");
+    console.log(isApplyable);
+    if (!isApplyable) {
+      console.log("Already Applied");
 
-  //   console.log(req.body);
+      return res.status(500).json({
+        success: false,
+        msg: "You have already applied for this job",
+      });
+    } else {
+      console.log("Not Applied Yet");
 
-  //   const isApplyable = verifyNewApplicant(appliedJob, user);
-  //   console.log("Status: ");
-  //   console.log(isApplyable);
-  //   if (!isApplyable) {
-  //     console.log("Already Applied");
-
-  //     return res.status(500).json({
-  //       success: false,
-  //       msg: "You have already applied for this job",
-  //     });
-  //   } else {
-  //     console.log("Not Applied Yet");
-
-  uploadProposal.single("proposal")(req, res, async (err) => {
-    //       const proposal = req.file.path;
-    //       console.log(appliedJob);
-    //       appliedJob.applicants.push({
-    //         applicant: user,
-    //         status: "New",
-    //         appliedDate: new Date(),
-    //         proposal: proposal,
-    //         bid: req.body.bid,
-    //       });
-    //       appliedUser.appliedJobs.push({
-    //         job: appliedJob,
-    //         status: "New",
-    //         appliedDate: new Date(),
-    //       });
-    //       appliedJob.save();
-    //       appliedUser.save();
-    //       console.log("Successfully Applied");
-    //       return res.status(200).json({
-    //         success: true,
-    //         msg: "You have applied for this job",
-    //       });
-  });
-  //   }
-  // } catch (error) {
-  //   console.log(error);
-  //   return res.status(500).json({
-  //     success: false,
-  //     msg: error,
-  //   });
-  // }
+      const proposal = req.body.proposal;
+      console.log(appliedJob);
+      appliedJob.applicants.push({
+        applicant: user,
+        status: "Under-Review",
+        appliedDate: new Date(),
+        proposal: proposal,
+        bid: bid,
+      });
+      appliedUser.appliedJobs.push({
+        job: appliedJob,
+        status: "Under-Review",
+        appliedDate: new Date(),
+        proposal: proposal,
+        bid: bid,
+      });
+      appliedJob.save();
+      appliedUser.save();
+      console.log("Successfully Applied");
+      return res.status(200).json({
+        success: true,
+        msg: "You have applied for this job",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      msg: error,
+    });
+  }
 };
 
 const verifyNewApplicant = (appliedJob, user) => {

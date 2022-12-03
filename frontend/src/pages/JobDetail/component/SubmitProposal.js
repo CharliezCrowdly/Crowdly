@@ -2,8 +2,11 @@ import React from "react";
 import Wrapper from "../wrappers/SubmitProposal";
 import { ImCross } from "react-icons/im";
 import axios from "axios";
+import { useAppContext } from "../../../context/appContext";
 
 const SubmitProporsal = React.memo(({ ismodal, onbid }) => {
+  const { user } = useAppContext();
+  console.log(user);
   const [selectedFile, setSelectedFile] = React.useState(null);
   const [setBid, setSelectedBid] = React.useState(0);
 
@@ -20,27 +23,53 @@ const SubmitProporsal = React.memo(({ ismodal, onbid }) => {
     // console.log(e);
     e.preventDefault();
     const formData = new FormData();
-    formData.append("proposal", selectedFile);
     formData.append("bid", setBid);
     formData.append("jobId", jobId);
+    formData.append("proposal", selectedFile);
 
     const token = localStorage.getItem("token");
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
-        "content-type": "multipart/form-data",
+        "content-type": `multipart/form-data; boundary=${formData._boundary}`,
       },
     };
+    console.log(jobId);
+    console.log(setBid);
 
     axios
-      .post("/api/v1/job/applyForJob", formData, config)
+      .post("/api/v1/job/sendProposal", formData, config)
       .then((result) => {
-        toast.success(result.data.msg, toastOptions);
-        // window.location.reload();
+        console.log(result.data.file);
+        axios
+          .post(
+            "/api/v1/job/applyForJob",
+            {
+              bid: setBid,
+              jobId: jobId,
+              proposal: result.data.file,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          )
+          .then((result) => {
+            console.log(result);
+            // toast.success(result.data.msg, toastOptions);
+            // window.location.reload();
+          })
+          .catch((err) => {
+            console.log(err);
+            // toast.error(err, toastOptions);
+            // console.log(err);
+          });
       })
       .catch((err) => {
-        toast.error(err, toastOptions);
         console.log(err);
+        // toast.error(err, toastOptions);
+        // console.log(err);
       });
   };
   return (
