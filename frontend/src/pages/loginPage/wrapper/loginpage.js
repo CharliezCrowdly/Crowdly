@@ -25,6 +25,7 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     text-transform: uppercase;
+    justify-content: center;
 
     padding: 10%;
     gap: 20px;

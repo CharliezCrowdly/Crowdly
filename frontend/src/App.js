@@ -16,7 +16,6 @@ import {
   MessagePage,
   SharedLayout3,
 } from "./pages";
-import { Addjob } from "./component/Addjob";
 
 function App() {
   return (
@@ -24,7 +23,6 @@ function App() {
       <Routes>
         <Route path="login" element={<LoginPage />} />
         <Route path="/" element={<LandingPage />} />
-        <Route path="add" element={<Addjob />} />
         <Route
           path="/user"
           element={
