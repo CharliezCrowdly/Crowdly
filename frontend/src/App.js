@@ -15,7 +15,8 @@ import {
   ExplorePage,
   MessagePage,
   SharedLayout3,
-  AddJobPage
+  AddJobPage,
+  PaymentPage,
 } from "./pages";
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
           }
         >
           <Route path="add/job" element={<AddJobPage />} />
+          <Route path="payment" element={<PaymentPage />} />
 
           <Route path="message" element={<MessagePage />} />
         </Route>

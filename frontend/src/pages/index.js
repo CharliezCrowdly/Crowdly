@@ -13,6 +13,7 @@ import ExplorePage from "./ExplorePage/ExplorePage";
 import MessagePage from "./MessagePage/MessagePage"
 import SharedLayout3 from "./SharedLayouts3/SharedLayout3";
 import AddJobPage from "./AddJobPage/AddJobPage";
+import PaymentPage from "./PaymentPage/PaymentPage"
 export {
   LoginPage,
   ProtectedRoute,
@@ -28,5 +29,7 @@ export {
   ExplorePage,
   MessagePage,
   SharedLayout3,
-  AddJobPage
+  AddJobPage,
+  PaymentPage
+
 };
