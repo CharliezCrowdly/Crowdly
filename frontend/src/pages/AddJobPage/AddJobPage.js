@@ -5,6 +5,8 @@ import Wrapper from "./wrapper/AddJobPage";
 import { useAppContext } from "../../context/appContext";
 import { Alert } from "../../component";
 const AddJobPage = () => {
+  const { addJob, isLoading, alertType } = useAppContext();
+
   const formvalue = {
     title: "",
     sector: "",
@@ -126,10 +128,11 @@ const AddJobPage = () => {
 
     if (activeindex === 3) {
       if (closeTime && description) {
-        if(alertType === "success"){
-          setValue(formvalue)
-          setActive(1)
+        addJob({ values });
 
+        if (alertType === "success") {
+          setValue(formvalue);
+          setActive(1);
         }
       }
     }

@@ -30,7 +30,10 @@ import {
   UPDATE_POST_BEGIN,
   UPDATE_POST_ERROR,
   UPDATE_POST_SUCCESS,
-  SEARCH_SUCCESS
+  SEARCH_SUCCESS,
+  ADD_JOB_BEGIN,
+  ADD_JOB_ERROR,
+  ADD_JOB_SUCCESS,
 } from "./action";
 
 import axios from "axios";
@@ -362,6 +365,52 @@ const AppProvider = ({ children }) => {
      }
    };
 
+   const addJob = async ({ values }) => {
+     dispatch({ type: ADD_JOB_BEGIN });
+     try {
+       const {
+         title,
+         sector,
+         experiencelvl,
+         jobtype,
+         skills,
+         sallary,
+         description,
+         responsibilities,
+         requirments,
+         closeTime,
+       } = values;
+       let formData = new FormData();
+
+       formData.append("title", title);
+       formData.append("description", description);
+       formData.append("sector", sector);
+       formData.append("experiencelvl", experiencelvl);
+       formData.append("jobtype", jobtype);
+       formData.append("skills", skills);
+       formData.append("sallary", sallary);
+       formData.append("responsibilities", responsibilities);
+       formData.append("requirments", requirments);
+       formData.append("closeTime", closeTime);
+
+       await authFetch.post("job/addJob", formData);
+       dispatch({
+         type: ADD_JOB_SUCCESS,
+       });
+
+       // dispatch({ type: CLEAR_VALUES });
+     } catch (error) {
+       console.log(error);
+       if (error.response.status === 401) return;
+       dispatch({
+         type: ADD_JOB_ERROR,
+         payload: { msg: error.response.data.msg },
+       });
+     }
+     clearAlert();
+   };
+
+
   const toggleSidebar = () => {
     dispatch({ type: TOGGLE_SIDEBAR });
   };
@@ -384,6 +433,7 @@ const AppProvider = ({ children }) => {
         updatePost,
         explorePage,
         searchProfile,
+        addJob,
       }}
     >
       {children}
