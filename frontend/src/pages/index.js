@@ -12,6 +12,7 @@ import LandingPage from "./LandingPage/Landing";
 import ExplorePage from "./ExplorePage/ExplorePage";
 import MessagePage from "./MessagePage/MessagePage"
 import SharedLayout3 from "./SharedLayouts3/SharedLayout3";
+import AddJobPage from "./AddJobPage/AddJobPage";
 export {
   LoginPage,
   ProtectedRoute,
@@ -26,5 +27,6 @@ export {
   LandingPage,
   ExplorePage,
   MessagePage,
-  SharedLayout3
+  SharedLayout3,
+  AddJobPage
 };
