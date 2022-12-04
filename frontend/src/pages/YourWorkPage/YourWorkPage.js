@@ -1,8 +1,7 @@
-import React, { useEffect, useState, userRef, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { FilterContent, SearchContainer } from "../../component";
 import Wrapper from "./wrapper/YourWorkPage";
 import JobLists from "./components/JobLists";
-import { useAppContext } from "../../context/appContext";
 
 import axios from "axios";
 
@@ -29,13 +28,11 @@ const YourWorkPage = () => {
     category: [],
     wage: "",
   });
-  const { user } = useAppContext();
-  
 
   const categoryfilter = (name) => {
     var newsearch = search.category;
     if (newsearch.includes(name)) {
-      newsearch.pop(name);
+      newsearch = newsearch.filter((item) => item !== name);
     } else {
       newsearch.push(name);
     }
@@ -47,34 +44,49 @@ const YourWorkPage = () => {
     setsearch({ ...search, category: [] });
   };
 
+  const jobtypefilter = (name) => {
+    var newsearch = search.jobtype;
+    if (newsearch.includes(name)) {
+      newsearch = newsearch.filter((item) => item !== name);
+    } else {
+      newsearch.push(name);
+    }
+
+    setsearch({ ...search, jobtype: newsearch });
+  };
+
+  const clearjobtype = () => {
+    setsearch({ ...search, jobtype: [] });
+  };
+
+  const experiencelvlfilter = (name) => {
+    var newsearch = search.experiencelvl;
+    if (newsearch.includes(name)) {
+      newsearch = newsearch.filter((item) => item !== name);
+    } else {
+      newsearch.push(name);
+    }
+
+    setsearch({ ...search, experiencelvl: newsearch });
+  };
+
+  const clearexperiencelvl = () => {
+    setsearch({ ...search, experiencelvl: [] });
+  };
+
   const fetch = async () => {
     const token = localStorage.getItem("token");
-    if (user.usertype == "individual") {
-      await axios
-        .get(`http://localhost:5000/api/v1/job/getAllJobs/`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((res) => {
-          setJobs(res.data.data);
-          setfilterd(res.data.data);
-          setLoading(false);
-        });
-    } else {
-      await axios
-        .get(`http://localhost:5000/api/v1/job/getCompanyJob`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((res) => {
-          setJobs(res.data.data);
-          setfilterd(res.data.data);
-          setLoading(false);
-          console.log(res.data.data);
-        });
-    }
+    await axios
+      .get(`http://localhost:5000/api/v1/job/getAllJobs/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setJobs(res.data.data);
+        setfilterd(res.data.data);
+        setLoading(false);
+      });
   };
 
   useEffect(() => {
@@ -99,10 +111,8 @@ const YourWorkPage = () => {
     }
 
     if (search.jobtype.length > 0) {
-      console.log("jobtype");
-
       filterlist = filterlist.filter((item) => {
-        search.jobtype.includes(item.jobtype);
+       return search.jobtype.includes(item.jobtype);
       });
     }
 
@@ -111,6 +121,12 @@ const YourWorkPage = () => {
 
       filterlist = filterlist.filter((item) => {
         return search.category.includes(item.sector);
+      });
+    }
+
+    if (search.experiencelvl.length > 0) {
+      filterlist = filterlist.filter((item) => {
+        return search.experiencelvl.includes(item.experiencelvl);
       });
     }
 
@@ -151,6 +167,11 @@ const YourWorkPage = () => {
             handleChange={handleChange}
             categoryfilter={categoryfilter}
             clearcategory={clearcategory}
+            jobtypefilter={jobtypefilter}
+            clearjobtype={clearjobtype}
+            experiencelvlfilter={experiencelvlfilter}
+            clearexperiencelvl={clearexperiencelvl}
+            search={search}
           />
         </div>
       </div>

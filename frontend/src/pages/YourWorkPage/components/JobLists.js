@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from "react";
-import joblists from "../../../utils/joblist";
+import React from "react";
 import { JobBox } from "../../../component";
-import axios from "axios";
 
 const JobLists = React.memo(({ joblists, joblength, applyFilters, search }) => {
   

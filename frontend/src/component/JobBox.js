@@ -35,9 +35,9 @@ const JobBox = (job) => {
         <div className="jobdetail">{job.job.description}</div>
 
         <div className="jobtype">
-          <p className="fulltime bluebox">FullTime</p>
+          <p className="fulltime bluebox">{job.job.jobtype}</p>
           <p className="jobfield bluebox">{job.job.sector}</p>
-          <p className="jobfield bluebox">Remote</p>
+          <p className="jobfield bluebox">{job.job.experiencelvl}</p>
         </div>
         {/* footer */}
 

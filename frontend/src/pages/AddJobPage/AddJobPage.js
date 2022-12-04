@@ -118,12 +118,8 @@ const AddJobPage = () => {
         skills[0].skill &&
         requirments[0].requirement
       ) {
-        console.log(skills[0].skill);
         setActive(3);
-      } else {
-        console.log("hello");
-        console.log(responsibilities[0].responsibility);
-      }
+      } 
     }
 
     if (activeindex === 3) {
