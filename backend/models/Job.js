@@ -22,6 +22,20 @@ const jobSchema = new mongoose.Schema({
     ],
     // type: String,
   },
+  jobtype: {
+    type: String,
+    required: true,
+    enum: ["PartTime", "FullTime", "FreeLance"],
+    // type: String,
+  },
+
+  experiencelvl: {
+    type: String,
+    required: true,
+    enum: ["Interdimate", "Entry Level", "Expert"],
+    // type: String,
+  },
+
   skills: [
     {
       type: String,
