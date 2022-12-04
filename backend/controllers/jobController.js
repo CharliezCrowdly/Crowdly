@@ -37,7 +37,16 @@ module.exports.addJob = async (req, res, next) => {
       responsibilities,
       closeTime,
       sector,
+      experiencelvl,
+      jobtype,
     } = req.body;
+    if (title.length < 4) {
+      throw new BAD_REQUESTError("title is too short");
+    }
+    if (description.length < 4) {
+      throw new BAD_REQUESTError("description is too short");
+    }
+
     const job = new Job({
       title: title,
       sallary: sallary,
@@ -48,15 +57,17 @@ module.exports.addJob = async (req, res, next) => {
       closeDate: closeTime,
       company: req.user.userId,
       sector: sector,
+      experiencelvl: experiencelvl,
+      jobtype: jobtype,
     });
     job.save().then((result) => {
-      return res.json({
+      return res.status(200).json({
         success: true,
         data: result,
       });
     });
   } catch (error) {
-    return res.json({
+    return res.status(200).json({
       success: false,
       error: error,
       msg: "Something went wrong",
