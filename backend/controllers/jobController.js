@@ -4,75 +4,68 @@ const Job = require("../models/Job");
 const userModel = require("../models/UserModel");
 const util = require("util");
 const asyncHandler = require("express-async-handler");
-const multer = require("multer");
+const { BAD_REQUESTError, UnAuthenticatedError } = require("../errors/index");
+const path = require("path");
 
-const storage = multer.diskStorage({
-  destination: "./uploads/files/proposals",
-  filename: (req, file, cb) => {
-    cb(null, `${file.fieldname}-${Date.now()}${file.originalname}`);
-  },
-});
+// const storage = multer.diskStorage({
+//   destination: "./uploads/files/proposals",
+//   filename: (req, file, cb) => {
+//     cb(null, `${file.fieldname}-${Date.now()}${file.originalname}`);
+//   },
+// });
 
-const uploadProposal = multer({
-  storage: storage,
-  fileFilter: (req, file, cb) => {
-    if (!file.originalname.match(/\.(pdf|docx)$/i)) {
-      return cb(new Error("Please upload an document"));
-    }
-    cb(null, true);
-  },
-  limits: {
-    fileSize: 10024 * 1024 * 5,
-  },
-});
+// const uploadProposal = multer({
+//   storage: storage,
+//   fileFilter: (req, file, cb) => {
+//     if (!file.originalname.match(/\.(pdf|docx)$/i)) {
+//       return cb(new Error("Please upload an document"));
+//     }
+//     cb(null, true);
+//   },
+//   limits: {
+//     fileSize: 10024 * 1024 * 5,
+//   },
+// });
 
 module.exports.addJob = async (req, res, next) => {
-  try {
-    const {
-      title,
-      sallary,
-      description,
-      skills,
-      requirements,
-      responsibilities,
-      closeTime,
-      sector,
-      experiencelvl,
-      jobtype,
-    } = req.body;
-    if (title.length < 4) {
-      throw new BAD_REQUESTError("title is too short");
-    }
-    if (description.length < 4) {
-      throw new BAD_REQUESTError("description is too short");
-    }
-
-    const job = new Job({
-      title: title,
-      sallary: sallary,
-      description: description,
-      skills: skills,
-      requirements: requirements,
-      responsibilities: responsibilities,
-      closeDate: closeTime,
-      company: req.user.userId,
-      sector: sector,
-      experiencelvl: experiencelvl,
-      jobtype: jobtype,
-    });
-    job.save().then((result) => {
-      return res.status(200).json({
-        success: true,
-        data: result,
-      });
-    });
-  } catch (error) {
-    return res.status(200).json({
-      success: false,
-      error: error,
-      msg: "Something went wrong",
-    });
+  const {
+    title,
+    sallary,
+    description,
+    skills,
+    requirements,
+    responsibilities,
+    closeTime,
+    sector,
+    experiencelvl,
+    jobtype,
+  } = req.body;
+  if (title.length < 4) {
+    throw new BAD_REQUESTError("title is too short");
   }
+  if (description.length < 4) {
+    throw new BAD_REQUESTError("description is too short");
+  }
+
+  const job = new Job({
+    title: title,
+    sallary: sallary,
+    description: description,
+    skills: skills,
+    requirements: requirements,
+    responsibilities: responsibilities,
+    closeDate: closeTime,
+    company: req.user.userId,
+    sector: sector,
+    experiencelvl: experiencelvl,
+    jobtype: jobtype,
+  });
+  job.save().then((result) => {
+    return res.status(200).json({
+      success: true,
+      data: result,
+    });
+  });
 };
 
 module.exports.getAllJobs = async (req, res, next) => {
@@ -120,21 +113,22 @@ module.exports.getJob = async (req, res, next) => {
 };
 
 module.exports.submitProposal = async (req, res, next) => {
-  uploadProposal.single("proposal")(req, res, async (err) => {
-    if (err) {
-      console.log(err);
-      return res.status(300).json({
-        success: false,
-        msg: "Some Error Occured",
-      });
-    } else {
-      return res.status(200).json({
-        success: true,
-        msg: "File Uploaded",
-        file: req.file.path,
-      });
-    }
-  });
+  if (req.files) {
+    const { proposal } = req.files;
+    const postPath = proposal;
+    const src = `/proposal/${proposal.name}`;
+
+    const imagePath = path.join(
+      __dirname,
+      "../public/proposal/" + `${proposal.name}`
+    );
+    await postPath.mv(imagePath);
+    return res.status(200).json({
+      success: true,
+      msg: "File Uploaded",
+      file: src,
+    });
+  }
 };
 
 module.exports.applyForJob = async (req, res, next) => {
@@ -143,6 +137,7 @@ module.exports.applyForJob = async (req, res, next) => {
     const bid = req.body.bid;
     const user = req.user.userId;
     const appliedJob = await Job.findById(job);
+    console.log(req.body);
 
     const appliedUser = await userModel.findById(user);
     console.log(appliedUser);
@@ -160,24 +155,24 @@ module.exports.applyForJob = async (req, res, next) => {
     } else {
       console.log("Not Applied Yet");
 
-      const proposal = req.body.proposal;
-      console.log(appliedJob);
-      appliedJob.applicants.push({
-        applicant: user,
-        status: "Under-Review",
-        appliedDate: new Date(),
-        proposal: proposal,
-        bid: bid,
-      });
-      appliedUser.appliedJobs.push({
-        job: appliedJob,
-        status: "Under-Review",
-        appliedDate: new Date(),
-        proposal: proposal,
-        bid: bid,
-      });
-      appliedJob.save();
-      appliedUser.save();
+      // const proposal = req.body.proposal;
+      // console.log(appliedJob);
+      // appliedJob.applicants.push({
+      //   applicant: user,
+      //   status: "Under-Review",
+      //   appliedDate: new Date(),
+      //   proposal: proposal,
+      //   bid: bid,
+      // });
+      // appliedUser.appliedJobs.push({
+      //   job: appliedJob,
+      //   status: "Under-Review",
+      //   appliedDate: new Date(),
+      //   proposal: proposal,
+      //   bid: bid,
+      // });
+      // appliedJob.save();
+      // appliedUser.save();
       console.log("Successfully Applied");
       return res.status(200).json({
         success: true,

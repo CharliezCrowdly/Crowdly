@@ -49,6 +49,7 @@ const JobDetail = () => {
         setJob(res.data.data);
         setLoading(false);
         setOwner(res.data.data.company._id == user._id);
+        console.log(res.data.data)
       });
 
     await axios

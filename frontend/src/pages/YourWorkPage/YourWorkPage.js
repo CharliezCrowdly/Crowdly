@@ -133,7 +133,7 @@ const YourWorkPage = () => {
     if (search.wage) {
       console.log(search.wage);
       filterlist = filterlist.filter(
-        (item) => parseInt(item.sallary) <= parseInt(search.wage)
+        (item) => parseInt(item.sallary) >= parseInt(search.wage)
       );
     }
     setfilterd(filterlist);

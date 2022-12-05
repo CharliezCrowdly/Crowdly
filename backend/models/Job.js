@@ -36,11 +36,10 @@ const jobSchema = new mongoose.Schema({
     // type: String,
   },
 
-  skills: [
-    {
-      type: String,
-    },
-  ],
+  skills: {
+    type: Array,
+    required: true,
+  },
   sallary: {
     type: Number,
     required: true,
@@ -49,16 +48,13 @@ const jobSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  responsibilities: [
-    {
-      type: String,
-    },
-  ],
-  requirements: [
-    {
-      type: String,
-    },
-  ],
+  responsibilities: {
+    type: Array,
+  },
+
+  requirements: {
+    type: Array,
+  },
   company: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",

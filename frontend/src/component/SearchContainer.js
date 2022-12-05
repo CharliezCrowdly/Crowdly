@@ -33,7 +33,7 @@ const SearchContainer = ({ applyFilters, handleChange }) => {
             />
           </div>
           <div className="sort-by">
-            <button onClick={applyFilters}>search</button>
+            <button onClick={applyFilters}>Filter</button>
           </div>
         </div>
       </div>
