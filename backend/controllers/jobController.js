@@ -114,13 +114,14 @@ module.exports.getJob = async (req, res, next) => {
 
 module.exports.submitProposal = async (req, res, next) => {
   if (req.files) {
+    //`${Date.now()}${proposal.name}`
     const { proposal } = req.files;
     const postPath = proposal;
-    const src = `/proposal/${proposal.name}`;
+    const src = `/proposal/${Date.now()}${proposal.name}`;
 
     const imagePath = path.join(
       __dirname,
-      "../public/proposal/" + `${proposal.name}`
+      "../public/proposal/" + `${Date.now()}${proposal.name}`
     );
     await postPath.mv(imagePath);
     return res.status(200).json({
@@ -137,10 +138,10 @@ module.exports.applyForJob = async (req, res, next) => {
     const bid = req.body.bid;
     const user = req.user.userId;
     const appliedJob = await Job.findById(job);
-    console.log(req.body);
+    // console.log(req.body);
 
     const appliedUser = await userModel.findById(user);
-    console.log(appliedUser);
+    // console.log(appliedUser);
 
     const isApplyable = verifyNewApplicant(appliedJob, user);
     console.log("Status: ");
@@ -155,24 +156,24 @@ module.exports.applyForJob = async (req, res, next) => {
     } else {
       console.log("Not Applied Yet");
 
-      // const proposal = req.body.proposal;
+      const proposal = req.body.proposal;
       // console.log(appliedJob);
-      // appliedJob.applicants.push({
-      //   applicant: user,
-      //   status: "Under-Review",
-      //   appliedDate: new Date(),
-      //   proposal: proposal,
-      //   bid: bid,
-      // });
-      // appliedUser.appliedJobs.push({
-      //   job: appliedJob,
-      //   status: "Under-Review",
-      //   appliedDate: new Date(),
-      //   proposal: proposal,
-      //   bid: bid,
-      // });
-      // appliedJob.save();
-      // appliedUser.save();
+      appliedJob.applicants.push({
+        applicant: user,
+        status: "Under-Review",
+        appliedDate: new Date(),
+        proposal: proposal,
+        bid: bid,
+      });
+      appliedUser.appliedJobs.push({
+        job: appliedJob,
+        status: "Under-Review",
+        appliedDate: new Date(),
+        proposal: proposal,
+        bid: bid,
+      });
+      appliedJob.save();
+      appliedUser.save();
       console.log("Successfully Applied");
       return res.status(200).json({
         success: true,
@@ -190,8 +191,10 @@ module.exports.applyForJob = async (req, res, next) => {
 
 const verifyNewApplicant = (appliedJob, user) => {
   var isFine = true;
+  console.log("User: " + user);
   try {
     appliedJob.applicants.every((applicant) => {
+      console.log(applicant.applicant);
       const status = conditionChecker(applicant.applicant, user);
       if (!status) {
         isFine = false;
@@ -392,3 +395,47 @@ module.exports.getApplicants = async (req, res, next) => {
     });
   }
 };
+
+//function to save job
+module.exports.saveJob = asyncHandler(async (req, res, next) => {
+  const job = await Job.findById(req.body.id);
+  const user = await userModel.findById(req.user.userId);
+  if (!job) {
+    res.status(400).send("Job not found");
+  }
+  if (!user) {
+    res.status(400).send("User not found");
+  }
+  if (user.savedJobs) {
+    user.savedJobs.forEach((savedJob) => {
+      if (savedJob.job == req.body.id) {
+        res.status(400).send("Job already saved");
+      }
+    });
+  }
+  user.savedJobs.push({ job: req.body.id });
+  user.save();
+  res.status(200).send("Job saved successfully");
+});
+
+//function to unsave a job
+module.exports.unsaveJob = asyncHandler(async (req, res, next) => {
+  const job = await Job.findById(req.body.id);
+  const user = await userModel.findById(req.user.userId);
+  if (!job) {
+    res.status(400).send("Job not found");
+  }
+  if (!user) {
+    res.status(400).send("User not found");
+  }
+  if (user.savedJobs) {
+    user.savedJobs.forEach((savedJob) => {
+      if (savedJob.job == req.body.id) {
+        user.savedJobs.remove(savedJob);
+        user.save();
+        res.status(200).send("Job unsaved successfully");
+      }
+    });
+  }
+  res.status(400).send("Job not saved");
+});
