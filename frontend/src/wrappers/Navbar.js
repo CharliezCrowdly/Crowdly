@@ -18,12 +18,46 @@ const Wrapper = styled.aside`
     left: 0;
     /* z-index: 3;
     width: 100%; */
+
+    & > .nav-links{
+      & > .nav-link{
+        display: flex;
+        align-items: center;
+      }
+    }
     & > .nav-content {
       display: flex;
       align-items: center;
       gap: 4px;
+      position: relative;
       & > .bell-icon {
         font-size: 1.7rem;
+      }
+      & > .dropdown-menus {
+        position: relative;
+        & > h5 {
+          cursor: pointer;
+        }
+
+        & > .dropdown-options {
+          position: absolute;
+          top: 20px;
+          left: 0;
+          width: 100px;
+          border-radius: 5px;
+          text-align: center;
+
+          & > li {
+            padding: 2%;
+            font-weight: 500;
+            text-transform: capitalize;
+            cursor: pointer;
+            &:hover {
+              background-color: var(--light-blue-500);
+              color: white;
+            }
+          }
+        }
       }
     }
   }

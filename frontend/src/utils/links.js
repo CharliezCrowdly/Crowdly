@@ -3,6 +3,7 @@ import { MdWork } from "react-icons/md";
 import { FaPhotoVideo } from "react-icons/fa";
 
 import { ImProfile } from "react-icons/im";
+import { MdExplore } from "react-icons/md";
 
 const links = [
   {
@@ -19,9 +20,9 @@ const links = [
   },
   {
     id: 3,
-    text: "Profile",
-    path: "Profile",
-    icon: <ImProfile />,
+    text: "Explore",
+    path: "/user/explore",
+    icon: <MdExplore />,
   },
   {
     id: 4,
