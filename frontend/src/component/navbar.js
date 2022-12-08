@@ -4,9 +4,9 @@ import NavLinks from "./NavLinks";
 import { IoIosNotifications } from "react-icons/io";
 import Wrapper from "../wrappers/Navbar";
 import { useAppContext } from "../context/appContext";
-import { Link } from "react-router-dom";
+
 const Navbar = () => {
-  const { user } = useAppContext();
+  const { user, logoutUser } = useAppContext();
   const [dropdown, setDropdown] = useState(false);
 
   return (
@@ -32,7 +32,7 @@ const Navbar = () => {
               className={dropdown ? "dropdown-options glassmorphism" : "d-none"}
             >
               <li>profile</li>
-              <li>logout</li>
+              <li onClick={() => logoutUser()}>logout</li>
             </ul>
           </div>
         </div>

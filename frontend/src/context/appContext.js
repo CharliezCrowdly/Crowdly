@@ -429,6 +429,7 @@ const AppProvider = ({ children }) => {
     <AppContext.Provider
       value={{
         ...state,
+        logoutUser,
         displayAlert,
         setupUser,
         createPost,
