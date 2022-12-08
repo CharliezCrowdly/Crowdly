@@ -41,7 +41,10 @@ const followUser = async (req, res) => {
     );
     res.status(StatusCodes.OK).json({ success: true });
   }
-  res.status(StatusCodes.OK).json({ success: false, usercount: user.length });
+  else {
+
+    res.status(StatusCodes.OK).json({ success: false, usercount: user.length });
+  }
 };
 
 const unfollowUser = async (req, res) => {
@@ -68,7 +71,10 @@ const unfollowUser = async (req, res) => {
     );
     res.status(StatusCodes.OK).json({ success: false, followers, following });
   }
-  res.status(StatusCodes.OK).json({ success: true });
+  else {
+    
+    res.status(StatusCodes.OK).json({ success: true });
+  }
 };
 
 const recommend = async (req, res) => {

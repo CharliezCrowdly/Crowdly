@@ -8,6 +8,7 @@ import SelectionOption from "./SelectionOption";
 import FilterContent from "./FilterContent";
 import SearchContainer from "./SearchContainer";
 import JobBox from "./JobBox";
+import Recommendationlst from "./Recommendationlst";
 
 export {
   Alert,
@@ -20,4 +21,5 @@ export {
   SelectionOption,
   SearchContainer,
   JobBox,
+  Recommendationlst,
 };

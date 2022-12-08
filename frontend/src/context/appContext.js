@@ -425,11 +425,32 @@ const AppProvider = ({ children }) => {
   const toggleSidebar = () => {
     dispatch({ type: TOGGLE_SIDEBAR });
   };
+  const unfollowUser = async (userId) => {  
+    try {
+      await authFetch.patch(`/profile/unfollow/${userId}`);
+      dispatch({ type: FOLLOW_SUCCESS });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const followUser = async (userId) => {
+
+    try {
+      await authFetch.patch(`/profile/${userId}`);
+
+      dispatch({ type: FOLLOW_SUCCESS });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  
   return (
     <AppContext.Provider
       value={{
         ...state,
         logoutUser,
+        unfollowUser,
+        followUser,
         displayAlert,
         setupUser,
         createPost,
@@ -456,5 +477,6 @@ const AppProvider = ({ children }) => {
 const useAppContext = () => {
   return useContext(AppContext);
 };
+
 
 export { AppProvider, initialState, useAppContext };
