@@ -70,8 +70,20 @@ const unfollowUser = async (req, res) => {
   }
   res.status(StatusCodes.OK).json({ success: true });
 };
+
+const recommend = async (req, res) => {
+  try {
+    const post = await User.aggregate([{ $sample: { size: 4 } }]);
+
+    const user = await User.populate(post, { path: "userid" });
+    res.status(StatusCodes.OK).json({ user });
+  } catch (e) {
+    res.status(StatusCodes.OK).json({ error: e });
+  }
+};
 module.exports = {
   searchProfile,
   followUser,
-  unfollowUser
+  unfollowUser,
+  recommend,
 };
