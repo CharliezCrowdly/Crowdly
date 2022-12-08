@@ -3,8 +3,17 @@ import Wrapper from "../wrappers/SubmitProposal";
 import { ImCross } from "react-icons/im";
 import axios from "axios";
 import { useAppContext } from "../../../context/appContext";
+import { toast } from "react-toastify";
+
 
 const SubmitProporsal = React.memo(({ ismodal, onbid }) => {
+  const toastOptions = {
+    position: "bottom-right",
+    autoClose: 8000,
+    pauseOnHover: true,
+    draggable: true,
+    theme: "dark",
+  };
   const { user } = useAppContext();
   console.log(user);
   const [selectedFile, setSelectedFile] = React.useState(null);
@@ -57,19 +66,19 @@ const SubmitProporsal = React.memo(({ ismodal, onbid }) => {
           )
           .then((result) => {
             console.log(result);
-            // toast.success(result.data.msg, toastOptions);
-            // window.location.reload();
+            toast.success(result.data.msg, toastOptions);
+            window.location.reload();
           })
           .catch((err) => {
             console.log(err);
-            // toast.error(err, toastOptions);
-            // console.log(err);
+            toast.error("Already Applied for this job", toastOptions);
+            console.log(err);
           });
       })
       .catch((err) => {
         console.log(err);
-        // toast.error(err, toastOptions);
-        // console.log(err);
+        toast.error(err, toastOptions);
+        console.log(err);
       });
   };
   return (
