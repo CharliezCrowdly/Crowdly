@@ -4,6 +4,7 @@ import Wrapper from "./wrapper/YourWorkPage";
 import JobLists from "./components/JobLists";
 
 import axios from "axios";
+import { useAppContext } from "../../context/appContext";
 
 // const options = {
 //   method: "GET",
@@ -21,6 +22,7 @@ const YourWorkPage = () => {
 
   const [loading, setLoading] = useState(true);
   const load = useRef(true);
+  const { user } = useAppContext();
   const [search, setsearch] = useState({
     title: "",
     jobtype: [],
@@ -76,17 +78,32 @@ const YourWorkPage = () => {
 
   const fetch = async () => {
     const token = localStorage.getItem("token");
-    await axios
-      .get(`http://localhost:5000/api/v1/job/getAllJobs/`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        setJobs(res.data.data);
-        setfilterd(res.data.data);
-        setLoading(false);
-      });
+    if (user.usertype == "individual") {
+      await axios
+        .get(`http://localhost:5000/api/v1/job/getAllJobs/`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          setJobs(res.data.data);
+          setfilterd(res.data.data);
+          setLoading(false);
+        });
+    } else {
+      await axios
+        .get(`http://localhost:5000/api/v1/job/getCompanyJob`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          setJobs(res.data.data);
+          setfilterd(res.data.data);
+          setLoading(false);
+          console.log(res.data.data);
+        });
+    }
   };
 
   useEffect(() => {
@@ -112,7 +129,7 @@ const YourWorkPage = () => {
 
     if (search.jobtype.length > 0) {
       filterlist = filterlist.filter((item) => {
-       return search.jobtype.includes(item.jobtype);
+        return search.jobtype.includes(item.jobtype);
       });
     }
 
