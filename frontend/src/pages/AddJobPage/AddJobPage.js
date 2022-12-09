@@ -81,7 +81,7 @@ const AddJobPage = () => {
   const Addrequirment = () => {
     var newskill = values.requirments;
     if (newskill.length <= 7) {
-      newskill.push({ requirment: "" });
+      newskill.push({ requirement: "" });
       setValue({ ...values, requirments: newskill });
     }
   };
