@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const Wrapper = styled.aside`
-  z-index: 2;
+  z-index: 1;
   .select-container {
     position: relative;
     width: 20em;

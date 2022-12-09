@@ -29,16 +29,21 @@ const options = {
 };
 const PostEditPage = () => {
   const load = useRef(true);
-  const { user, token, updatePost, isLoading, showAlert } = useAppContext();
+  const { user, token, updatePost, isLoading, showAlert, alertType } =
+    useAppContext();
   const [value, setValue] = useState(options);
   const [upload, setUpload] = useState(uploadState);
   const [preview, setPreview] = useState(
     "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80"
   );
+  const [onsuccess, setsuccess] = useState(false);
 
   const { id } = useParams();
 
   useEffect(() => {
+    if (alertType === "success") {
+      setsuccess(true);
+    }
     const fetch = async () => {
       if (load.current === true) {
         await axios
@@ -70,7 +75,7 @@ const PostEditPage = () => {
     fetch();
 
     return () => (load.current = false);
-  }, [id, upload.preview]);
+  }, [id, upload.preview, alertType]);
 
   const handleChange = (e) => {
     setUpload({ ...upload, [e.target.name]: e.target.value });
@@ -167,7 +172,7 @@ const PostEditPage = () => {
     <Wrapper className="">
       {showAlert && <Alert />}
 
-      <div className="card ">
+      <div className={onsuccess ? "card active" : "card"}>
         <div className="card-content">
           <div className="card-front ">
             <h3 className={value.fullscreen ? "d-none " : ""}>Edit Post</h3>
