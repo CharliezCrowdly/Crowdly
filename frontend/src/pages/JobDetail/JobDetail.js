@@ -8,8 +8,8 @@ import { RiMoneyDollarCircleLine } from "react-icons/ri";
 import { BsBookmarkFill, BsThreeDots } from "react-icons/bs";
 import { AiTwotoneEdit, AiTwotoneDelete } from "react-icons/ai";
 import Todo from "./component/Todo";
-import { Recommendation } from "../../component";
-import lstrecommendation from "../../utils/lstrecommendation";
+import { Recommendationlst } from "../../component";
+
 import axios from "axios";
 import { useAppContext } from "../../context/appContext";
 import Table from "react-bootstrap/Table";
@@ -312,9 +312,7 @@ const JobDetail = () => {
           )}
         </div>
         <div className="right-section ">
-          {lstrecommendation.map((item) => (
-            <Recommendation item={item} key={item.id} />
-          ))}
+          <Recommendationlst/>
           <Todo />
         </div>
       </Wrapper>

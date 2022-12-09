@@ -1,12 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
 import { HiLocationMarker } from "react-icons/hi";
 import { RiMoneyDollarCircleFill } from "react-icons/ri";
 import Wrapper from "../wrappers/JobBox";
 import { useNavigate } from "react-router-dom";
-
+import { useAppContext } from "../context/appContext";
 const JobBox = (job) => {
   const navigate = useNavigate();
+  const { user, savejob, unsavejob } = useAppContext();
+  const [bookmarked, Setbookmark] = useState(false);
+  useEffect(() => {
+    if (job.job.saved.find((like) => like === user._id)) {
+      Setbookmark(true);
+      // postState.bookmarked= true
+    } else {
+      // postState.bookmarked = false
+      Setbookmark(false);
+    }
+  }, [job.job.saved, user._id]);
+
+  const togglesave = (e) => {
+    e.preventDefault();
+
+    if (bookmarked) {
+      unsavejob(job.job._id);
+      Setbookmark(false);
+    } else {
+      savejob(job.job._id);
+      Setbookmark(true);
+    }
+  };
   return (
     <Wrapper>
       <div className="jobbox glassmorphism">
@@ -25,8 +48,14 @@ const JobBox = (job) => {
             </div>
           </div>
           <div className="savejob">
-            <p className="blue-color">Save Job</p>
-            <BsBookmark />
+            <p className="blue-color">
+              {!bookmarked ? "Save Job" : "Unsave Job"}
+            </p>
+            {bookmarked ? (
+              <BsFillBookmarkFill onClick={togglesave} />
+            ) : (
+              <BsBookmark onClick={togglesave} />
+            )}
           </div>
         </div>
 

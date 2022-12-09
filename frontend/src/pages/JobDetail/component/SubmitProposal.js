@@ -102,6 +102,7 @@ const SubmitProporsal = React.memo(({ ismodal, onbid }) => {
           id="proposal"
           onChange={handleFileSelect}
           required
+          accept="application/pdf"
         />
         <ImCross className="icon" onClick={onbid} />
         <button className="btn-submit" type="submit" onClick={handleApply}>

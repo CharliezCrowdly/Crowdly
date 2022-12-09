@@ -445,7 +445,7 @@ const AppProvider = ({ children }) => {
   };
 
 
-  const savejob = async ({ jobid }) => {
+  const savejob = async ( jobid ) => {
     try {
       await authFetch.patch(`/job/savejob/${jobid}`);
     } catch (error) {
@@ -453,7 +453,7 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  const unsavejob = async ({ jobid }) => {
+  const unsavejob = async ( jobid ) => {
     try {
       await authFetch.patch(`/job/unsavejob/${jobid}`);
      
