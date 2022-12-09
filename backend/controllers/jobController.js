@@ -439,3 +439,43 @@ module.exports.unsaveJob = asyncHandler(async (req, res, next) => {
   }
   res.status(400).send("Job not saved");
 });
+
+module.exports.saveJobs = async (req, res) => {
+  const post = await Job.find({
+    _id: req.params.id,
+    saved: req.user.userId,
+  });
+
+  if (post.length === 0) {
+    const bookmark = await Job.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        $push: { saved: req.user.userId },
+      },
+      { new: true }
+    );
+    res.status(StatusCodes.OK).json({ bookmark });
+  } else {
+    res.status(StatusCodes.OK).json({ post });
+  }
+};
+
+module.exports.unsaveJobs = async (req, res) => {
+  const post = await Job.find({
+    _id: req.params.id,
+    saved: req.user.userId,
+  });
+
+  if (post.length > 0) {
+    const bookmark = await Job.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        $pull: { saved: req.user.userId },
+      },
+      { new: true }
+    );
+    res.status(StatusCodes.OK).json({ bookmark });
+  } else {
+    res.status(StatusCodes.OK).json({ post });
+  }
+};

@@ -443,6 +443,24 @@ const AppProvider = ({ children }) => {
       console.log(e);
     }
   };
+
+
+  const savejob = async ({ jobid }) => {
+    try {
+      await authFetch.patch(`/job/savejob/${jobid}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const unsavejob = async ({ jobid }) => {
+    try {
+      await authFetch.patch(`/job/unsavejob/${jobid}`);
+     
+    } catch (error) {
+      console.log(error);
+    }
+  };
   
   return (
     <AppContext.Provider
@@ -467,6 +485,8 @@ const AppProvider = ({ children }) => {
         explorePage,
         searchProfile,
         addJob,
+        savejob,
+        unsavejob
       }}
     >
       {children}
