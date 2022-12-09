@@ -8,7 +8,7 @@ const UserInfoCard = () => {
   const navigate = useNavigate();
 
   return (
-    <Wrapper>
+    <Wrapper className="user-card">
       <div className="info-card glassmorphism">
         <div className="userimage">
           <img

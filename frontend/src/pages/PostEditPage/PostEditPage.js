@@ -182,9 +182,8 @@ const PostEditPage = () => {
                   muted
                   loop
                   controls={true}
-                >
-                  <source type={"video/mp4"} src={preview} />
-                </video>
+                  src={preview}
+                ></video>
               ) : null}
               {upload.filetype?.substring(0, upload.filetype?.indexOf("/")) ===
                 "image" && (
@@ -203,6 +202,7 @@ const PostEditPage = () => {
                   className="uploadfile"
                   id=""
                   onChange={onFileSelection}
+                  accept="image/*,video/*"
                 />
                 <RiImageAddFill className="icon" />
               </div>
