@@ -71,7 +71,7 @@ const jobSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
-    saved: [{ type: mongoose.Types.ObjectId, ref: "User" }],
+  saved: [{ type: mongoose.Types.ObjectId, ref: "User" }],
 
   applicants: [
     {

@@ -70,9 +70,9 @@ const AppProvider = ({ children }) => {
   // axios.defaults.headers.common['Authorization'] = `Bearer ${state.token}`
   const authFetch = axios.create({
     baseURL: "/api/v1",
-    // headers: {
-    //   Authorization: `Bearer ${state.token}`,
-    // },
+    headers: {
+      Authorization: `Bearer ${state.token}`,
+    },
   });
 
   // response interceptor
@@ -80,6 +80,7 @@ const AppProvider = ({ children }) => {
     (config) => {
       // do something before request is sent
       config.headers.common["Authorization"] = `Bearer ${state.token}`;
+
       return config;
     },
     (error) => {
@@ -377,7 +378,6 @@ const AppProvider = ({ children }) => {
   };
 
   const addJob = async ({ values }) => {
-
     dispatch({ type: ADD_JOB_BEGIN });
     try {
       const {
@@ -405,7 +405,18 @@ const AppProvider = ({ children }) => {
       formData.append("requirments", requirments);
       formData.append("closeTime", closeTime);
 
-      await authFetch.post("job/addJob", formData);
+      await authFetch.post("job/addJob", {
+        title,
+        sector,
+        experiencelvl,
+        jobtype,
+        skills,
+        sallary,
+        description,
+        responsibilities,
+        requirments,
+        closeTime,
+      });
       dispatch({
         type: ADD_JOB_SUCCESS,
       });
@@ -425,7 +436,7 @@ const AppProvider = ({ children }) => {
   const toggleSidebar = () => {
     dispatch({ type: TOGGLE_SIDEBAR });
   };
-  const unfollowUser = async (userId) => {  
+  const unfollowUser = async (userId) => {
     try {
       await authFetch.patch(`/profile/unfollow/${userId}`);
       dispatch({ type: FOLLOW_SUCCESS });
@@ -434,7 +445,6 @@ const AppProvider = ({ children }) => {
     }
   };
   const followUser = async (userId) => {
-
     try {
       await authFetch.patch(`/profile/${userId}`);
 
@@ -444,8 +454,7 @@ const AppProvider = ({ children }) => {
     }
   };
 
-
-  const savejob = async ( jobid ) => {
+  const savejob = async (jobid) => {
     try {
       await authFetch.patch(`/job/savejob/${jobid}`);
     } catch (error) {
@@ -453,15 +462,14 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  const unsavejob = async ( jobid ) => {
+  const unsavejob = async (jobid) => {
     try {
       await authFetch.patch(`/job/unsavejob/${jobid}`);
-     
     } catch (error) {
       console.log(error);
     }
   };
-  
+
   return (
     <AppContext.Provider
       value={{
@@ -486,7 +494,7 @@ const AppProvider = ({ children }) => {
         searchProfile,
         addJob,
         savejob,
-        unsavejob
+        unsavejob,
       }}
     >
       {children}
@@ -497,6 +505,5 @@ const AppProvider = ({ children }) => {
 const useAppContext = () => {
   return useContext(AppContext);
 };
-
 
 export { AppProvider, initialState, useAppContext };

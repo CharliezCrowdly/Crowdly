@@ -141,7 +141,7 @@ const JobDetail = () => {
             </div>
             <div className="jobtype">
               <FaBriefcase className="icon" />
-              <span>Full-time</span>
+              <span>{job.jobtype}</span>
             </div>
             <div className="jobtype">
               <BiBuilding className="icon" />
@@ -221,28 +221,28 @@ const JobDetail = () => {
                 ? requirement.map((item) => {
                     return <li key={item.id}>{item.content}</li>;
                   })
-                : job.requirements.map((item) => {
-                    return <li key={item.id}>{item}</li>;
+                : job.requirements.map((item,index) => {
+                    return <li key={index}>{item.requirement}</li>;
                   })}
             </div>
             <div className="responsiblity">
               <h3>Requirement</h3>
               {loading
-                ? requirement.map((item) => {
-                    return <li key={item.id}>{item.content}</li>;
+                ? requirement.map((item,index) => {
+                    return <li key={index}>{item.requirement}</li>;
                   })
-                : job.responsibilities.map((item) => {
-                    return <li key={item.id}>{item}</li>;
+                : job.responsibilities.map((item,index) => {
+                    return <li key={index}>{item.responsibility}</li>;
                   })}
             </div>
             <div className="responsiblity">
               <h3>Skills Required</h3>
               {loading
-                ? requirement.map((item) => {
-                    return <li key={item.id}>{item.content}</li>;
+                ? requirement.map((item,index) => {
+                    return <li key={index}>{item.content}</li>;
                   })
-                : job.skills.map((item) => {
-                    return <li key={item.id}>{item}</li>;
+                : job.skills.map((item,index) => {
+                    return <li key={index}>{item.skill}</li>;
                   })}
             </div>
           </section>

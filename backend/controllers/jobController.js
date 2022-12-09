@@ -8,7 +8,6 @@ const { BAD_REQUESTError, UnAuthenticatedError } = require("../errors/index");
 const path = require("path");
 const { StatusCodes } = require("http-status-codes");
 
-
 // const storage = multer.diskStorage({
 //   destination: "./uploads/files/proposals",
 //   filename: (req, file, cb) => {
@@ -35,7 +34,7 @@ module.exports.addJob = async (req, res, next) => {
     sallary,
     description,
     skills,
-    requirements,
+    requirments,
     responsibilities,
     closeTime,
     sector,
@@ -54,14 +53,20 @@ module.exports.addJob = async (req, res, next) => {
     sallary: sallary,
     description: description,
     skills: skills,
-    requirements: requirements,
-    responsibilities: responsibilities,
+    requirements: requirments,
+    responsibilities: [],
     closeDate: closeTime,
     company: req.user.userId,
     sector: sector,
     experiencelvl: experiencelvl,
     jobtype: jobtype,
   });
+  console.log(responsibilities)
+
+  responsibilities.forEach((item) => {
+    job.responsibilities.push(item);
+  });
+
   job.save().then((result) => {
     return res.status(200).json({
       success: true,
