@@ -185,7 +185,7 @@ const LandingPage = () => {
       </section>
 
      
-
+        <hr></hr>
       <section className="footer">
         <div className="footer-content">
           <ul className="d-flex navbar-link">
@@ -217,7 +217,7 @@ const LandingPage = () => {
         <div className="line-right"></div>
 
         <div className="copyright">
-          Copyrights © 2022 Winkle’Media. All rights reserved.
+          Copyrights © 2022 Winkle’Media. All rights reserved.  
         </div>
       </section>
     </Wrapper>

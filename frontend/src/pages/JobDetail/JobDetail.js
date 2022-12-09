@@ -9,7 +9,6 @@ import { BsBookmarkFill, BsThreeDots } from "react-icons/bs";
 import { AiTwotoneEdit, AiTwotoneDelete } from "react-icons/ai";
 import Todo from "./component/Todo";
 import { Recommendationlst } from "../../component";
-
 import axios from "axios";
 import { useAppContext } from "../../context/appContext";
 import Table from "react-bootstrap/Table";
@@ -23,11 +22,11 @@ const JobDetail = () => {
   const [loading, setLoading] = useState(true);
   const [job, setJob] = useState("");
   const { token } = useAppContext();
-  const { user } = useAppContext();
   const [owner, setOwner] = useState(false);
   const [applicants, setApplicants] = useState([]);
   const [applicantsLoading, setApplicantsLoading] = useState(true);
-
+  const { user, savejob, unsavejob } = useAppContext();
+  const [bookmarked, Setbookmark] = useState(false);
   //get job id from params and fetch job detail
   const fetch = async () => {
     const id = window.location.pathname.split("/")[3];
@@ -51,6 +50,13 @@ const JobDetail = () => {
         setLoading(false);
         setOwner(res.data.data.company._id == user._id);
         console.log(res.data.data);
+         if (res.data.data.saved.find((like) => like === user._id)) {
+           Setbookmark(true);
+           // postState.bookmarked= true
+         } else {
+           // postState.bookmarked = false
+           Setbookmark(false);
+         }
       });
 
     await axios
@@ -77,7 +83,18 @@ const JobDetail = () => {
 
   useEffect(() => {
     fetch();
-  }, []);
+  }, [user._id]);
+  const togglesave = (e, jobid) => {
+    e.preventDefault();
+
+    if (bookmarked) {
+      unsavejob(jobid);
+      Setbookmark(false);
+    } else {
+      savejob(jobid);
+      Setbookmark(true);
+    }
+  };
 
   const onsave = () => {
     if (save) {
@@ -161,8 +178,8 @@ const JobDetail = () => {
                 >
                   Deactivate
                 </button>
-                <button className="btn-save" onClick={onsave}>
-                  {save ? (
+                <button className="btn-save" onClick={(e)=>togglesave(e,job._id)}>
+                  {!bookmarked ? (
                     "Save"
                   ) : (
                     <span className="bookmark">
