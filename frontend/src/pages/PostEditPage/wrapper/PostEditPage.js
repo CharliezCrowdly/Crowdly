@@ -33,6 +33,7 @@ const Wrapper = styled.div`
 
         height: 100%;
         width: 100%;
+        border-radius: 15px;
 
         & > .card-body {
           transform: translateZ(6rem);

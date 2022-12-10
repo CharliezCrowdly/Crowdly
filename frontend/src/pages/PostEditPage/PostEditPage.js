@@ -7,6 +7,7 @@ import { useAppContext } from "../../context/appContext";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Alert } from "../../component";
+import PostBox from "./component/PostBox";
 
 const uploadState = {
   location: false,
@@ -37,8 +38,13 @@ const PostEditPage = () => {
     "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80"
   );
   const [onsuccess, setsuccess] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const { id } = useParams();
+
+  const onedit = () => {
+    setsuccess(false);
+  };
 
   useEffect(() => {
     if (alertType === "success") {
@@ -68,6 +74,7 @@ const PostEditPage = () => {
               item: post,
             });
             setPreview(post.postfile);
+            setLoading(false);
             console.log(post);
           });
       }
@@ -164,7 +171,7 @@ const PostEditPage = () => {
     }
   };
 
-  if (isLoading) {
+  if (loading) {
     return <div>... Loading</div>;
   }
 
@@ -233,9 +240,14 @@ const PostEditPage = () => {
           </div>
           <div className="card-back">
             <p className="card-body">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam
-              omnis voluptatem dolorem alias perferendis veritatis dignissimos
-              nostrum mollitia praesentium laudantium, porro laborum!
+              <PostBox
+                item={upload.item}
+                onedit={onedit}
+                filetype={upload.filetype}
+                preview={preview}
+                description={upload.description}
+                location={upload.location}
+              />
             </p>
           </div>
         </div>

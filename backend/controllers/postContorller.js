@@ -157,6 +157,10 @@ const UpdatePost = async (req, res) => {
 
   const { description, location } = req.body;
 
+  if (!description) {
+    throw new BAD_REQUESTError("Please provide description");
+  }
+
   const post = await Post.findOne({ _id: postId })
     .populate("userid likesid", "profilePicture username location")
     .sort("-createdAt");
