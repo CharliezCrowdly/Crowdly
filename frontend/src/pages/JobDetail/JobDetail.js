@@ -27,6 +27,8 @@ const JobDetail = () => {
   const [applicantsLoading, setApplicantsLoading] = useState(true);
   const { user, savejob, unsavejob } = useAppContext();
   const [bookmarked, Setbookmark] = useState(false);
+  const [applied, setApplied] = useState(false);
+  const [status, setStatus] = useState("");
   //get job id from params and fetch job detail
   const fetch = async () => {
     const id = window.location.pathname.split("/")[3];
@@ -49,13 +51,13 @@ const JobDetail = () => {
         setJob(res.data.data);
         setLoading(false);
         setOwner(res.data.data.company._id == user._id);
-         if (res.data.data.saved.find((like) => like === user._id)) {
-           Setbookmark(true);
-           // postState.bookmarked= true
-         } else {
-           // postState.bookmarked = false
-           Setbookmark(false);
-         }
+        if (res.data.data.saved.find((like) => like === user._id)) {
+          Setbookmark(true);
+          // postState.bookmarked= true
+        } else {
+          // postState.bookmarked = false
+          Setbookmark(false);
+        }
       });
 
     await axios
@@ -77,6 +79,13 @@ const JobDetail = () => {
         setApplicantsLoading(false);
         console.log("Applicants");
         console.log(res.data.data.applicants);
+
+        res.data.data.applicants.find((applicant) => {
+          if (applicant.applicant._id === user._id) {
+            setApplied(true);
+            setStatus(applicant);
+          }
+        });
       });
   };
 
@@ -177,7 +186,10 @@ const JobDetail = () => {
                 >
                   Deactivate
                 </button>
-                <button className="btn-save" onClick={(e)=>togglesave(e,job._id)}>
+                <button
+                  className="btn-save"
+                  onClick={(e) => togglesave(e, job._id)}
+                >
                   {!bookmarked ? (
                     "Save"
                   ) : (
@@ -189,9 +201,16 @@ const JobDetail = () => {
               </div>
             ) : (
               <div className="buttons">
-                <button className="btn-easy" onClick={onbid}>
-                  Bid
-                </button>
+                {applied ? (
+                  <button className="btn-easy" disabled>
+                    Applied
+                  </button>
+                ) : (
+                  <button className="btn-easy" onClick={onbid}>
+                    Bid
+                  </button>
+                )}
+
                 <button className="btn-save" onClick={onsave}>
                   {save ? (
                     "Save"
@@ -203,7 +222,17 @@ const JobDetail = () => {
                 </button>
               </div>
             )}
+
+            {applied ? (
+              <p>
+                Status: {status.status} <br />
+                <br />
+              </p>
+            ) : (
+              <div></div>
+            )}
           </section>
+
           <section className="two">
             {loading ? (
               <p className="description">
@@ -214,33 +243,33 @@ const JobDetail = () => {
             ) : (
               <p className="description">{job.description}</p>
             )}
-            <div className="responsiblity">
+            {/* <div className="responsiblity">
               <h3>Responsiblity</h3>
               {loading
                 ? requirement.map((item) => {
                     return <li key={item.id}>{item.content}</li>;
                   })
-                : job.requirements.map((item,index) => {
+                : job.requirements.map((item, index) => {
                     return <li key={index}>{item.requirement}</li>;
                   })}
-            </div>
+            </div> */}
             <div className="responsiblity">
               <h3>Requirement</h3>
               {loading
-                ? requirement.map((item,index) => {
+                ? requirement.map((item, index) => {
                     return <li key={index}>{item.requirement}</li>;
                   })
-                : job.responsibilities.map((item,index) => {
+                : job.responsibilities.map((item, index) => {
                     return <li key={index}>{item.responsibility}</li>;
                   })}
             </div>
             <div className="responsiblity">
               <h3>Skills Required</h3>
               {loading
-                ? requirement.map((item,index) => {
+                ? requirement.map((item, index) => {
                     return <li key={index}>{item.content}</li>;
                   })
-                : job.skills.map((item,index) => {
+                : job.skills.map((item, index) => {
                     return <li key={index}>{item.skill}</li>;
                   })}
             </div>
@@ -328,7 +357,7 @@ const JobDetail = () => {
           )}
         </div>
         <div className="right-section ">
-          <Recommendationlst/>
+          <Recommendationlst />
           <Todo />
         </div>
       </Wrapper>
