@@ -146,7 +146,7 @@ const Searchbar = React.memo(({  toggleload }) => {
           </div>
           <HiLocationMarker className="icon" onClick={toggleLocation} />
           <button className="btn-send"  onClick={onSubmit}>
-            send
+            Post
           </button>
         </div>
 

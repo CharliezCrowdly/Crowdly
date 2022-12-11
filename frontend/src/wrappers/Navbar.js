@@ -19,8 +19,8 @@ const Wrapper = styled.aside`
     /* z-index: 3;
     width: 100%; */
 
-    & > .nav-links{
-      & > .nav-link{
+    & > .nav-links {
+      & > .nav-link {
         display: flex;
         align-items: center;
       }
@@ -63,7 +63,8 @@ const Wrapper = styled.aside`
   }
   .active {
     border-radius: 50px;
-    background-color: var(--blue-600);
+    background-color: #5555ff;
+    color: white !important;
   }
   .nav-links {
     display: flex;
@@ -84,6 +85,14 @@ const Wrapper = styled.aside`
         margin-right: 10px;
         font-size: 1.2rem;
         color: var(--blue-400);
+        transform: translateY(3px);
+        
+      }
+
+      &.active {
+        & > .icon {
+          color: white;
+        }
       }
     }
   }

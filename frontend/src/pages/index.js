@@ -14,6 +14,7 @@ import MessagePage from "./MessagePage/MessagePage"
 import SharedLayout3 from "./SharedLayouts3/SharedLayout3";
 import AddJobPage from "./AddJobPage/AddJobPage";
 import PaymentPage from "./PaymentPage/PaymentPage"
+import ApplicantPage from "./ApplicantPage/ApplicantPage";
 export {
   LoginPage,
   ProtectedRoute,
@@ -30,6 +31,7 @@ export {
   MessagePage,
   SharedLayout3,
   AddJobPage,
-  PaymentPage
+  PaymentPage,
+  ApplicantPage
 
 };

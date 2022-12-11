@@ -18,6 +18,7 @@ import {
   SharedLayout3,
   AddJobPage,
   PaymentPage,
+  ApplicantPage
 } from "./pages";
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
           <Route path="payment" element={<PaymentPage />} />
 
           <Route path="message" element={<MessagePage />} />
+          <Route path="applicants" element={<ApplicantPage />} />
         </Route>
 
         <Route

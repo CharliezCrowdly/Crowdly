@@ -49,7 +49,6 @@ const JobDetail = () => {
         setJob(res.data.data);
         setLoading(false);
         setOwner(res.data.data.company._id == user._id);
-        console.log(res.data.data);
          if (res.data.data.saved.find((like) => like === user._id)) {
            Setbookmark(true);
            // postState.bookmarked= true

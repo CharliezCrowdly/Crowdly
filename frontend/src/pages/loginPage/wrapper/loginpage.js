@@ -38,7 +38,7 @@ const Wrapper = styled.div`
       border: none;
       color: white;
       font-weight: bolder;
-      background-color: var(--light-blue-600);
+      background-color: #5555ff;
       cursor: pointer;
     }
 
@@ -52,7 +52,7 @@ const Wrapper = styled.div`
 
   .image-container {
     width: 100%;
-    background-color: var(--primary-color);
+    background-color: #5555ff;
     position: relative;
 
     & > .login-info {
