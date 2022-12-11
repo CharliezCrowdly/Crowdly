@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Alert } from "../../component";
 import PostBox from "./component/PostBox";
+import { useNavigate } from "react-router-dom";
 
 const uploadState = {
   location: false,
@@ -41,6 +42,7 @@ const PostEditPage = () => {
   const [loading, setLoading] = useState(true);
 
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const onedit = () => {
     setsuccess(false);
@@ -74,8 +76,11 @@ const PostEditPage = () => {
               item: post,
             });
             setPreview(post.postfile);
-            setLoading(false);
-            console.log(post);
+            if (user._id !== post.userid._id) {
+              navigate("/errors");
+            } else {
+              setLoading(false);
+            }
           });
       }
     };
