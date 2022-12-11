@@ -1,31 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { BiSearch } from "react-icons/bi";
-import  DropdownInput  from "./DropdownInput";
+import DropdownInput from "./DropdownInput";
 import Wrapper from "../wrappers/SearchContainer";
 import { useAppContext } from "../context/appContext";
 
+const SearchContainer = ({ applyFilters, handleChange }) => {
+  const {
+    isLoading,
 
+    searchType,
 
-const SearchContainer = () => {
-    const {
-      isLoading,
-     
-      searchType,
-     
-      jobTypeOptions,
-      handleChange,
-      clearFilters,
-    } = useAppContext();
+    jobTypeOptions,
+  } = useAppContext();
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
 
-    const handleSearch = (e) => {
-      if (isLoading) return;
-      handleChange({ name: e.target.name, value: e.target.value });
-    };
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      clearFilters();
-    };
   return (
     <Wrapper>
       <div className="search-container glassmorphism">
@@ -37,16 +28,12 @@ const SearchContainer = () => {
               type="text"
               className="search-input"
               placeholder="Enter Job"
+              name="title"
+              onChange={handleChange}
             />
           </div>
           <div className="sort-by">
-            <DropdownInput
-              labelText={"Sort"}
-              name="searchType"
-              value={searchType}
-              handleChange={handleSearch}
-              list={["all", ...jobTypeOptions]}
-            />
+            <button onClick={applyFilters}>Filter</button>
           </div>
         </div>
       </div>

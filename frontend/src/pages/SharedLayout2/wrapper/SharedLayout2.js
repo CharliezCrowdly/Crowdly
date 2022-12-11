@@ -42,7 +42,13 @@ const Wrapper = styled.aside`
     margin-top: 25px;
 
     & > .left-content {
-      width: 25%;
+      width: 30%;
+
+      & > .user-card{
+        & > .info-card{
+          width: 100%;
+        }
+      }
     }
     & > .middle-content {
       width: 100%;
@@ -72,6 +78,10 @@ const Wrapper = styled.aside`
       margin-inline: 0%;
       padding: 2%;
     }
+
+    .middle-content {
+      width: 70%;
+    }
   }
 
   @media screen and (max-width: 924px) {
@@ -79,8 +89,8 @@ const Wrapper = styled.aside`
       display: none;
     }
 
-    .middle-content{
-      width: 90%;
+    .middle-content {
+      width: 70%;
     }
   }
 `;

@@ -1,5 +1,5 @@
 const Post = require("../models/Post");
-const User = require("../models/user");
+const User = require("../models/UserModel");
 
 const { BAD_REQUESTError } = require("../errors/index");
 const { StatusCodes } = require("http-status-codes");
@@ -157,6 +157,10 @@ const UpdatePost = async (req, res) => {
 
   const { description, location } = req.body;
 
+  if (!description) {
+    throw new BAD_REQUESTError("Please provide description");
+  }
+
   const post = await Post.findOne({ _id: postId })
     .populate("userid likesid", "profilePicture username location")
     .sort("-createdAt");
@@ -181,6 +185,8 @@ const UpdatePost = async (req, res) => {
   }
 
   // check permissions
+
+  checkPermissions(req.user,post.userid);
 
   post.location = location;
   post.description = description;

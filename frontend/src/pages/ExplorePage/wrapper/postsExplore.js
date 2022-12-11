@@ -41,11 +41,13 @@ const Wrapper = styled.div`
         & > img {
           height: 100%;
           width: 100%;
+          backdrop-filter: blur(50px);
+          background: rgba(255, 255, 255, 0.61);
         }
 
         & > .video-container {
           position: relative;
-          background-color: blue;
+          background-color: whitesmoke;
           height: 100%;
           width: 100%;
 

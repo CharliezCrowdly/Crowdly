@@ -13,7 +13,7 @@ const Postbox = ({ postfile, filetype, index, openmodel }) => {
   return (
     <div className="post-container">
       {filetype.substring(0, filetype.indexOf("/")) === "image" ? (
-        <img className="post-img" src={postfile} alt="" />
+        <img className="post-img" src={postfile} alt="" loading="lazy" />
       ) : (
         ""
       )}

@@ -3,13 +3,15 @@ import styled from "styled-components";
 const Wrapper = styled.div`
   .feedPage {
     display: flex;
+    gap: 5%;
+
     & > .middle-container {
       width: 100%;
       padding-inline: 8%;
     }
 
     & > .right-container {
-      width: 35%;
+      width: 45%;
 
       & > .users {
         position: sticky;

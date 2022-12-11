@@ -29,7 +29,9 @@ import {
   UPDATE_POST_BEGIN,
   UPDATE_POST_SUCCESS,
   UPDATE_POST_ERROR,
-  
+  ADD_JOB_BEGIN,
+  ADD_JOB_ERROR,
+  ADD_JOB_SUCCESS,
 } from "./action";
 import { initialState } from "./appContext";
 
@@ -254,6 +256,33 @@ const reducer = (state, action) => {
   if (action.type === GET_EXPLORE_ERROR) {
     return { ...state, isLoading: false };
   }
+
+
+   if (action.type === ADD_JOB_BEGIN) {
+     return {
+       ...state,
+       isLoading: true,
+     };
+   }
+   if (action.type === ADD_JOB_SUCCESS) {
+     return {
+       ...state,
+       isLoading: false,
+       showAlert: true,
+       alertType: "success",
+       alertText: "New JOB ADDED!",
+     };
+   }
+   if (action.type === ADD_JOB_ERROR) {
+     return {
+       ...state,
+       isLoading: false,
+       showAlert: true,
+       isSubmit: false,
+       alertType: "danger",
+       alertText: action.payload.msg,
+     };
+   }
 
   throw new Error(`no such action: ${action.type}`);
 };

@@ -15,10 +15,12 @@
     "g": "^2.0.1",
     "moment": "^2.29.4",
     "react": "^18.2.0",
+    "react-bootstrap": "^2.6.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.6.0",
     "react-router-dom": "^6.2.2",
     "react-scripts": "5.0.1",
+    "react-toastify": "^9.1.1",
     "selenium-webdriver": "^4.6.1",
     "styled-components": "^5.3.6",
     "web-vitals": "^2.1.4"

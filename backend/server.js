@@ -21,6 +21,7 @@ const postRouter = require("./routes/postRoute");
 const commentRouter = require("./routes/commentRoute");
 const profileRouter = require("./routes/profileRoute");
 const todoRouter = require("./routes/todoRoute");
+const jobRouter = require("./routes/jobRoute");
 
 // middleware import
 const errorHandlerMiddleware = require("./middleware/error-handler");
@@ -33,6 +34,7 @@ if (process.env.NODE_ENV !== "production") {
 app.use(cors());
 
 app.use(express.static("./public"));
+app.use(express.static("./uploads"));
 
 app.use(express.json());
 
@@ -44,7 +46,7 @@ app.use("/api/v1/posts", authenticateUser, postRouter);
 app.use("/api/v1/comment", authenticateUser, commentRouter);
 app.use("/api/v1/profile", authenticateUser, profileRouter);
 app.use("/api/v1/todo", authenticateUser, todoRouter);
-
+app.use("/api/v1/job", authenticateUser, jobRouter);
 
 app.use(errorHandlerMiddleware);
 
@@ -62,5 +64,4 @@ const start = async () => {
 };
 start();
 
-
-module.exports = app
+module.exports = app;

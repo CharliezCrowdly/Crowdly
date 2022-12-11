@@ -18,6 +18,7 @@ const Wrapper = styled.div`
       border: none;
       outline: none;
       background-color: transparent;
+      margin-left: 10px;
     }
 
     & > .btn-post {

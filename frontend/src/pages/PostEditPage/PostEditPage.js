@@ -7,6 +7,8 @@ import { useAppContext } from "../../context/appContext";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Alert } from "../../component";
+import PostBox from "./component/PostBox";
+import { useNavigate } from "react-router-dom";
 
 const uploadState = {
   location: false,
@@ -29,16 +31,27 @@ const options = {
 };
 const PostEditPage = () => {
   const load = useRef(true);
-  const { user, token, updatePost, isLoading, showAlert } = useAppContext();
+  const { user, token, updatePost, isLoading, showAlert, alertType } =
+    useAppContext();
   const [value, setValue] = useState(options);
   const [upload, setUpload] = useState(uploadState);
   const [preview, setPreview] = useState(
     "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80"
   );
+  const [onsuccess, setsuccess] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const { id } = useParams();
+  const navigate = useNavigate();
+
+  const onedit = () => {
+    setsuccess(false);
+  };
 
   useEffect(() => {
+    if (alertType === "success") {
+      setsuccess(true);
+    }
     const fetch = async () => {
       if (load.current === true) {
         await axios
@@ -63,14 +76,18 @@ const PostEditPage = () => {
               item: post,
             });
             setPreview(post.postfile);
-            console.log(post);
+            if (user._id !== post.userid._id) {
+              navigate("/errors");
+            } else {
+              setLoading(false);
+            }
           });
       }
     };
     fetch();
 
     return () => (load.current = false);
-  }, [id, upload.preview]);
+  }, [id, upload.preview, alertType]);
 
   const handleChange = (e) => {
     setUpload({ ...upload, [e.target.name]: e.target.value });
@@ -159,7 +176,7 @@ const PostEditPage = () => {
     }
   };
 
-  if (isLoading) {
+  if (loading) {
     return <div>... Loading</div>;
   }
 
@@ -167,7 +184,7 @@ const PostEditPage = () => {
     <Wrapper className="">
       {showAlert && <Alert />}
 
-      <div className="card ">
+      <div className={onsuccess ? "card active" : "card"}>
         <div className="card-content">
           <div className="card-front ">
             <h3 className={value.fullscreen ? "d-none " : ""}>Edit Post</h3>
@@ -182,9 +199,8 @@ const PostEditPage = () => {
                   muted
                   loop
                   controls={true}
-                >
-                  <source type={"video/mp4"} src={preview} />
-                </video>
+                  src={preview}
+                ></video>
               ) : null}
               {upload.filetype?.substring(0, upload.filetype?.indexOf("/")) ===
                 "image" && (
@@ -203,6 +219,7 @@ const PostEditPage = () => {
                   className="uploadfile"
                   id=""
                   onChange={onFileSelection}
+                  accept="image/*,video/*"
                 />
                 <RiImageAddFill className="icon" />
               </div>
@@ -228,9 +245,14 @@ const PostEditPage = () => {
           </div>
           <div className="card-back">
             <p className="card-body">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam
-              omnis voluptatem dolorem alias perferendis veritatis dignissimos
-              nostrum mollitia praesentium laudantium, porro laborum!
+              <PostBox
+                item={upload.item}
+                onedit={onedit}
+                filetype={upload.filetype}
+                preview={preview}
+                description={upload.description}
+                location={upload.location}
+              />
             </p>
           </div>
         </div>

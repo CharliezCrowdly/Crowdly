@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useRef } from "react";
 import Wrapper from "../wrappers/SelectionOption";
-const SelectionOption = () => {
+const SelectionOption = ({ categoryfilter,clearcategory }) => {
   const options = [
     {
       label: "Fashon",
@@ -103,11 +103,9 @@ const SelectionOption = () => {
   const onchange = (o) => {
     setValue(o);
   };
-  const highlightlst = (index)=>{
-   
-    setHighlightedIndex(index)
-
-  }
+  const highlightlst = (index) => {
+    setHighlightedIndex(index);
+  };
 
   function clearOptions() {
     multiple ? onchange([]) : onchange([options[0]]);
@@ -117,12 +115,10 @@ const SelectionOption = () => {
   function selectOption(option) {
     if (multiple) {
       if (value.some((item) => item.label === option.label)) {
-        if(value.length === 1){
-        onchange(value.filter((o) => o.label !== option.label));
-        setMultiple(false)
-
-        }else{
-
+        if (value.length === 1) {
+          onchange(value.filter((o) => o.label !== option.label));
+          setMultiple(false);
+        } else {
           onchange(value.filter((o) => o.label !== option.label));
         }
       } else {
@@ -163,6 +159,7 @@ const SelectionOption = () => {
                     onClick={(e) => {
                       e.stopPropagation();
                       selectOption(v);
+                      categoryfilter(v.label);
                     }}
                   >
                     {v.label} <span className="btn-remove">&times;</span>
@@ -175,6 +172,7 @@ const SelectionOption = () => {
           onClick={(e) => {
             clearOptions();
             e.stopPropagation();
+            clearcategory()
           }}
           className="clear-btn"
         >
@@ -191,8 +189,8 @@ const SelectionOption = () => {
                   e.stopPropagation();
                   selectOption(option);
                   setIsOpen(false);
+                  categoryfilter(option.label);
                 }}
-                
                 onMouseEnter={() => highlightlst(index)}
                 className={
                   isOptionSelected(option)

@@ -13,7 +13,7 @@ const Wrapper = styled.aside`
     width: 100%;
     overflow: hidden;
 
-    background-color: var(--secodary-color);
+    background-color: white;
     background-size: cover;
     background-position: center;
     overflow: hidden;
@@ -92,7 +92,7 @@ const Wrapper = styled.aside`
     align-items: center;
     gap: 90px;
     font-weight: bold;
-    color: var(--white-color);
+    color: black;
     font-weight: bolder;
     z-index: 7 !important;
   }
@@ -105,13 +105,19 @@ const Wrapper = styled.aside`
     justify-content: center;
     gap: 20px;
     font-weight: lighter;
+
+    & > span{
+      & + span{
+        font-weight: bolder;
+      }
+    }
   }
   .circle-border {
     width: 53px;
     height: 53px;
     text-align: center;
     display: flex;
-    box-shadow: 0px 0px 21px rgb(255 255 255 / 26%);
+    box-shadow: 0px 0px 21px rgb(0 0 0 / 26%);
 
     justify-content: center;
     align-items: center;
@@ -127,10 +133,11 @@ const Wrapper = styled.aside`
     opacity: 0;
 
     text-align: center;
-    color: var(--white-color);
+    color: black;
     /* transform: translateY(-50px); */
     font-family: "MADE Soulmaze Outline Regular";
     font-size: min(10vw, 85px);
+    
 
     line-height: min(10vw, 81px);
     text-shadow: 0px 0px 21px rgb(255 255 255 / 65%);
@@ -176,22 +183,23 @@ const Wrapper = styled.aside`
   .container-center {
     width: 80vw;
     margin: 0 auto;
-    color: var(--white-color);
+    color: black;
 
     display: flex;
     justify-content: space-between;
   }
   .GetStarted {
-    background-color: #e93dd600;
+    background-color: rgba(0 0 0 0.5);
     border-style: solid;
     border-width: 0px 0px 0px 0px;
-    border-color: #ffffff;
+    border-color: black;
     border-radius: 5px 5px 5px 5px;
     box-shadow: 0px 32px 32px 5px rgb(4 4 4 / 42%);
     padding: 12px 75px 12px 75px;
     position: absolute;
     margin-top: 190px;
-    color: #ffffff;
+    backdrop-filter: blur(200px);
+    color: white;
     font-weight: bold;
     cursor: pointer;
     text-transform: uppercase;
@@ -222,7 +230,7 @@ const Wrapper = styled.aside`
 
     left: 10vw;
     font-size: 2rem;
-    color: var(--white-color);
+    color: black;
 
     text-transform: uppercase;
     animation: fadeIn 2s ease-in 0s forwards;
@@ -236,7 +244,7 @@ const Wrapper = styled.aside`
     left: 0;
     font-size: 2rem;
     color: transparent;
-    -webkit-text-stroke: 0.3px rgba(255, 255, 255, 0.497);
+    -webkit-text-stroke: 0.3px rgba(0, 0, 0, 0.497);
 
     text-transform: uppercase;
   }
@@ -244,7 +252,7 @@ const Wrapper = styled.aside`
   .two {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    background: var(--secodary-color);
+    background: white;
     padding: 9%;
     padding-top: 2%;
     column-gap: 2%;
@@ -256,7 +264,7 @@ const Wrapper = styled.aside`
   }
 
   .three {
-    background-color: var(--secodary-color);
+    background-color: var(--white-color);
     padding-right: 4%;
     display: flex;
     align-items: center;
@@ -296,7 +304,7 @@ const Wrapper = styled.aside`
     .four {
     background-color: blue;
 
-    background-color: var(--secodary-color);
+    background-color: var(--white-color);
     padding-inline: 10%;
 
     & > .Patners {
@@ -323,7 +331,7 @@ const Wrapper = styled.aside`
       &::before {
         content: "patners with";
         font-family: inherit;
-        color: #d2d4f2;
+        color: black;
 
         position: absolute;
         bottom: -15px;
@@ -378,7 +386,7 @@ const Wrapper = styled.aside`
     }
 
     .brands {
-      background-color: var(--secodary-color);
+      background-color: var(--white-color);
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       align-items: center;
@@ -386,7 +394,7 @@ const Wrapper = styled.aside`
   }
 
   .five {
-    background-color: var(--secodary-color);
+    background-color: white;
     padding-inline: 10%;
     padding-top: 5%;
     /* background-color: #ab89c7; */
@@ -424,7 +432,7 @@ const Wrapper = styled.aside`
         min-height: 53px;
 
         display: flex;
-        box-shadow: 0px 0px 21px rgb(255 255 255 / 26%);
+        box-shadow: 0px 0px 21px rgb(0 0 0 / 26%);
 
         justify-content: center;
         align-items: center;
@@ -444,12 +452,12 @@ const Wrapper = styled.aside`
       }
 
       &>.Why::before {
-        content: "Why choose winkle";
+        content: "Why choose crowdly";
         font-size: inherit !important;
         white-space: nowrap;
         width: 100%;
         font-family: inherit;
-        color: #d2d4f2;
+        color: black;
         word-break: keep-all;
 
         position: absolute;
@@ -461,7 +469,7 @@ const Wrapper = styled.aside`
       }
 
       &>.Why::after {
-        content: "Why choose winkle";
+        content: "Why choose crowdly";
         font-size: inherit !important;
         white-space: nowrap;
 
@@ -470,7 +478,7 @@ const Wrapper = styled.aside`
         left: 0;
         font-size: 2rem;
         color: transparent;
-        -webkit-text-stroke: 0.3px rgba(255, 255, 255, 0.497);
+        -webkit-text-stroke: 0.3px rgba(0, 0, 0, 0.497);
 
         text-transform: uppercase;
       }
@@ -478,7 +486,7 @@ const Wrapper = styled.aside`
   }
 
   .six {
-    background-color: var(--secodary-color);
+    background-color: var(--white-color);
     padding-inline: 10%;
     position: relative;
     padding-block: 80px;
@@ -499,7 +507,7 @@ const Wrapper = styled.aside`
         white-space: nowrap;
         width: 100%;
         font-family: inherit;
-        color: #d2d4f2;
+        color: black;
         word-break: keep-all;
 
         font-size: 2rem;
@@ -518,7 +526,7 @@ const Wrapper = styled.aside`
         
         font-size: 2rem;
         color: transparent;
-        -webkit-text-stroke: 0.3px rgba(255, 255, 255, 0.497);
+        -webkit-text-stroke: 0.3px rgba(0, 0, 0, 0.497);
 
         text-transform: uppercase;
 
@@ -609,7 +617,7 @@ const Wrapper = styled.aside`
     }
   }
   .footer{
-    background-color: var(--secodary-color);
+    background-color: var(--white-color);
     padding-inline: 10%;
     padding-block: 7%;
     text-align: center;
@@ -633,7 +641,7 @@ const Wrapper = styled.aside`
         font-weight: normal;
         font-size:0.8rem;
         margin-top: 5px;
-        color:white;
+        color:black;
       text-align: end;
   
       }

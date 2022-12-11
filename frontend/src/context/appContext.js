@@ -30,11 +30,13 @@ import {
   UPDATE_POST_BEGIN,
   UPDATE_POST_ERROR,
   UPDATE_POST_SUCCESS,
-  SEARCH_SUCCESS
+  SEARCH_SUCCESS,
+  ADD_JOB_BEGIN,
+  ADD_JOB_ERROR,
+  ADD_JOB_SUCCESS,
 } from "./action";
 
 import axios from "axios";
-import { Action } from "@remix-run/router";
 
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
@@ -68,9 +70,9 @@ const AppProvider = ({ children }) => {
   // axios.defaults.headers.common['Authorization'] = `Bearer ${state.token}`
   const authFetch = axios.create({
     baseURL: "/api/v1",
-    // headers: {
-    //   Authorization: `Bearer ${state.token}`,
-    // },
+    headers: {
+      Authorization: `Bearer ${state.token}`,
+    },
   });
 
   // response interceptor
@@ -78,6 +80,7 @@ const AppProvider = ({ children }) => {
     (config) => {
       // do something before request is sent
       config.headers.common["Authorization"] = `Bearer ${state.token}`;
+
       return config;
     },
     (error) => {
@@ -129,8 +132,15 @@ const AppProvider = ({ children }) => {
   const setupUser = async ({ currentUser, endPoint, alertText }) => {
     dispatch({ type: SETUP_USER_BEGIN });
 
-    const { name, email, password, profilePicture, username, usertype,cpassword } =
-      currentUser;
+    const {
+      name,
+      email,
+      password,
+      profilePicture,
+      username,
+      usertype,
+      cpassword,
+    } = currentUser;
 
     let formData = new FormData();
 
@@ -141,8 +151,7 @@ const AppProvider = ({ children }) => {
     formData.append("email", email);
     formData.append("password", password);
     formData.append("profilePicture", profilePicture);
-    formData.append("cpassword",cpassword);
-
+    formData.append("cpassword", cpassword);
 
     try {
       const { data } = await axios.post(`/api/v1/auth/${endPoint}`, formData);
@@ -309,7 +318,13 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  const updatePost = async ({ postid, description, location, filePath,filetype }) => {
+  const updatePost = async ({
+    postid,
+    description,
+    location,
+    filePath,
+    filetype,
+  }) => {
     dispatch({ type: UPDATE_POST_BEGIN });
     try {
       let formData = new FormData();
@@ -334,41 +349,134 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
-   const searchProfile = async (url) => {
-     try {
-       const res = await authFetch.get(`/profile/${url}`);
-       const { users } = res.data;
+  const searchProfile = async (url) => {
+    try {
+      const res = await authFetch.get(`/profile/${url}`);
+      const { users } = res.data;
 
-       dispatch({ type: SEARCH_SUCCESS, payload: { users } });
-     } catch (e) {
-       console.log(e);
-     }
-   };
+      dispatch({ type: SEARCH_SUCCESS, payload: { users } });
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
-   const explorePage = async () => {
-     dispatch({ type: GET_EXPLORE_BEGIN });
+  const explorePage = async () => {
+    dispatch({ type: GET_EXPLORE_BEGIN });
 
-     try {
-       const { data } = await authFetch.get("/posts/explorepost");
-       const { posts } = data;
-       dispatch({
-         type: GET_EXPLORE_SUCCESS,
-         payload: { posts },
-       });
-     } catch (e) {
-       dispatch({
-         type: GET_EXPLORE_ERROR,
-       });
-     }
-   };
+    try {
+      const { data } = await authFetch.get("/posts/explorepost");
+      const { posts } = data;
+      dispatch({
+        type: GET_EXPLORE_SUCCESS,
+        payload: { posts },
+      });
+    } catch (e) {
+      dispatch({
+        type: GET_EXPLORE_ERROR,
+      });
+    }
+  };
+
+  const addJob = async ({ values }) => {
+    dispatch({ type: ADD_JOB_BEGIN });
+    try {
+      const {
+        title,
+        sector,
+        experiencelvl,
+        jobtype,
+        skills,
+        sallary,
+        description,
+        responsibilities,
+        requirments,
+        closeTime,
+      } = values;
+      let formData = new FormData();
+
+      formData.append("title", title);
+      formData.append("description", description);
+      formData.append("sector", sector);
+      formData.append("experiencelvl", experiencelvl);
+      formData.append("jobtype", jobtype);
+      formData.append("skills", skills);
+      formData.append("sallary", sallary);
+      formData.append("responsibilities", responsibilities);
+      formData.append("requirments", requirments);
+      formData.append("closeTime", closeTime);
+
+      await authFetch.post("job/addJob", {
+        title,
+        sector,
+        experiencelvl,
+        jobtype,
+        skills,
+        sallary,
+        description,
+        responsibilities,
+        requirments,
+        closeTime,
+      });
+      dispatch({
+        type: ADD_JOB_SUCCESS,
+      });
+
+      // dispatch({ type: CLEAR_VALUES });
+    } catch (error) {
+      console.log(error);
+      if (error.response.status === 401) return;
+      dispatch({
+        type: ADD_JOB_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
+  };
 
   const toggleSidebar = () => {
     dispatch({ type: TOGGLE_SIDEBAR });
   };
+  const unfollowUser = async (userId) => {
+    try {
+      await authFetch.patch(`/profile/unfollow/${userId}`);
+      dispatch({ type: FOLLOW_SUCCESS });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const followUser = async (userId) => {
+    try {
+      await authFetch.patch(`/profile/${userId}`);
+
+      dispatch({ type: FOLLOW_SUCCESS });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const savejob = async (jobid) => {
+    try {
+      await authFetch.patch(`/job/savejob/${jobid}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const unsavejob = async (jobid) => {
+    try {
+      await authFetch.patch(`/job/unsavejob/${jobid}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
         ...state,
+        logoutUser,
+        unfollowUser,
+        followUser,
         displayAlert,
         setupUser,
         createPost,
@@ -384,14 +492,15 @@ const AppProvider = ({ children }) => {
         updatePost,
         explorePage,
         searchProfile,
+        addJob,
+        savejob,
+        unsavejob,
       }}
     >
       {children}
     </AppContext.Provider>
   );
 };
-
-
 
 const useAppContext = () => {
   return useContext(AppContext);

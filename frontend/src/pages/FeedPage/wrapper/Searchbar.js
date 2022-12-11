@@ -58,6 +58,7 @@ const Wrapper = styled.div`
         margin-left: 2%;
         font-size: 0.9rem;
         cursor: pointer;
+        background-color: transparent;
 
         &:disabled{
           cursor:progress;

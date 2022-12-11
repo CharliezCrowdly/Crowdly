@@ -1,12 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
 import { HiLocationMarker } from "react-icons/hi";
 import { RiMoneyDollarCircleFill } from "react-icons/ri";
 import Wrapper from "../wrappers/JobBox";
 import { useNavigate } from "react-router-dom";
-
-const JobBox = () => {
+import { useAppContext } from "../context/appContext";
+const JobBox = (job) => {
   const navigate = useNavigate();
+  const { user, savejob, unsavejob } = useAppContext();
+  const [bookmarked, Setbookmark] = useState(false);
+  useEffect(() => {
+    if (job.job.saved.find((like) => like === user._id)) {
+      Setbookmark(true);
+      // postState.bookmarked= true
+    } else {
+      // postState.bookmarked = false
+      Setbookmark(false);
+    }
+  }, [job.job.saved, user._id]);
+
+  const togglesave = (e) => {
+    e.preventDefault();
+
+    if (bookmarked) {
+      unsavejob(job.job._id);
+      Setbookmark(false);
+    } else {
+      savejob(job.job._id);
+      Setbookmark(true);
+    }
+  };
   return (
     <Wrapper>
       <div className="jobbox glassmorphism">
@@ -20,28 +43,30 @@ const JobBox = () => {
               alt=""
             />
             <div className="jobfield">
-              <span className="jobname">Junior Ui/ UX Developer</span>
-              <p className="companyname">company name</p>
+              <span className="jobname">{job.job.title}</span>
+              <p className="companyname">{job.job.company.name}</p>
             </div>
           </div>
           <div className="savejob">
-            <p className="blue-color">Save Job</p>
-            <BsBookmark />
+            <p className="blue-color">
+              {!bookmarked ? "Save Job" : "Unsave Job"}
+            </p>
+            {bookmarked ? (
+              <BsFillBookmarkFill onClick={togglesave} />
+            ) : (
+              <BsBookmark onClick={togglesave} />
+            )}
           </div>
         </div>
 
         {/* body */}
 
-        <div className="jobdetail">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id eligendi
-          adipisci ab doloremque consequatur, quam ipsum temporibus natus,
-          voluptate vitae, explicabo cupiditate!
-        </div>
+        <div className="jobdetail">{job.job.description}</div>
 
         <div className="jobtype">
-          <p className="fulltime bluebox">FullTime</p>
-          <p className="jobfield bluebox">IT</p>
-          <p className="jobfield bluebox">Remote</p>
+          <p className="fulltime bluebox">{job.job.jobtype}</p>
+          <p className="jobfield bluebox">{job.job.sector}</p>
+          <p className="jobfield bluebox">{job.job.experiencelvl}</p>
         </div>
         {/* footer */}
 
@@ -50,7 +75,7 @@ const JobBox = () => {
             <div className="jobprice">
               <RiMoneyDollarCircleFill className="blue-icon" />
               <p className="price">
-                $12k - 14K <span className="light-text">/Month</span>
+                ${job.job.sallary} <span className="light-text">/Month</span>
               </p>
             </div>
             <div className="jobLocation">
@@ -59,7 +84,10 @@ const JobBox = () => {
             </div>
           </div>
 
-          <button className="btn-apply" onClick={()=>navigate("/job/jobdetail")}>
+          <button
+            className="btn-apply"
+            onClick={() => navigate(`/job/jobdetail/${job.job._id}`)}
+          >
             Learn More
           </button>
         </div>

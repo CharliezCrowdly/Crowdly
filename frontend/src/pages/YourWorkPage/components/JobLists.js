@@ -1,20 +1,18 @@
-import React from 'react'
-import joblists from '../../../utils/joblist'
-import {JobBox} from '../../../component';
+import React from "react";
+import { JobBox } from "../../../component";
 
-const JobLists = () => {
+const JobLists = React.memo(({ joblists, joblength, applyFilters, search }) => {
+  
+
   return (
     <div>
-      {joblists.map((link) => {
-        const {  id } = link;
+      {joblists.map((job, index) => {
+        // const { id } = link;
 
-        return (
-            <JobBox key={id}/>
-          
-        );
+        return <JobBox job={job} key={index} />;
       })}
     </div>
   );
-}
+});
 
-export default JobLists
+export default JobLists;

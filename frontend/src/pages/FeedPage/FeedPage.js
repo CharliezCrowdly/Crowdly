@@ -4,7 +4,7 @@ import Searchbar from "./component/Searchbar";
 
 import lstrecommendation from "../../utils/lstrecommendation";
 
-import { Recommendation,Alert } from "../../component";
+import { Recommendation,Alert, Recommendationlst } from "../../component";
 import { PostContainer } from "./component";
 import { useAppContext } from "../../context/appContext";
 import Todo from "../JobDetail/component/Todo";
@@ -32,11 +32,7 @@ const FeedPage = () => {
           <PostContainer postLoad={loadRef.current} toggleload={stopload} />
         </div>
         <div className="right-container">
-          <div className="users">
-            {lstrecommendation.map((item) => (
-              <Recommendation item={item} key={item.id} />
-            ))}
-          </div>
+          <Recommendationlst />
 
           <Todo/>
         </div>

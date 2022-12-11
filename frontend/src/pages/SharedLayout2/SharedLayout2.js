@@ -2,7 +2,7 @@ import React from "react";
 import { UserInfoCard, Navbar, SmallNavBar } from "../../component";
 import { Outlet } from "react-router-dom";
 import Wrapper from "./wrapper/SharedLayout2";
-import { Recommendation, Alert } from "../../component";
+import { Recommendation, Alert,Recommendationlst } from "../../component";
 import lstrecommendation from "../../utils/lstrecommendation";
 
 import Todo from "../JobDetail/component/Todo";
@@ -24,11 +24,7 @@ const SharedLayout2 = () => {
             </div>
 
             <div className="right-content">
-              <div className="users">
-                {lstrecommendation.map((item) => (
-                  <Recommendation item={item} key={item.id} />
-                ))}
-              </div>
+              <Recommendationlst/>
 
               <Todo />
             </div>

@@ -17,7 +17,7 @@ const NavLinks = ({ toggleSidebar }) => {
             }
           >
             <span className="icon">{icon}</span>
-            {text}
+            <span>{text}</span>
           </NavLink>
         );
       })}

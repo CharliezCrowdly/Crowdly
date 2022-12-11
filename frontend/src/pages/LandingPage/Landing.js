@@ -36,7 +36,7 @@ const LandingPage = () => {
             <li>Get Started</li>
             <li className="logo">
               <span className="circle-border">C</span>{" "}
-              <span>Crowdly'S MEDIA</span>
+              <span>Crowdly</span>
             </li>
             <li>About</li>
           </ul>
@@ -116,23 +116,7 @@ const LandingPage = () => {
         </svg>
       </section>
 
-      <section className="four">
-        <div className="Patners"></div>
-        <div className="line-left"></div>
-
-        <div className="brands  ">
-          <img src={samsung} alt="" />
-
-          <img src={cocacola} alt="" />
-          <img src={fourf} alt="" />
-          <img src={ikea} alt="" />
-        </div>
-        <div className="line-right"></div>
-
-        <span className="million">*Along with 1 million users</span>
-
-        <button className="getstarted-btn">get started</button>
-      </section>
+     
 
       <section className="five">
         <div className="five-content">
@@ -156,15 +140,15 @@ const LandingPage = () => {
         <p className="five-p">Check out our services.</p>
 
         {/* <img src={jurrasic} className="bigimg-left" alt="" /> */}
-        <Spline
+        {/* <Spline
           className="bigimg-left"
           scene="https://prod.spline.design/OPjUA4wRIp6W0MSc/scene.splinecode"
-        />
+        /> */}
         {/* <img src={avatar} className="bigimg-right" alt="" /> */}
-        <Spline
+        {/* <Spline
           className="bigimg-right"
           scene="https://prod.spline.design/ynT-4AQcXlkJMFhe/scene.splinecode"
-        />
+        /> */}
       </section>
 
       <section className="six">
@@ -200,19 +184,8 @@ const LandingPage = () => {
         </p>
       </section>
 
-      <section className="seven">
-        <video className="footer-bg" autoPlay muted loop>
-          <source type="video/mp4" src={handvideo} />
-        </video>
-
-        <div className="linear-gradient"></div>
-
-        <div className="quote">
-          <div>"The best thing to hold</div>
-          <div>onto in life is each other"</div>
-        </div>
-      </section>
-
+     
+        <hr></hr>
       <section className="footer">
         <div className="footer-content">
           <ul className="d-flex navbar-link">
@@ -244,7 +217,7 @@ const LandingPage = () => {
         <div className="line-right"></div>
 
         <div className="copyright">
-          Copyrights © 2022 Winkle’Media. All rights reserved.
+          Copyrights © 2022 Winkle’Media. All rights reserved.  
         </div>
       </section>
     </Wrapper>

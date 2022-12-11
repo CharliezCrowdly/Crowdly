@@ -2,6 +2,7 @@ import React from "react";
 import "./index.css";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import {
   LoginPage,
   ProtectedRoute,
@@ -14,7 +15,10 @@ import {
   LandingPage,
   ExplorePage,
   MessagePage,
-  SharedLayout3
+  SharedLayout3,
+  AddJobPage,
+  PaymentPage,
+  ApplicantPage
 } from "./pages";
 
 function App() {
@@ -22,15 +26,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="login" element={<LoginPage />} />
-        <Route
-          path="/"
-          element={
-            <ProtectedRoute>
-              <LandingPage />
-            </ProtectedRoute>
-          }
-        />
-
+        <Route path="/" element={<LandingPage />} />
         <Route
           path="/user"
           element={
@@ -51,9 +47,13 @@ function App() {
             </ProtectedRoute>
           }
         >
+          <Route path="add/job" element={<AddJobPage />} />
+          <Route path="payment" element={<PaymentPage />} />
+
           <Route path="message" element={<MessagePage />} />
+          <Route path="applicants" element={<ApplicantPage />} />
         </Route>
-        
+
         <Route
           path="/job"
           element={
@@ -62,7 +62,7 @@ function App() {
             </ProtectedRoute>
           }
         >
-          <Route path="jobDetail" element={<JobDetail />} />
+          <Route path="jobDetail/:id" element={<JobDetail />} />
         </Route>
 
         <Route

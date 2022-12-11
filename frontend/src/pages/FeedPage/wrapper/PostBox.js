@@ -13,7 +13,7 @@ const Wrapper = styled.div`
     padding-inline: max(25px, 4%);
     padding-block: 2.5%;
     border-radius: 25px;
-    width: 460px;
+    max-width: 560px;
 
     align-content: stretch;
 
@@ -91,9 +91,10 @@ const Wrapper = styled.div`
 
       & > .post-image-section {
         & > .post-img {
-          width: 408px;
+          width: 100%;
           height: 472px;
           border-radius: 25px;
+          aspect-ratio: 1/1;
           object-fit: cover;
 
           & > .music-img {
@@ -170,7 +171,6 @@ const Wrapper = styled.div`
         text-align: start;
         margin-left: 2.5%;
         font-size: 0.8rem;
-
       }
       & > .more-less {
         color: var(--black-500);
