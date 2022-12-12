@@ -151,6 +151,21 @@ const EditProfilePage = () => {
         })
       : [{ etitle: "", ecollege: "", estart: "", eend: "" }];
 
+  let work = [];
+  if (user.experience && user.experience.length > 0) {
+    setworkset(
+      user.experience.map((work) => {
+        return {
+          wtitle: work.title,
+          wcompany: work.company,
+          wlocation: work.location,
+          wstart: new Date(work.startDate),
+          wend: new Date(work.endDate),
+        };
+      })
+    );
+  }
+
   const handleOnEduChange = (e, property, index) => {
     const { data, errors } = this.state;
     e.target.value.length <= 0
@@ -158,6 +173,35 @@ const EditProfilePage = () => {
       : (errors[e.target.name] = "");
     data.educationSet[index][property] = e.target.value;
     this.setState({ data });
+  };
+
+  const [workset, setworkset] = useState([
+    {
+      wtitle: "",
+      wcompany: "",
+      wlocation: "",
+      wstart: "",
+      wend: "",
+    },
+  ]);
+
+  const handleAddWork = () => {
+    setworkset([
+      ...workset,
+      {
+        wtitle: "",
+        wcompany: "",
+        wlocation: "",
+        wstart: "",
+        wend: "",
+      },
+    ]);
+  };
+
+  const handleRemoveWork = (index) => {
+    const values = [...workSet];
+    values.splice(index, 1);
+    setworkset(values);
   };
 
   return (
@@ -207,6 +251,10 @@ const EditProfilePage = () => {
               educationSet={educationSet}
               education={education}
               handleDateEdu={handleDateEdu}
+              workSet={workset}
+              // work={work}
+              handleAddWork={handleAddWork}
+              handleRemoveWork={handleRemoveWork}
             />
           </div>
 

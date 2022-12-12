@@ -22,17 +22,16 @@ const Step2 = ({
   list,
   Addskill,
   Removeskill,
-  Removeresponsibility,
-  Addresponsibility,
-  responsibilitiesChange,
-  Addrequirment,
-  requirmentsChange,
-  Removerequirment,
+  // work,
+  workSet,
   handleOnEduChange,
   handleAddEdu,
   handleRemoveEdu,
   handleDateEdu,
+  handleAddWork,
+  handleRemoveWork,
 }) => {
+  console.log("workSet", workSet);
   return (
     <div>
       <label htmlFor="">Skills</label>
@@ -162,19 +161,133 @@ const Step2 = ({
         </div>
       </div>
 
-      <label htmlFor="">Requirements</label>
-
-      {/* {list.requirments.map((item, index) => {
+      <label htmlFor="">Experience</label>
+      {workSet.map((work, index) => {
         return (
-          <ListInput
-            handleChange={(e) => requirmentsChange(e, index)}
-            Add={Addrequirment}
-            key={index}
-            value={list.requirments[index].requirment}
-            Remove={() => Removerequirment(index)}
-          />
+          <>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-around",
+                marginBottom: "1rem",
+              }}
+            >
+              <Accordion
+                style={{
+                  width: "85%",
+                  background: "inherit",
+                }}
+              >
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                >
+                  <Typography>Job Detail</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <TextField
+                    name="wtitle"
+                    label="Job Title"
+                    value={work.wtitle}
+                    onChange={(e) => {
+                      handleOnWorkChange(e, "wtitle", index);
+                    }}
+                    style={{ width: "100%" }}
+                    size="small"
+                    sx={{ input: { color: "orange !important" } }}
+                  />
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      marginBottom: "1rem",
+                      marginTop: "2rem",
+                    }}
+                  >
+                    <TextField
+                      name="wcompany"
+                      label="Company's Name"
+                      value={work.wcompany}
+                      onChange={(e) => {
+                        handleOnWorkChange(e, "wcompany", index);
+                      }}
+                      style={{ width: "45%" }}
+                      size="small"
+                      sx={{ input: { color: "orange !important" } }}
+                    />
+                    <TextField
+                      name="wlocation"
+                      label="Company's Location"
+                      value={work.wlocation}
+                      onChange={(e) => {
+                        handleOnWorkChange(e, "wlocation", index);
+                      }}
+                      style={{ width: "45%" }}
+                      size="small"
+                      sx={{ input: { color: "orange !important" } }}
+                    />
+                  </div>
+
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      marginBottom: "1rem",
+                      marginTop: "2rem",
+                    }}
+                  >
+                    <div
+                      style={{
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <h6 style={{ color: "white" }}>Start Date</h6>
+                      <TextField
+                        name="wstart"
+                        label="Start Date"
+                        value={work.wstart}
+                        onChange={(e) => {
+                          handleOnWorkChange(e, "wstart", index);
+                        }}
+                        size="small"
+                        sx={{ input: { color: "orange !important" } }}
+                      />
+                    </div>
+                    <div
+                      style={{
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <h6 style={{ color: "white" }}>End Date</h6>
+                      <TextField
+                        name="webd"
+                        label="End Date"
+                        value={work.wend}
+                        onChange={(e) => {
+                          handleOnWorkChange(e, "wend", index);
+                        }}
+                        size="small"
+                        sx={{ input: { color: "orange !important" } }}
+                      />
+                    </div>
+                  </div>
+                </AccordionDetails>
+              </Accordion>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <IconButton onClick={() => handleRemoveWork(index)}>
+                  <RemoveButton />
+                </IconButton>
+              </div>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <IconButton onClick={handleAddWork}>
+                  <AddButton />
+                </IconButton>
+              </div>
+            </div>
+          </>
         );
-      })} */}
+      })}
     </div>
   );
 };
