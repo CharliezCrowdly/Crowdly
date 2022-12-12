@@ -23,7 +23,7 @@ const UserInfoCard = () => {
           <div
             className="edit-profile"
             style={{ cursor: "pointer" }}
-            onClick={() => navigate("/user/add/job")}
+            onClick={() => navigate("/user/edit")}
           >
             Edit Profile
           </div>
