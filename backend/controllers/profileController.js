@@ -40,15 +40,12 @@ const followUser = async (req, res) => {
       { new: true }
     );
     res.status(StatusCodes.OK).json({ success: true });
-  }
-  else {
-
+  } else {
     res.status(StatusCodes.OK).json({ success: false, usercount: user.length });
   }
 };
 
 const unfollowUser = async (req, res) => {
-  
   const user = await User.find({
     _id: req.params.id,
     followers: req.user.userId,
@@ -70,16 +67,17 @@ const unfollowUser = async (req, res) => {
       { new: true }
     );
     res.status(StatusCodes.OK).json({ success: false, followers, following });
-  }
-  else {
-    
+  } else {
     res.status(StatusCodes.OK).json({ success: true });
   }
 };
 
 const recommend = async (req, res) => {
   try {
-    const post = await User.aggregate([{ $sample: { size: 4 } }]);
+    const post = await User.aggregate([
+      { $match: { _id: { $ne: req.user.userId } } },
+      { $sample: { size: 4 } },
+    ]);
 
     const user = await User.populate(post, { path: "userid" });
     res.status(StatusCodes.OK).json({ user });
