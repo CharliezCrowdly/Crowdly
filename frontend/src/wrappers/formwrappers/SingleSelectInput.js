@@ -3,6 +3,8 @@ import styled from "styled-components";
 const Wrapper = styled.div`
   position: relative;
   padding-block: 2%;
+  border-radius: 25px;
+ 
 
   .caret {
     border: 0.6rem solid transparent;

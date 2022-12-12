@@ -6,13 +6,14 @@ const Wrapper = styled.aside`
     flex-direction: column;
     width: 100%;
     padding: 2%;
-    border-radius: 20px;
+    border-radius: 15px;
 
     & > .searchbox {
       display: flex;
       column-gap: 1.5rem;
       height: 2.2rem;
       align-items: center;
+      margin-top: 10px;
 
       & > .searchbar {
         background-color: var(--blue-300);
@@ -39,6 +40,7 @@ const Wrapper = styled.aside`
       }
 
       & > .sort-by {
+        transform: translateY(-5px);
         & > button {
           background-color: var(--blue-1100);
           color: white;

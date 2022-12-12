@@ -169,10 +169,10 @@ const LoginPage = () => {
         </form>
 
         <div className="image-container">
-          {/* <img src={loginImage} alt="no " /> */}
+          <img src={loginImage} alt="no " />
 
           <h4 className="login-info">
-            {values.isMember ? " Login To" : "Create"} Your Crowdly Account
+            {values.isMember ? " Login To" : "Create Your"}  Crowdly Account
           </h4>
         </div>
       </div>

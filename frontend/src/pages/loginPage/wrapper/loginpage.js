@@ -62,13 +62,14 @@ const Wrapper = styled.div`
       z-index: 2;
       font-size: min(70px, calc(20px + 4vw));
       color: white;
+      text-align: center;
     }
 
     & > img {
-      margin-top: 70px;
-      width: 70%;
+      margin-top: 200px;
+      width: 50%;
       object-fit: contain;
-      transform: translateX(-40%);
+      transform: translateX(-20%);
       animation: bounce infinite 15.2s forwards;
     }
   }

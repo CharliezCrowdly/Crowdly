@@ -37,10 +37,10 @@ const Wrapper = styled.aside`
       & > .savejob {
         display: flex;
         align-items: center;
-       
+
         white-space: nowrap;
 
-        & > .blue-color{
+        & > .blue-color {
           color: var(--blue-900);
           font-weight: 600;
           font-family: var(--inter-font);
@@ -53,14 +53,14 @@ const Wrapper = styled.aside`
       gap: 2%;
 
       & > .bluebox {
-        background-color: var(--blue-600);
+        background-color: #5959ff;
         padding-block: 1%;
         padding-inline: 1%;
         text-align: center;
         width: max-content;
         min-width: 20%;
         border-radius: 10px;
-        color: var(--black-650);
+        color: white;
         font-weight: 500;
       }
     }
@@ -68,7 +68,7 @@ const Wrapper = styled.aside`
     & > .jobboxfooter {
       display: flex;
       justify-content: space-between;
-      
+
       & > .jobspecification {
         display: flex;
         align-items: center;
@@ -90,6 +90,7 @@ const Wrapper = styled.aside`
           display: flex;
           align-items: center;
           font-size: 1.1rem;
+          text-transform: capitalize;
 
           & > .blue-icon {
             color: var(--blue-1000);
@@ -117,7 +118,7 @@ const Wrapper = styled.aside`
     }
 
     & > .jobdetail {
-      color: var(--black-500);
+      color: #4c4c4c;
       line-height: 1rem;
       font-size: 0.9rem;
     }

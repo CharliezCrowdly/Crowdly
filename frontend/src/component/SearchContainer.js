@@ -27,7 +27,7 @@ const SearchContainer = ({ applyFilters, handleChange }) => {
             <input
               type="text"
               className="search-input"
-              placeholder="Enter Job"
+              placeholder="Enter Job Title"
               name="title"
               onChange={handleChange}
             />
