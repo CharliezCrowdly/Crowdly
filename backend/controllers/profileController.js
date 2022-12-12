@@ -74,8 +74,10 @@ const unfollowUser = async (req, res) => {
 
 const recommend = async (req, res) => {
   try {
+    const { followers } = await User.findById(req.user.userId);
+
     const post = await User.aggregate([
-      { $match: { _id: { $ne: req.user.userId } } },
+      { $match: { _id: { $nin: [req.user.userId] } } },
       { $sample: { size: 4 } },
     ]);
 

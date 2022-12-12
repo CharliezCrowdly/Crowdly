@@ -42,7 +42,7 @@ const Applicant = () => {
           ) : (
             <AiOutlineStar className="icon" onClick={onpinned} />
           )}
-          <button className="send-msg">Send Message</button>
+          <button className="send-msg">Show Proposal</button>
         </div>
       </div>
       <hr />
