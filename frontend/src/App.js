@@ -21,6 +21,7 @@ import {
   ApplicantPage,
   ProfilePage,
 } from "./pages";
+import EditProfilePage from "./pages/EditProfile/EditProfilePage";
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
           }
         >
           <Route path="add/job" element={<AddJobPage />} />
+          <Route path="edit" element={<EditProfilePage />} />
           <Route path="payment" element={<PaymentPage />} />
 
           <Route path="message" element={<MessagePage />} />

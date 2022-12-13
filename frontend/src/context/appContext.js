@@ -67,6 +67,7 @@ const initialState = {
   profilePost: [],
   followings: [],
   followers: [],
+  
 };
 
 const AppContext = React.createContext();
@@ -489,6 +490,12 @@ const AppProvider = ({ children }) => {
     } catch (error) {
       dispatch({ type: ERROR });
     }
+
+
+  const updateUser = async (values) => {
+    try {
+      await authFetch.put("/profile/updateUser", { ...values });
+    } catch (error) {}
   };
 
   return (
@@ -517,6 +524,7 @@ const AppProvider = ({ children }) => {
         savejob,
         unsavejob,
         userProfile
+        updateUser,
       }}
     >
       {children}

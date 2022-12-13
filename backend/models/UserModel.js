@@ -37,6 +37,56 @@ const UserSchema = new mongoose.Schema({
     trim: true,
   },
 
+  educationSet: [
+    {
+      degree: {
+        type: String,
+      },
+      college: {
+        type: String,
+      },
+      startDate: {
+        type: String,
+      },
+      endDate: {
+        type: String,
+      },
+    },
+  ],
+
+  skillSet: [
+    {
+      skill: { type: String },
+    },
+  ],
+
+  workSet: [
+    {
+      title: {
+        type: String,
+      },
+      company: {
+        type: String,
+      },
+      location: {
+        type: String,
+      },
+      work_type: {
+        type: String,
+      },
+      startDate: {
+        type: String,
+      },
+      endDate: {
+        type: String,
+      },
+    },
+  ],
+
+  description: {
+    type: String,
+  },
+
   email: {
     type: String,
 
