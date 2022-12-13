@@ -13,6 +13,7 @@ import AddButton from "@material-ui/icons/Add";
 import RemoveButton from "@material-ui/icons/Remove";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ReactDatePicker from "react-datepicker";
+import Wrapper from "../wrapper/Step2"
 
 const Step2 = ({
   skillsChange,
@@ -29,7 +30,7 @@ const Step2 = ({
   handleOnWorkChange,
 }) => {
   return (
-    <div>
+    <Wrapper>
       <label htmlFor="">Skills</label>
 
       {list.skills.map((item, index) => {
@@ -282,7 +283,7 @@ const Step2 = ({
           </>
         );
       })}
-    </div>
+    </Wrapper>
   );
 };
 

@@ -33,6 +33,9 @@ import {
   ADD_JOB_ERROR,
   ADD_JOB_SUCCESS,
   GET_PROFILE_SUCCESS,
+  UPDATE_PROFILE_BEGIN,
+  UPDATE_PROFILE_ERROR,
+  UPDATE_PROFILE_SUCCESS,
 } from "./action";
 import { initialState } from "./appContext";
 
@@ -221,13 +224,12 @@ const reducer = (state, action) => {
   if (action.type === UPDATE_POST_BEGIN) {
     return {
       ...state,
-     
     };
   }
   if (action.type === UPDATE_POST_SUCCESS) {
     return {
       ...state,
-   
+
       showAlert: true,
       alertType: "success",
       alertText: "Post Updated",
@@ -236,7 +238,7 @@ const reducer = (state, action) => {
   if (action.type === UPDATE_POST_ERROR) {
     return {
       ...state,
-     
+
       showAlert: true,
       alertType: "danger",
       alertText: action.payload.msg,
@@ -258,44 +260,67 @@ const reducer = (state, action) => {
     return { ...state, isLoading: false };
   }
 
+  if (action.type === ADD_JOB_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+  if (action.type === ADD_JOB_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "success",
+      alertText: "New JOB ADDED!",
+    };
+  }
+  if (action.type === ADD_JOB_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      isSubmit: false,
+      alertType: "danger",
+      alertText: action.payload.msg,
+    };
+  }
 
-   if (action.type === ADD_JOB_BEGIN) {
-     return {
-       ...state,
-       isLoading: true,
-     };
-   }
-   if (action.type === ADD_JOB_SUCCESS) {
-     return {
-       ...state,
-       isLoading: false,
-       showAlert: true,
-       alertType: "success",
-       alertText: "New JOB ADDED!",
-     };
-   }
-   if (action.type === ADD_JOB_ERROR) {
-     return {
-       ...state,
-       isLoading: false,
-       showAlert: true,
-       isSubmit: false,
-       alertType: "danger",
-       alertText: action.payload.msg,
-     };
-   }
+  if (action.type === GET_PROFILE_SUCCESS) {
+    return {
+      ...state,
+      profileUser: action.payload.user,
+      profilePost: action.payload.post,
+      followings: action.payload.followings,
+      followers: action.payload.followers,
 
-    if (action.type === GET_PROFILE_SUCCESS) {
-      return {
-        ...state,
-        profileUser: action.payload.user,
-        profilePost: action.payload.post,
-        followings: action.payload.followings,
-        followers: action.payload.followers,
+      isLoading: false,
+    };
+  }
 
-        isLoading: false,
-      };
-    }
+  if (action.type === UPDATE_PROFILE_BEGIN) {
+    return {
+      ...state,
+    };
+  }
+  if (action.type === UPDATE_PROFILE_SUCCESS) {
+    return {
+      ...state,
+
+      showAlert: true,
+      alertType: "success",
+      alertText: "PROFILE Updated",
+    };
+  }
+  if (action.type === UPDATE_PROFILE_ERROR) {
+    return {
+      ...state,
+
+      showAlert: true,
+      alertType: "danger",
+      alertText: "Invalide credential",
+    };
+  }
 
   throw new Error(`no such action: ${action.type}`);
 };

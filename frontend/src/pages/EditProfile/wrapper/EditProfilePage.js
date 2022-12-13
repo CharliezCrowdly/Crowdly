@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
 const Wrapper = styled.div`
-& > h1{
-  margin-inline: auto;
-  width:max-content;
-}
+  & > h1 {
+    margin-inline: auto;
+    width: max-content;
+  }
   & > .content {
-    width: calc(400px + 2.5vw);
+    width: calc(400px + 10%);
     max-width: 900px;
     padding: 2%;
     margin: 0 auto;
@@ -96,7 +96,8 @@ const Wrapper = styled.div`
   }
 
   .alerty {
-    width: calc(400px + 2.5vw);
+    width: calc(400px + 10%);
+
     max-width: 900px;
     margin: 0 auto;
   }

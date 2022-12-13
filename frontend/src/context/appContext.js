@@ -35,6 +35,9 @@ import {
   ADD_JOB_ERROR,
   ADD_JOB_SUCCESS,
   GET_PROFILE_SUCCESS,
+  UPDATE_PROFILE_BEGIN,
+  UPDATE_PROFILE_ERROR,
+  UPDATE_PROFILE_SUCCESS,
 } from "./action";
 
 import axios from "axios";
@@ -489,12 +492,18 @@ const AppProvider = ({ children }) => {
     } catch (error) {
       dispatch({ type: ERROR });
     }
+    clearAlert();
   };
 
   const updateUser = async (values) => {
+    dispatch({ type: UPDATE_PROFILE_BEGIN });
     try {
       await authFetch.put("/profile/updateUser", { ...values });
-    } catch (error) {}
+      dispatch({ type: UPDATE_PROFILE_SUCCESS });
+    } catch (error) {
+      dispatch({ type: UPDATE_PROFILE_ERROR });
+    }
+    clearAlert();
   };
 
   return (

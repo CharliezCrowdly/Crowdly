@@ -7,7 +7,7 @@ const {
   unfollowUser,
   recommend,
 
-  userProfile
+  userProfile,
 
   updateUserDetails,
 

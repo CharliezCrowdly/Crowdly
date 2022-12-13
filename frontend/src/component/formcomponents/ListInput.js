@@ -2,7 +2,7 @@ import React from "react";
 import Wrapper from "../../wrappers/formwrappers/ListInput";
 const ListInput = ({ handleChange, Add, Remove, value }) => {
   return (
-    <Wrapper className="">
+    <Wrapper className="lstinput">
       <div className="listinput">
         <input type="text" onChange={handleChange} value={value} />
         <div className="icons">
