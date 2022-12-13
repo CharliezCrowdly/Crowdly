@@ -6,6 +6,20 @@ const { StatusCodes } = require("http-status-codes");
 
 const path = require("path");
 
+
+const userProfile = async (req, res) => {
+  const { id: userId } = req.params;
+
+  const user = await User.findOne({ _id: userId });
+  const post = await Post.find({ userid: userId })
+    .populate("userid likesid", "profilePicture username location")
+    .sort("-createdAt");
+
+  const followings = await User.find({ _id: [...user.following] });
+  const followers = await User.find({ _id: [...user.followers] });
+
+  res.status(StatusCodes.OK).json({ user, post, followings, followers });
+};
 const searchProfile = async (req, res) => {
   const users = await User.find({ username: { $regex: req.query.username } })
     .limit(10)
@@ -92,4 +106,5 @@ module.exports = {
   followUser,
   unfollowUser,
   recommend,
+  userProfile
 };

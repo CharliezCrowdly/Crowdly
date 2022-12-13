@@ -59,7 +59,7 @@ const Postmodel = React.memo(({ slideIndex, explorelst, closeslide }) => {
   }
 
   return (
-    <Wrapper>
+    <Wrapper className="modely">
       <div className="slider">
         <IoClose className="btn-close" onClick={closeslide} />
 

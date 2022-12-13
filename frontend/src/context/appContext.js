@@ -34,6 +34,7 @@ import {
   ADD_JOB_BEGIN,
   ADD_JOB_ERROR,
   ADD_JOB_SUCCESS,
+  GET_PROFILE_SUCCESS,
 } from "./action";
 
 import axios from "axios";
@@ -61,6 +62,11 @@ const initialState = {
   jobTypeOptions: ["full-time", "part-time", "remote", "internship"],
   searchList: [],
   postdetail: "",
+
+  profileUser: "",
+  profilePost: [],
+  followings: [],
+  followers: [],
 };
 
 const AppContext = React.createContext();
@@ -470,6 +476,21 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const userProfile = async (userId) => {
+    dispatch({ type: BEGIN });
+    try {
+      const response = await authFetch.get(`/profile/${userId}`);
+      const { post, user, followings, followers } = response.data;
+
+      dispatch({
+        type: GET_PROFILE_SUCCESS,
+        payload: { post, user, followings, followers },
+      });
+    } catch (error) {
+      dispatch({ type: ERROR });
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -495,6 +516,7 @@ const AppProvider = ({ children }) => {
         addJob,
         savejob,
         unsavejob,
+        userProfile
       }}
     >
       {children}
