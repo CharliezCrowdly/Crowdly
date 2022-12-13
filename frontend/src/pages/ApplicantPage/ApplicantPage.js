@@ -14,7 +14,7 @@ const ApplicantPage = () => {
     jobtype: [],
     experiencelvl: [],
     category: [],
-    wage: "",
+    wage: "0",
   });
   const [applicantslst, setApplicantslst] = useState([]);
 
@@ -59,6 +59,12 @@ const ApplicantPage = () => {
           item.applicant.name
             .toLowerCase()
             .search(search.title.toLowerCase().trim()) != -1
+      );
+    }
+
+    if (search.wage) {
+      filterlist = filterlist.filter(
+        (item) => parseInt(item.bid) <= parseInt(search.wage)
       );
     }
     setApplicants(filterlist);

@@ -2,19 +2,22 @@ import React from "react";
 import Wrapper from "../wrappers/RangeFilter";
 
 const RangeFilter = React.memo(({ bid, handleChange }) => {
+
+  
   return (
     <Wrapper className="glassmorphism">
       <div className="range">
         <p>Bid</p>
-        <p>{bid}</p>
+        <p>$ {bid}</p>
       </div>
       <input
         type="range"
         min="0"
         name="wage"
         max="100000"
-        handleChange={handleChange}
+        onChange={handleChange}
         id=""
+        
       />
     </Wrapper>
   );
