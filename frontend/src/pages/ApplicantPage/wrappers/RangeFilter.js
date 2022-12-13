@@ -5,6 +5,11 @@ const Wrapper = styled.div`
   background-color: white;
   padding-inline: 1%;
   border: 1px solid black;
+
+  & > .range{
+    display: flex;
+    justify-content: space-between;
+  }
   & > input {
     background: black;
     color: black;

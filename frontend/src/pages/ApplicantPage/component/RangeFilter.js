@@ -1,13 +1,23 @@
 import React from "react";
 import Wrapper from "../wrappers/RangeFilter";
 
-const RangeFilter = () => {
+const RangeFilter = React.memo(({ bid, handleChange }) => {
   return (
     <Wrapper className="glassmorphism">
+      <div className="range">
         <p>Bid</p>
-      <input type="range" name="" id="" />
+        <p>{bid}</p>
+      </div>
+      <input
+        type="range"
+        min="0"
+        name="wage"
+        max="100000"
+        handleChange={handleChange}
+        id=""
+      />
     </Wrapper>
   );
-};
+});
 
 export default RangeFilter;

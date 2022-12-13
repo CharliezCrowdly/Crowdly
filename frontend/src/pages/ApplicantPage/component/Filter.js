@@ -2,14 +2,12 @@ import React from "react";
 import SelectionOption from "./SelectionOption";
 import UserFilter from "./UserFilter";
 import RangeFilter from "./RangeFilter";
-import SearechFilter from "./SearechFilter";
-const Filter = () => {
+const Filter = ({search,handleChange}) => {
   return (
     <div>
-      <SearechFilter/>
       <SelectionOption />
       <UserFilter />
-      <RangeFilter />
+      <RangeFilter bid ={search.wage} handleChange={handleChange} />
     </div>
   );
 };

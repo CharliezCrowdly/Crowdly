@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { TiTick } from "react-icons/ti";
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import Wrapper from "../wrappers/Applicant";
 import lstskill from "../utils/lstskill";
-const Applicant = () => {
+import moment from "moment";
+const Applicant = ({ item }) => {
+  const {applicant,appliedDate,bid} = item
+  useEffect(()=>{
+    console.log(item)
+
+  },[])
   const options = {
     drop: false,
   };
@@ -28,10 +34,10 @@ const Applicant = () => {
         <div className="img-container">
           <img
             className="profilePicture"
-            src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+            src={applicant.profilePicture}
             alt=""
           />
-          <span className="username">username</span>
+          <span className="username">{applicant.name}</span>
           <TiTick />
         </div>
 
@@ -50,11 +56,11 @@ const Applicant = () => {
         <div className="userinfo">
           <div className="info">
             <p>Username</p>
-            <p>John Doe</p>
+            <p>{applicant.username}</p>
           </div>
           <div className="info">
             <p>Email</p>
-            <p>John Doe</p>
+            <p>{applicant.email}</p>
           </div>
           <div className="info">
             <p>Followers</p>
@@ -75,7 +81,7 @@ const Applicant = () => {
 
         <div className="bid">
           <h3>Bid</h3>
-          <h1>$ 20000</h1>
+          <h1>$ {bid}</h1>
         </div>
       </div>
       <hr />
@@ -86,8 +92,8 @@ const Applicant = () => {
             <p>Kathmandu</p>
           </div>
           <div className="info">
-            <p>Date</p>
-            <p>2022/11/22</p>
+            <p>Applied Date</p>
+            <p>{moment(appliedDate).fromNow()}</p>
           </div>
         </div>
         <div className="content">
