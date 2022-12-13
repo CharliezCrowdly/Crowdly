@@ -6,7 +6,6 @@ const { StatusCodes } = require("http-status-codes");
 
 const path = require("path");
 
-
 const userProfile = async (req, res) => {
   const { id: userId } = req.params;
 
@@ -152,7 +151,6 @@ module.exports = {
   followUser,
   unfollowUser,
   recommend,
-
-  userProfile
+  userProfile,
   updateUserDetails,
 };

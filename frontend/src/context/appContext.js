@@ -67,7 +67,6 @@ const initialState = {
   profilePost: [],
   followings: [],
   followers: [],
-  
 };
 
 const AppContext = React.createContext();
@@ -490,7 +489,7 @@ const AppProvider = ({ children }) => {
     } catch (error) {
       dispatch({ type: ERROR });
     }
-
+  };
 
   const updateUser = async (values) => {
     try {
@@ -523,7 +522,7 @@ const AppProvider = ({ children }) => {
         addJob,
         savejob,
         unsavejob,
-        userProfile
+        userProfile,
         updateUser,
       }}
     >
