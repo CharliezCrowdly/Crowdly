@@ -57,6 +57,8 @@ const Wrapper = styled.div`
         border-bottom-right-radius: 15px;
         padding: 2%;
         width: 120px;
+        font-size: 0.9rem;
+        text-align: center;
         background-color: #ccecff;
         height: 30px;
         color: var(--blue-1100);
@@ -78,8 +80,7 @@ const Wrapper = styled.div`
     justify-content: space-between;
 
     & > .userinfo {
-      
-      width:45%;
+      width: 45%;
       display: flex;
       flex-direction: column;
       gap: 6px;

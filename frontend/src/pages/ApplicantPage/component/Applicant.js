@@ -1,15 +1,14 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { TiTick } from "react-icons/ti";
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import Wrapper from "../wrappers/Applicant";
 import lstskill from "../utils/lstskill";
 import moment from "moment";
 const Applicant = ({ item }) => {
-  const {applicant,appliedDate,bid} = item
-  useEffect(()=>{
-    console.log(item)
-
-  },[])
+  const { applicant, appliedDate, bid } = item;
+  useEffect(() => {
+    console.log(item);
+  }, []);
   const options = {
     drop: false,
   };
@@ -48,7 +47,14 @@ const Applicant = ({ item }) => {
           ) : (
             <AiOutlineStar className="icon" onClick={onpinned} />
           )}
-          <button className="send-msg">Show Proposal</button>
+          <a
+            href={`http://localhost:5000/${item.proposal}`}
+            download
+            className="send-msg"
+            onClick={(e) => e.stopPropagation()}
+          >
+            Show Proposal
+          </a>
         </div>
       </div>
       <hr />
@@ -64,7 +70,7 @@ const Applicant = ({ item }) => {
           </div>
           <div className="info">
             <p>Followers</p>
-            <p>1000</p>
+            <p>{applicant.followers.length}</p>
           </div>
         </div>
 
@@ -88,7 +94,7 @@ const Applicant = ({ item }) => {
       <section className="about">
         <div className="userinfo">
           <div className="info">
-            <p>Location</p>
+            <p>{applicant.location ? applicant.location : "kathmandu"}</p>
             <p>Kathmandu</p>
           </div>
           <div className="info">

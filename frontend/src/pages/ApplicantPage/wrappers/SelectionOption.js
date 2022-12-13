@@ -1,9 +1,7 @@
 import styled from "styled-components";
 
 const Wrapper = styled.aside`
-  border: 1px solid black;
-  padding-inline: 1%;
-  padding-bottom: 1%;
+  padding: 2%;
   padding-top: 5px;
   width: 300px;
 
@@ -11,18 +9,24 @@ const Wrapper = styled.aside`
   overflow: hidden;
   transform: 1s height;
   background-color: white;
-  &.active{
+  border-radius: 7px;
+
+  &.active {
     height: max-content;
   }
   & > .filter-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    & > p {
+      color: var(--dark-purple);
+      font-weight: bold;
+    }
     & > .icon {
       font-size: 1.5rem;
       cursor: pointer;
       transition: 1s transform;
-      
+
       &.active {
         transform: rotate(180deg);
       }

@@ -3,12 +3,15 @@ import styled from "styled-components";
 const Wrapper = styled.div`
   width: 300px;
   background-color: white;
-  padding-inline: 1%;
-  border: 1px solid black;
-
-  & > .range{
+  padding: 2%;
+  border-radius: 7px;
+  & > .range {
     display: flex;
     justify-content: space-between;
+    & > p:first-child {
+      color: var(--dark-purple);
+      font-weight: bold;
+    }
   }
   & > input {
     background: black;

@@ -368,7 +368,7 @@ module.exports.getApplicants = async (req, res, next) => {
   try {
     Job.findById(req.params.id)
       .select("applicants")
-      .populate("applicants.applicant","profilePicture username location skill name email").sort("-appliedDate")
+      .populate("applicants.applicant","profilePicture username location skill name email followers").sort("-appliedDate")
       .then((result) => {
         console.log(result);
         res.status(200).json({

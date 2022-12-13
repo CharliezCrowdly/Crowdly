@@ -2,7 +2,7 @@ import React from "react";
 import Applicant from "./Applicant";
 const Applicantlst = React.memo(({ applicants }) => {
   return (
-    <div>
+    <div className="applicants">
       {applicants.map((item, index) => (
         <Applicant key={index} item={item} />
       ))}

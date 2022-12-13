@@ -13,7 +13,7 @@ const ApplicantPage = () => {
     title: "",
     jobtype: [],
     experiencelvl: [],
-    category: [],
+    status: [],
     wage: "0",
   });
   const [applicantslst, setApplicantslst] = useState([]);
@@ -48,6 +48,17 @@ const ApplicantPage = () => {
     fetch();
   }, []);
 
+  const statusfilter = (e) => {
+    var newsearch = search.status;
+    if (newsearch.includes(e.target.name)) {
+      newsearch = newsearch.filter((item) => item !== e.target.name);
+    } else {
+      newsearch.push(e.target.name);
+    }
+
+    setsearch({ ...search, status: newsearch });
+  };
+
   const applyFilters = () => {
     var filterlist = applicantslst;
 
@@ -67,13 +78,19 @@ const ApplicantPage = () => {
         (item) => parseInt(item.bid) <= parseInt(search.wage)
       );
     }
+
+    if (search.status.length > 0) {
+      filterlist = filterlist.filter((item) => {
+        return search.status.includes(item.status);
+      });
+    }
     setApplicants(filterlist);
   };
 
   return (
     <Wrapper>
       <div className="left-container">
-        <Filter handleChange={handleChange} search={search} />
+        <Filter handleChange={handleChange} search={search} statusfilter ={statusfilter} />
       </div>
       <div className="right-container glassmorphism">
         <SearechFilter filter={applyFilters} handleChange={handleChange} />
