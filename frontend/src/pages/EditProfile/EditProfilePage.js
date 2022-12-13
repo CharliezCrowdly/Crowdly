@@ -4,7 +4,6 @@ import { Step1, Step2, Step3 } from "./component";
 import Wrapper from "./wrapper/EditProfilePage";
 import { useAppContext } from "../../context/appContext";
 import { Alert } from "../../component";
-// import {user} from
 
 const EditProfilePage = () => {
   const { user } = useAppContext();
@@ -12,19 +11,20 @@ const EditProfilePage = () => {
 
   const formvalue = {
     fullname: user.name,
-    skills: user.skills ?? [{ skill: "" }],
+    skills: user.skillSet ?? [{ skill: "" }],
     description: user.description ?? "",
     educationSet: user.educationSet ?? [
       {
-        etitle: "",
-        ecollege: "",
-        estart: "",
-        eend: "",
+        degree: "",
+        college: "",
+        startDate: "",
+        endDate: "",
       },
     ],
-    workSet: user.experienceSet ?? [
-      { wtitle: "", wcompany: "", wlocation: "", wstart: "", wend: "" },
+    workSet: user.workSet ?? [
+      { title: "", company: "", location: "", startDate: "", endDate: "" },
     ],
+    sector: user.sector ?? "",
   };
 
   const [values, setValue] = useState(formvalue);
@@ -46,11 +46,7 @@ const EditProfilePage = () => {
     newskill[index].skill = e.target.value;
     setValue({ ...values, skills: newskill });
   };
-  const handleDateEdu = (date, index, type) => {
-    const { data, errors } = this.state;
-    data.educationSet[index][type] = date;
-    this.setState({ data, errors });
-  };
+
   const Addskill = () => {
     var newskill = values.skills;
     if (newskill.length <= 7) {
@@ -67,46 +63,6 @@ const EditProfilePage = () => {
     }
   };
 
-  const responsibilitiesChange = (e, index) => {
-    var newskill = values.responsibilities;
-    newskill[index].responsibility = e.target.value;
-    setValue({ ...values, responsibilities: newskill });
-  };
-  const Addresponsibility = () => {
-    var newskill = values.responsibilities;
-    if (newskill.length <= 7) {
-      newskill.push({ responsibility: "" });
-      setValue({ ...values, responsibilities: newskill });
-    }
-  };
-  const Removeresponsibility = (index) => {
-    if (values.responsibilities.length > 1) {
-      var newSkills = values.responsibilities;
-      newSkills.splice(index, 1);
-      setValue({ ...values, responsibilities: newSkills });
-    }
-  };
-
-  const requirmentsChange = (e, index) => {
-    var newskill = values.requirments;
-    newskill[index].requirement = e.target.value;
-    setValue({ ...values, requirments: newskill });
-  };
-  const Addrequirment = () => {
-    var newskill = values.requirments;
-    if (newskill.length <= 7) {
-      newskill.push({ requirement: "" });
-      setValue({ ...values, requirments: newskill });
-    }
-  };
-  const Removerequirment = (index) => {
-    if (values.requirments.length > 1) {
-      var newSkills = values.requirments;
-      newSkills.splice(index, 1);
-      setValue({ ...values, requirments: newSkills });
-    }
-  };
-
   const onsave = () => {
     const { fullname, sector, skills, educationSet, workSet, description } =
       values;
@@ -118,7 +74,7 @@ const EditProfilePage = () => {
       }
     }
     if (activeindex === 2) {
-      if (educationSet[0].etitle && skills[0].skill && workSet[0].wtitle) {
+      if (educationSet[0].degree && skills[0].skill && workSet[0].title) {
         setActive(3);
       }
     }
@@ -136,104 +92,62 @@ const EditProfilePage = () => {
     }
   };
 
-  const [educationSet, setEducationSet] = useState([
-    {
-      etitle: "",
-      ecollege: "",
-      estart: "",
-      eend: "",
-    },
-  ]);
-
-  // educationSet: [{ etitle: "", ecollege: "", estart: "", eend: "" }],
-  if (user.education && user.education.length > 0) {
-    setEducationSet(
-      user.education.map((edu) => {
-        return {
-          etitle: edu.title,
-          ecollege: edu.college,
-          estart: edu.estart,
-          eend: edu.eend,
-        };
-      })
-    );
-  }
-
-  if (user.experience && user.experience.length > 0) {
-    setworkset(
-      user.experience.map((work) => {
-        return {
-          wtitle: work.title,
-          wcompany: work.company,
-          wlocation: work.location,
-          wstart: "",
-          wend: "",
-        };
-      })
-    );
-  }
+  const [educationSet, setEducationSet] = useState(values.educationSet);
 
   const handleOnEduChange = (e, property, index) => {
-    // e.target.value.length <= 0
-    //   ? (errors[e.target.name] = ` ${e.target.name} must not be null`)
-    //   : (errors[e.target.name] = "");
-    // setEducationSet([...educationSet, { [[index][property]]: e.target.value }]);
     educationSet[index][property] = e.target.value;
     setEducationSet([...educationSet]);
     setValue({ ...values, educationSet: educationSet });
   };
 
   const handleOnWorkChange = (e, property, index) => {
+    console.log(workset[index]);
     workset[index][property] = e.target.value;
     setworkset([...workset]);
     setValue({ ...values, workSet: workset });
   };
 
-  const [workset, setworkset] = useState([
-    {
-      wtitle: "",
-      wcompany: "",
-      wlocation: "",
-      wstart: "",
-      wend: "",
-    },
-  ]);
+  const [workset, setworkset] = useState(values.workSet);
 
   const handleAddWork = () => {
     setworkset([
       ...workset,
       {
-        wtitle: "",
-        wcompany: "",
-        wlocation: "",
-        wstart: "",
-        wend: "",
+        title: "",
+        company: "",
+        location: "",
+        startDate: "",
+        endDate: "",
       },
     ]);
   };
 
   const handleRemoveWork = (index) => {
-    const values = [...workset];
-    values.splice(index, 1);
-    setworkset(values);
+    if (workset.length > 1) {
+      const values = [...workset];
+      values.splice(index, 1);
+      setworkset(values);
+    }
   };
 
   const handleAddEducation = () => {
     setEducationSet([
       ...educationSet,
       {
-        etitle: "",
-        ecollege: "",
-        estart: "",
-        eend: "",
+        degree: "",
+        college: "",
+        startDate: "",
+        endDate: "",
       },
     ]);
   };
 
   const handleRemoveEducation = (index) => {
-    const values = [...educationSet];
-    values.splice(index, 1);
-    setEducationSet(values);
+    if (educationSet.length > 1) {
+      const values = [...educationSet];
+      values.splice(index, 1);
+      setEducationSet(values);
+    }
   };
 
   return (
@@ -273,15 +187,8 @@ const EditProfilePage = () => {
               Addskill={Addskill}
               skillsChange={skillsChange}
               Removeskill={Removeskill}
-              Addresponsibility={Addresponsibility}
-              responsibilitiesChange={responsibilitiesChange}
-              Removeresponsibility={Removeresponsibility}
-              requirmentsChange={requirmentsChange}
-              Addrequirment={Addrequirment}
-              Removerequirment={Removerequirment}
               handleOnEduChange={handleOnEduChange}
               educationSet={educationSet}
-              handleDateEdu={handleDateEdu}
               workSet={workset}
               // work={work}
               handleAddWork={handleAddWork}
@@ -298,7 +205,7 @@ const EditProfilePage = () => {
         </section>
         <section className="save ">
           {activeindex === 1 ? null : (
-            <button onClick={() => setActive((prev) => prev - 1)}>back</button>
+            <button onClick={() => setActive((prev) => prev - 1)}>Back</button>
           )}
           <button onClick={onsave} disabled={isLoading}>
             {" "}

@@ -15,14 +15,11 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ReactDatePicker from "react-datepicker";
 
 const Step2 = ({
-  handleChange,
   skillsChange,
-  education,
   educationSet,
   list,
   Addskill,
   Removeskill,
-  // work,
   workSet,
   handleOnEduChange,
   handleAddEdu,
@@ -81,26 +78,24 @@ const Step2 = ({
                     }}
                   >
                     <TextField
-                      name="etitle"
+                      name="degree"
+                      value={education.degree}
                       label="Degree Name"
-                      value={education.etitle}
                       onChange={(e) => {
-                        handleOnEduChange(e, "etitle", index);
+                        handleOnEduChange(e, "degree", index);
                       }}
                       style={{ width: "45%" }}
                       size="small"
-                      sx={{ input: { color: "orange !important" } }}
                     />
                     <TextField
-                      name="ecollege"
+                      name="college"
                       label="College Name"
-                      value={education.ecollege}
+                      value={education.college}
                       onChange={(e) => {
-                        handleOnEduChange(e, "ecollege", index);
+                        handleOnEduChange(e, "college", index);
                       }}
                       style={{ width: "45%" }}
                       size="small"
-                      sx={{ input: { color: "orange !important" } }}
                     />
                   </div>
                   <div
@@ -115,17 +110,16 @@ const Step2 = ({
                       }}
                     >
                       <TextField
-                        name="estart"
+                        name="startDate"
                         label="Start Date"
-                        value={education.estart}
+                        value={education.startDate}
                         onChange={(e) => {
-                          handleOnEduChange(e, "estart", index);
+                          handleOnEduChange(e, "startDate", index);
                         }}
                         style={{
                           marginBottom: "1rem",
                         }}
                         size="small"
-                        sx={{ input: { color: "orange !important" } }}
                       />
                     </div>
                     <div
@@ -135,17 +129,16 @@ const Step2 = ({
                       }}
                     >
                       <TextField
-                        name="eend"
+                        name="endDate"
                         label="End Date"
-                        value={education.eend}
+                        value={education.endDate}
                         onChange={(e) => {
-                          handleOnEduChange(e, "eend", index);
+                          handleOnEduChange(e, "endDate", index);
                         }}
                         style={{
                           marginBottom: "1rem",
                         }}
                         size="small"
-                        sx={{ input: { color: "orange !important" } }}
                       />
                     </div>
                   </div>
@@ -168,6 +161,7 @@ const Step2 = ({
 
       <label htmlFor="">Experience</label>
       {workSet.map((work, index) => {
+        console.log(work);
         return (
           <>
             <div
@@ -192,15 +186,14 @@ const Step2 = ({
                 </AccordionSummary>
                 <AccordionDetails>
                   <TextField
-                    name="wtitle"
+                    name="title"
                     label="Job Title"
-                    value={work.wtitle}
+                    value={work.title}
                     onChange={(e) => {
-                      handleOnWorkChange(e, "wtitle", index);
+                      handleOnWorkChange(e, "title", index);
                     }}
                     style={{ width: "100%" }}
                     size="small"
-                    sx={{ input: { color: "orange !important" } }}
                   />
                   <div
                     style={{
@@ -211,26 +204,24 @@ const Step2 = ({
                     }}
                   >
                     <TextField
-                      name="wcompany"
+                      name="company"
                       label="Company's Name"
-                      value={work.wcompany}
+                      value={work.company}
                       onChange={(e) => {
-                        handleOnWorkChange(e, "wcompany", index);
+                        handleOnWorkChange(e, "company", index);
                       }}
                       style={{ width: "45%" }}
                       size="small"
-                      sx={{ input: { color: "orange !important" } }}
                     />
                     <TextField
-                      name="wlocation"
+                      name="location"
                       label="Company's Location"
-                      value={work.wlocation}
+                      value={work.location}
                       onChange={(e) => {
-                        handleOnWorkChange(e, "wlocation", index);
+                        handleOnWorkChange(e, "location", index);
                       }}
                       style={{ width: "45%" }}
                       size="small"
-                      sx={{ input: { color: "orange !important" } }}
                     />
                   </div>
 
@@ -249,14 +240,13 @@ const Step2 = ({
                     >
                       <h6 style={{ color: "white" }}>Start Date</h6>
                       <TextField
-                        name="wstart"
+                        name="startDate"
                         label="Start Date"
-                        value={work.wstart}
+                        value={work.startDate}
                         onChange={(e) => {
-                          handleOnWorkChange(e, "wstart", index);
+                          handleOnWorkChange(e, "startDate", index);
                         }}
                         size="small"
-                        sx={{ input: { color: "orange !important" } }}
                       />
                     </div>
                     <div
@@ -266,14 +256,13 @@ const Step2 = ({
                     >
                       <h6 style={{ color: "white" }}>End Date</h6>
                       <TextField
-                        name="webd"
+                        name="endDate"
                         label="End Date"
-                        value={work.wend}
+                        value={work.endDate}
                         onChange={(e) => {
-                          handleOnWorkChange(e, "wend", index);
+                          handleOnWorkChange(e, "endDate", index);
                         }}
                         size="small"
-                        sx={{ input: { color: "orange !important" } }}
                       />
                     </div>
                   </div>

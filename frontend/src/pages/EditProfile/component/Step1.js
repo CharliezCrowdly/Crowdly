@@ -67,6 +67,7 @@ const Step1 = ({ handleChange, handleChange2, values }) => {
         placeholder={"Enter Your Full Name"}
         name={"fullname"}
         handleChange={handleChange}
+        value={values.fullname}
       />
       <SingleInput
         options={options}
@@ -75,6 +76,7 @@ const Step1 = ({ handleChange, handleChange2, values }) => {
         handleChange2={handleChange2}
         value={values.sector}
         name={"sector"}
+        value2={values.sector}
       />
     </Wrapper>
   );
