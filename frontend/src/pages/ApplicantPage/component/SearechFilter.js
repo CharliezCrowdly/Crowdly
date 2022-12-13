@@ -1,16 +1,17 @@
 import React from "react";
 import Wrapper from "../wrappers/SearechFilter";
-const SearechFilter = () => {
+const SearechFilter = ({ filter, handleChange }) => {
   return (
-    <Wrapper className="glassmorphism ">
+    <Wrapper className=" ">
       {" "}
       <input
+        name="title"
         type="search"
         className="search-container"
         placeholder="search user"
+        onChange={handleChange}
       />
-      <button>Filter</button>
-      <p></p>
+      <button onClick={filter}>Filter</button>
     </Wrapper>
   );
 };

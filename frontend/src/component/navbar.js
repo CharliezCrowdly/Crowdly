@@ -4,10 +4,18 @@ import NavLinks from "./NavLinks";
 import { IoIosNotifications } from "react-icons/io";
 import Wrapper from "../wrappers/Navbar";
 import { useAppContext } from "../context/appContext";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const { user, logoutUser } = useAppContext();
   const [dropdown, setDropdown] = useState(false);
+
+  const navigate = useNavigate()
+
+  const gotoprofile=(e)=>{
+    e.stopPropagation()
+    navigate(`/user/profile/${user._id}`);
+  }
 
   return (
     <Wrapper>
@@ -31,7 +39,7 @@ const Navbar = () => {
             <ul
               className={dropdown ? "dropdown-options glassmorphism" : "d-none"}
             >
-              <li>profile</li>
+              <li onClick={(e)=>gotoprofile(e)}>profile</li>
               <li onClick={() => logoutUser()}>logout</li>
             </ul>
           </div>

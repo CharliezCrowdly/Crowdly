@@ -56,3 +56,7 @@ export const ADD_JOB_SUCCESS = "ADD_JOB_SUCCESS";
 export const ADD_JOB_ERROR = "ADD_JOB_ERROR";
 
 export const SEARCH_SUCCESS = "SEARCH_SUCCESS";
+
+
+
+export const GET_PROFILE_SUCCESS = "GET_PROFILE_SUCCESS";

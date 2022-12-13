@@ -27,8 +27,9 @@ const Wrapper = styled.div`
   & > .applicant-header {
     display: flex;
     align-items: center;
-    width: 100%;
     & > .img-container {
+      max-width: 200px;
+      width: calc(100px + 6.5vw);
       display: flex;
       align-items: center;
       gap: 5px;
@@ -56,6 +57,8 @@ const Wrapper = styled.div`
         border-bottom-right-radius: 15px;
         padding: 2%;
         width: 120px;
+        font-size: 0.9rem;
+        text-align: center;
         background-color: #ccecff;
         height: 30px;
         color: var(--blue-1100);
@@ -77,7 +80,7 @@ const Wrapper = styled.div`
     justify-content: space-between;
 
     & > .userinfo {
-      width: 33%;
+      width: 45%;
       display: flex;
       flex-direction: column;
       gap: 6px;
@@ -170,13 +173,12 @@ const Wrapper = styled.div`
       font-size: 1.2rem;
       padding: 0.5%;
     }
-    
-    & > .hire{
-      background-color: black;
 
+    & > .hire {
+      background-color: black;
     }
 
-    & > .reject{
+    & > .reject {
       background-color: #ff4040;
       border: none;
     }

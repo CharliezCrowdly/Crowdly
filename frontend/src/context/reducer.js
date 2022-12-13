@@ -32,6 +32,7 @@ import {
   ADD_JOB_BEGIN,
   ADD_JOB_ERROR,
   ADD_JOB_SUCCESS,
+  GET_PROFILE_SUCCESS,
 } from "./action";
 import { initialState } from "./appContext";
 
@@ -283,6 +284,18 @@ const reducer = (state, action) => {
        alertText: action.payload.msg,
      };
    }
+
+    if (action.type === GET_PROFILE_SUCCESS) {
+      return {
+        ...state,
+        profileUser: action.payload.user,
+        profilePost: action.payload.post,
+        followings: action.payload.followings,
+        followers: action.payload.followers,
+
+        isLoading: false,
+      };
+    }
 
   throw new Error(`no such action: ${action.type}`);
 };

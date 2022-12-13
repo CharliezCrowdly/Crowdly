@@ -15,6 +15,7 @@ import SharedLayout3 from "./SharedLayouts3/SharedLayout3";
 import AddJobPage from "./AddJobPage/AddJobPage";
 import PaymentPage from "./PaymentPage/PaymentPage"
 import ApplicantPage from "./ApplicantPage/ApplicantPage";
+import ProfilePage from './ProfilePage/ProfilePage'
 export {
   LoginPage,
   ProtectedRoute,
@@ -32,6 +33,7 @@ export {
   SharedLayout3,
   AddJobPage,
   PaymentPage,
-  ApplicantPage
+  ApplicantPage,
+  ProfilePage
 
 };

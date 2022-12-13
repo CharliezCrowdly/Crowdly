@@ -19,6 +19,7 @@ import {
   AddJobPage,
   PaymentPage,
   ApplicantPage,
+  ProfilePage,
 } from "./pages";
 import EditProfilePage from "./pages/EditProfile/EditProfilePage";
 
@@ -54,6 +55,7 @@ function App() {
 
           <Route path="message" element={<MessagePage />} />
           <Route path="applicants" element={<ApplicantPage />} />
+          <Route path="profile/:id" element={<ProfilePage />} />
         </Route>
 
         <Route

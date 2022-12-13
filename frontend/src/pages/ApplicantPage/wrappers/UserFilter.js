@@ -1,9 +1,8 @@
 import styled from "styled-components";
 
 const Wrapper = styled.div`
-  border: 1px solid black;
-  padding-inline: 1%;
-  padding-bottom: 1%;
+  padding-inline: 2%;
+  padding-block: 2%;
   padding-top: 5px;
   width: 300px;
 
@@ -11,6 +10,8 @@ const Wrapper = styled.div`
   overflow: hidden;
   transform: 1s height;
   background-color: white;
+  border-radius: 7px;
+  margin-block: 10px;
 
   &.active {
     height: max-content;
@@ -20,6 +21,11 @@ const Wrapper = styled.div`
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
+    & > p {
+      color: var(--dark-purple);
+      font-weight: bold;
+      text-transform: capitalize;
+    }
 
     & > .icon {
       font-size: 1.5rem;

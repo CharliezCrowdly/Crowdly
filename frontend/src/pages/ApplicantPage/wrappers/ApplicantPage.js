@@ -4,10 +4,10 @@ const Wrapper = styled.div`
   padding-inline: 5%;
   gap: 5%;
 
-  & > .left-container{
+  & > .left-container {
     position: sticky;
   }
- 
+
   & > .right-container {
     width: 100%;
     background-color: white;
@@ -17,6 +17,13 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     gap: 5px;
+
+    & > .applicants {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
   }
 `;
 export default Wrapper;

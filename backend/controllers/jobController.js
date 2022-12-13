@@ -8,25 +8,7 @@ const { BAD_REQUESTError, UnAuthenticatedError } = require("../errors/index");
 const path = require("path");
 const { StatusCodes } = require("http-status-codes");
 
-// const storage = multer.diskStorage({
-//   destination: "./uploads/files/proposals",
-//   filename: (req, file, cb) => {
-//     cb(null, `${file.fieldname}-${Date.now()}${file.originalname}`);
-//   },
-// });
 
-// const uploadProposal = multer({
-//   storage: storage,
-//   fileFilter: (req, file, cb) => {
-//     if (!file.originalname.match(/\.(pdf|docx)$/i)) {
-//       return cb(new Error("Please upload an document"));
-//     }
-//     cb(null, true);
-//   },
-//   limits: {
-//     fileSize: 10024 * 1024 * 5,
-//   },
-// });
 
 module.exports.addJob = async (req, res, next) => {
   const {
@@ -386,7 +368,7 @@ module.exports.getApplicants = async (req, res, next) => {
   try {
     Job.findById(req.params.id)
       .select("applicants")
-      .populate("applicants.applicant")
+      .populate("applicants.applicant","profilePicture username location skill name email followers").sort("-appliedDate")
       .then((result) => {
         console.log(result);
         res.status(200).json({
