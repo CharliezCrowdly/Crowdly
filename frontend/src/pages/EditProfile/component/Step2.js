@@ -27,11 +27,10 @@ const Step2 = ({
   handleOnEduChange,
   handleAddEdu,
   handleRemoveEdu,
-  handleDateEdu,
   handleAddWork,
   handleRemoveWork,
+  handleOnWorkChange,
 }) => {
-  console.log("workSet", workSet);
   return (
     <div>
       <label htmlFor="">Skills</label>
@@ -50,116 +49,122 @@ const Step2 = ({
 
       <label htmlFor="">Education</label>
 
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-around",
-          marginBottom: "1rem",
-        }}
-      >
-        <Accordion
-          style={{
-            width: "85%",
-            background: "inherit",
-          }}
-        >
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-          >
-            <Typography>Education details</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
+      {educationSet.map((education, index) => {
+        return (
+          <>
             <div
               style={{
                 display: "flex",
-                justifyContent: "space-between",
+                justifyContent: "space-around",
                 marginBottom: "1rem",
               }}
             >
-              <TextField
-                name="etitle"
-                label="Degree Name"
-                value={education.etitle}
-                onChange={(e) => {
-                  handleOnEduChange(e, "etitle", index);
-                }}
-                style={{ width: "45%" }}
-                size="small"
-                sx={{ input: { color: "orange !important" } }}
-              />
-              <TextField
-                name="ecollege"
-                label="College Name"
-                value={education.ecollege}
-                onChange={(e) => {
-                  handleOnEduChange(e, "ecollege", index);
-                }}
-                style={{ width: "45%" }}
-                size="small"
-                sx={{ input: { color: "orange !important" } }}
-              />
-            </div>
-            <div
-              style={{
-                marginBottom: "1rem",
-              }}
-            >
-              <div
+              <Accordion
                 style={{
-                  distplay: "flex",
-                  justifyContent: "space-between",
+                  width: "85%",
+                  background: "inherit",
                 }}
               >
-                <TextField
-                  name="estart"
-                  label="Start Date"
-                  value={education.estart}
-                  onChange={(e) => {
-                    handleOnEduChange(e, "estart", index);
-                  }}
-                  style={{
-                    marginBottom: "1rem",
-                  }}
-                  size="small"
-                  sx={{ input: { color: "orange !important" } }}
-                />
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                >
+                  <Typography>Education Detail</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      marginBottom: "1rem",
+                    }}
+                  >
+                    <TextField
+                      name="etitle"
+                      label="Degree Name"
+                      value={education.etitle}
+                      onChange={(e) => {
+                        handleOnEduChange(e, "etitle", index);
+                      }}
+                      style={{ width: "45%" }}
+                      size="small"
+                      sx={{ input: { color: "orange !important" } }}
+                    />
+                    <TextField
+                      name="ecollege"
+                      label="College Name"
+                      value={education.ecollege}
+                      onChange={(e) => {
+                        handleOnEduChange(e, "ecollege", index);
+                      }}
+                      style={{ width: "45%" }}
+                      size="small"
+                      sx={{ input: { color: "orange !important" } }}
+                    />
+                  </div>
+                  <div
+                    style={{
+                      marginBottom: "1rem",
+                    }}
+                  >
+                    <div
+                      style={{
+                        distplay: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <TextField
+                        name="estart"
+                        label="Start Date"
+                        value={education.estart}
+                        onChange={(e) => {
+                          handleOnEduChange(e, "estart", index);
+                        }}
+                        style={{
+                          marginBottom: "1rem",
+                        }}
+                        size="small"
+                        sx={{ input: { color: "orange !important" } }}
+                      />
+                    </div>
+                    <div
+                      style={{
+                        distplay: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <TextField
+                        name="eend"
+                        label="End Date"
+                        value={education.eend}
+                        onChange={(e) => {
+                          handleOnEduChange(e, "eend", index);
+                        }}
+                        style={{
+                          marginBottom: "1rem",
+                        }}
+                        size="small"
+                        sx={{ input: { color: "orange !important" } }}
+                      />
+                    </div>
+                  </div>
+                </AccordionDetails>
+              </Accordion>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <IconButton onClick={() => handleRemoveEdu(index)}>
+                  <RemoveButton />
+                </IconButton>
               </div>
-              <div
-                style={{
-                  distplay: "flex",
-                  justifyContent: "space-between",
-                }}
-              >
-                <TextField
-                  name="eend"
-                  label="End Date"
-                  value={education.eend}
-                  onChange={(e) => {
-                    handleOnEduChange(e, "eend", index);
-                  }}
-                  style={{
-                    marginBottom: "1rem",
-                  }}
-                  size="small"
-                  sx={{ input: { color: "orange !important" } }}
-                />
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <IconButton onClick={handleAddEdu}>
+                  <AddButton />
+                </IconButton>
               </div>
             </div>
-          </AccordionDetails>
-        </Accordion>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <IconButton onClick={() => handleRemoveEdu(index)}>
-            <RemoveButton />
-          </IconButton>
-        </div>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <IconButton onClick={handleAddEdu}>
-            <AddButton />
-          </IconButton>
-        </div>
-      </div>
+          </>
+        );
+      })}
 
       <label htmlFor="">Experience</label>
       {workSet.map((work, index) => {

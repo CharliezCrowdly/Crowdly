@@ -470,6 +470,12 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const updateUser = async (values) => {
+    dispatch({ type: UPDATE_USER_BEGIN });
+    try {}
+    catch (error) {}
+  };
+
   return (
     <AppContext.Provider
       value={{

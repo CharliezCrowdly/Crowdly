@@ -63,42 +63,18 @@ const Step1 = ({ handleChange, handleChange2, values }) => {
   return (
     <Wrapper>
       <Labelinput
-        label={"Job Title"}
-        placeholder={"Enter Job Title"}
-        name={"title"}
+        label={"Full Name"}
+        placeholder={"Enter Your Full Name"}
+        name={"fullname"}
         handleChange={handleChange}
       />
       <SingleInput
         options={options}
         label={"Category"}
-        placeholder={"Choose Job Sector"}
+        placeholder={"Choose Desired Job Sector"}
         handleChange2={handleChange2}
         value={values.sector}
         name={"sector"}
-      />
-      <SingleInput
-        options={explist}
-        label={"Experience Level"}
-        placeholder={"Choose Experience lvl"}
-        handleChange2={handleChange2}
-        value={values.experiencelvl}
-        name={"experiencelvl"}
-      />
-      <SingleInput
-        options={joblist}
-        label={"Job Type"}
-        placeholder={"Choose Job Type"}
-        handleChange2={handleChange2}
-        value={values.jobtype}
-        name={"jobtype"}
-      />
-
-      <Labelinput
-        label={"Minimum Salary"}
-        placeholder={"Enter Minimum Wage"}
-        type={"number"}
-        name={"sallary"}
-        handleChange={handleChange}
       />
     </Wrapper>
   );

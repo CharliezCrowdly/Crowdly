@@ -11,10 +11,20 @@ const EditProfilePage = () => {
   const { addJob, isLoading, alertType } = useAppContext();
 
   const formvalue = {
-    fullname: "",
-    experiencelvl: "",
-    skills: [{ skill: "" }],
-    description: "",
+    fullname: user.name,
+    skills: user.skills ?? [{ skill: "" }],
+    description: user.description ?? "",
+    educationSet: user.educationSet ?? [
+      {
+        etitle: "",
+        ecollege: "",
+        estart: "",
+        eend: "",
+      },
+    ],
+    workSet: user.experienceSet ?? [
+      { wtitle: "", wcompany: "", wlocation: "", wstart: "", wend: "" },
+    ],
   };
 
   const [values, setValue] = useState(formvalue);
@@ -23,6 +33,7 @@ const EditProfilePage = () => {
     if (e.target.files && e.target.files[0]) {
       setValue({ ...values, [e.target.name]: e.target.files[0] });
     } else {
+      console.log("else", e.target.value, e.target.name);
       setValue({ ...values, [e.target.name]: e.target.value });
     }
   };
@@ -97,37 +108,25 @@ const EditProfilePage = () => {
   };
 
   const onsave = () => {
-    const {
-      fullname,
-      sector,
-      experiencelvl,
-      jobtype,
-      skills,
-      sallary,
-      description,
-      responsibilities,
-      requirments,
-      closeTime,
-    } = values;
+    const { fullname, sector, skills, educationSet, workSet, description } =
+      values;
+    console.log(values);
 
     if (activeindex === 1) {
-      if (fullname && sector && experiencelvl && jobtype && skills && sallary) {
+      if (fullname && sector) {
         setActive(2);
       }
     }
     if (activeindex === 2) {
-      if (
-        responsibilities[0].responsibility &&
-        skills[0].skill &&
-        requirments[0].requirement
-      ) {
+      if (educationSet[0].etitle && skills[0].skill && workSet[0].wtitle) {
         setActive(3);
       }
     }
 
     if (activeindex === 3) {
-      if (closeTime && description) {
-        addJob({ values });
+      if (description) {
+        console.log(values);
+        // addJob({ values });
 
         if (alertType === "success") {
           setValue(formvalue);
@@ -137,21 +136,29 @@ const EditProfilePage = () => {
     }
   };
 
-  // educationSet: [{ etitle: "", ecollege: "", estart: "", eend: "" }],
-  let education = [];
-  let educationSet =
-    user.education && user.education.length > 0
-      ? this.user.additional[0].education.map((edu) => {
-          return {
-            etitle: edu.degree,
-            ecollege: edu.college,
-            estart: new Date(edu.startDate),
-            eend: new Date(edu.endDate),
-          };
-        })
-      : [{ etitle: "", ecollege: "", estart: "", eend: "" }];
+  const [educationSet, setEducationSet] = useState([
+    {
+      etitle: "",
+      ecollege: "",
+      estart: "",
+      eend: "",
+    },
+  ]);
 
-  let work = [];
+  // educationSet: [{ etitle: "", ecollege: "", estart: "", eend: "" }],
+  if (user.education && user.education.length > 0) {
+    setEducationSet(
+      user.education.map((edu) => {
+        return {
+          etitle: edu.title,
+          ecollege: edu.college,
+          estart: edu.estart,
+          eend: edu.eend,
+        };
+      })
+    );
+  }
+
   if (user.experience && user.experience.length > 0) {
     setworkset(
       user.experience.map((work) => {
@@ -159,20 +166,27 @@ const EditProfilePage = () => {
           wtitle: work.title,
           wcompany: work.company,
           wlocation: work.location,
-          wstart: new Date(work.startDate),
-          wend: new Date(work.endDate),
+          wstart: "",
+          wend: "",
         };
       })
     );
   }
 
   const handleOnEduChange = (e, property, index) => {
-    const { data, errors } = this.state;
-    e.target.value.length <= 0
-      ? (errors[e.target.name] = ` ${e.target.name} must not be null`)
-      : (errors[e.target.name] = "");
-    data.educationSet[index][property] = e.target.value;
-    this.setState({ data });
+    // e.target.value.length <= 0
+    //   ? (errors[e.target.name] = ` ${e.target.name} must not be null`)
+    //   : (errors[e.target.name] = "");
+    // setEducationSet([...educationSet, { [[index][property]]: e.target.value }]);
+    educationSet[index][property] = e.target.value;
+    setEducationSet([...educationSet]);
+    setValue({ ...values, educationSet: educationSet });
+  };
+
+  const handleOnWorkChange = (e, property, index) => {
+    workset[index][property] = e.target.value;
+    setworkset([...workset]);
+    setValue({ ...values, workSet: workset });
   };
 
   const [workset, setworkset] = useState([
@@ -199,9 +213,27 @@ const EditProfilePage = () => {
   };
 
   const handleRemoveWork = (index) => {
-    const values = [...workSet];
+    const values = [...workset];
     values.splice(index, 1);
     setworkset(values);
+  };
+
+  const handleAddEducation = () => {
+    setEducationSet([
+      ...educationSet,
+      {
+        etitle: "",
+        ecollege: "",
+        estart: "",
+        eend: "",
+      },
+    ]);
+  };
+
+  const handleRemoveEducation = (index) => {
+    const values = [...educationSet];
+    values.splice(index, 1);
+    setEducationSet(values);
   };
 
   return (
@@ -249,12 +281,14 @@ const EditProfilePage = () => {
               Removerequirment={Removerequirment}
               handleOnEduChange={handleOnEduChange}
               educationSet={educationSet}
-              education={education}
               handleDateEdu={handleDateEdu}
               workSet={workset}
               // work={work}
               handleAddWork={handleAddWork}
               handleRemoveWork={handleRemoveWork}
+              handleAddEdu={handleAddEducation}
+              handleRemoveEdu={handleRemoveEducation}
+              handleOnWorkChange={handleOnWorkChange}
             />
           </div>
 
