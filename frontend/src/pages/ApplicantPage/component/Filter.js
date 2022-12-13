@@ -1,17 +1,17 @@
-import React from 'react'
-import SelectionOption from './SelectionOption'
-import UserFilter from './UserFilter'
-import RangeFilter from './RangeFilter'
-
+import React from "react";
+import SelectionOption from "./SelectionOption";
+import UserFilter from "./UserFilter";
+import RangeFilter from "./RangeFilter";
+import SearechFilter from "./SearechFilter";
 const Filter = () => {
   return (
     <div>
-        <SelectionOption/>
-        <UserFilter/>
-        <RangeFilter/>
-      
+      <SearechFilter/>
+      <SelectionOption />
+      <UserFilter />
+      <RangeFilter />
     </div>
-  )
-}
+  );
+};
 
-export default Filter
+export default Filter;
