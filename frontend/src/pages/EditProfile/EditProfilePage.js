@@ -8,7 +8,7 @@ import { Alert } from "../../component";
 
 const EditProfilePage = () => {
   const { user } = useAppContext();
-  const { addJob, isLoading, alertType } = useAppContext();
+  const { updateUser, isLoading, alertType } = useAppContext();
 
   const formvalue = {
     fullname: user.name,
@@ -126,7 +126,7 @@ const EditProfilePage = () => {
     if (activeindex === 3) {
       if (description) {
         console.log(values);
-        // addJob({ values });
+        updateUser({ values });
 
         if (alertType === "success") {
           setValue(formvalue);

@@ -6,12 +6,13 @@ const {
   followUser,
   unfollowUser,
   recommend,
+  updateUserDetails,
 } = require("../controllers/profileController");
 
 router.route("/search").get(searchProfile);
 router.route("/userrandom").get(recommend);
 router.route("/unfollow/:id").patch(unfollowUser);
 router.route("/:id").patch(followUser);
-
+router.route("/updateUser").put(updateUserDetails);
 
 module.exports = router;

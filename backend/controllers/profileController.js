@@ -87,9 +87,56 @@ const recommend = async (req, res) => {
     res.status(StatusCodes.OK).json({ error: e });
   }
 };
+
+const updateUserDetails = async (req, res, next) => {
+  const userId = req.user.userId;
+  console.log(req.body);
+
+  var user;
+  try {
+    user = await User.findOneAndUpdate(
+      { _id: userId },
+      {
+        $set: {
+          name: req.body.values.fullname,
+          sector: req.body.values.sector,
+          description: req.body.values.description,
+          educationSet: req.body.values.educationSet.map((edu) => ({
+            degree: edu.etitle,
+            college: edu.ecollege,
+            startDate: edu.estart,
+            endDate: edu.eend,
+          })),
+          workSet: req.body.values.workSet.map((work) => ({
+            title: work.wtitle,
+            company: work.wcompany,
+            location: work.wlocation,
+            startDate: work.wstart,
+            endDate: work.wend,
+          })),
+          skillSet: req.body.values.skills.map((skill) => ({
+            skill: skill.skill,
+          })),
+        },
+      }
+    );
+    const updatedDetails = await User.findById(userId);
+    return res.status(200).json({
+      status: true,
+      user: updatedDetails,
+    });
+  } catch (e) {
+    console.log(e);
+  }
+  return res.status(500).json({
+    status: false,
+  });
+};
+
 module.exports = {
   searchProfile,
   followUser,
   unfollowUser,
   recommend,
+  updateUserDetails,
 };

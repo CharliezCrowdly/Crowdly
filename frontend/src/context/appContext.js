@@ -471,9 +471,9 @@ const AppProvider = ({ children }) => {
   };
 
   const updateUser = async (values) => {
-    dispatch({ type: UPDATE_USER_BEGIN });
-    try {}
-    catch (error) {}
+    try {
+      await authFetch.put("/profile/updateUser", { ...values });
+    } catch (error) {}
   };
 
   return (
@@ -501,6 +501,7 @@ const AppProvider = ({ children }) => {
         addJob,
         savejob,
         unsavejob,
+        updateUser,
       }}
     >
       {children}
