@@ -12,6 +12,7 @@ const Wrapper = styled.div`
     padding-left: 3%;
 
     & > .comment-box {
+      width: 100%;
       & > .comment-info {
         & > .username {
           font-weight: bold;

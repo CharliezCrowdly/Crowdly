@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { useAppContext } from "../../../../context/appContext";
-import Postmodel from "../../../ExplorePage/component/Postmodel";
-import { Postbox } from "../../components";
+import Postbox from "../Postbox";
+import Postmodel from "../Postmodel";
 import Wrapper from "../../wrappers/UserPost";
 import axios from "axios";
 const SavedPosts = () => {
   const { token } = useAppContext();
   const [postlst, setpost] = useState([]);
-   const options = {
-     slideIndex: 0,
-   };
-   const [option, setOptions] = useState(options);
-   const openSlide = (number) => {
-     setOptions({ isModel: true, slideIndex: number });
-   };
+  const [filterlst, setfilterd] = useState([]);
+  const options = {
+    slideIndex: 0,
+  };
+  const [option, setOptions] = useState(options);
+  const openSlide = (number) => {
+    setOptions({ isModel: true, slideIndex: number });
+  };
 
-   const closeslide = () => {
-     setOptions({ ...option, isModel: false });
-   };
+  const closeslide = () => {
+    setOptions({ ...option, isModel: false });
+  };
 
   const getsavedpost = async () => {
     await axios
@@ -34,6 +35,14 @@ const SavedPosts = () => {
   useEffect(() => {
     getsavedpost();
   }, []);
+
+  const removepost = (postid) => {
+    let filterlst = postlst;
+
+    filterlst = filterlst.filter((item) => item._id != postid);
+
+    setpost(filterlst);
+  };
   return (
     <Wrapper>
       {postlst.map((item, index) => {
@@ -59,6 +68,7 @@ const SavedPosts = () => {
           slideIndex={option.slideIndex}
           explorelst={postlst}
           closeslide={closeslide}
+          removepost={removepost}
         />
       </div>
     </Wrapper>
