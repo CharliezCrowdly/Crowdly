@@ -8,6 +8,7 @@ import {
   JobHistory,
   PendingApplication,
   SavedJobs,
+  SavedPosts
 } from "../components/tabs/index";
 const RightContainer = React.memo(({ profileUser, profilePost }) => {
   const [activeindex, setActive] = useState(0);
@@ -25,8 +26,7 @@ const RightContainer = React.memo(({ profileUser, profilePost }) => {
       {activeindex === 2 ? <PendingApplication /> : null}
       {activeindex === 3 ? <Cv /> : null}
       {activeindex === 4 ? <SavedJobs /> : null}
-
-     
+      {activeindex === 5 ? <SavedPosts /> : null}
     </Wrapper>
   );
 });

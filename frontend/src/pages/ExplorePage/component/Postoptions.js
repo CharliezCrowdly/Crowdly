@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useAppContext } from "../../../context/appContext";
 import { AiFillHeart } from "react-icons/ai";
 import { FaComment, FaShare } from "react-icons/fa";
-import {  BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
+import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
 import Wrapper from "../wrapper/Postoptions";
-
+import ModalBookmark from "./ModalBookmark";
 const Postoptions = React.memo(({ item }) => {
   const { user, unlikepost, likepost } = useAppContext();
 
@@ -40,13 +40,13 @@ const Postoptions = React.memo(({ item }) => {
       });
     }
   }, [item.likesid, user._id]);
-   const togglesave = () => {
-     if (postState.bookmarked) {
-       SetPost({ ...postState, bookmarked: false });
-     } else {
-       SetPost({ ...postState, bookmarked: true });
-     }
-   };
+  const togglesave = () => {
+    if (postState.bookmarked) {
+      SetPost({ ...postState, bookmarked: false });
+    } else {
+      SetPost({ ...postState, bookmarked: true });
+    }
+  };
 
   const toggleLike = (e) => {
     e.preventDefault();
@@ -78,15 +78,17 @@ const Postoptions = React.memo(({ item }) => {
             onClick={toggleLike}
           />
 
-          <FaComment className="icon"  />
+          <FaComment className="icon" />
           <FaShare className="icon" />
         </div>
 
-        {postState.bookmarked ? (
+        {/* {postState.bookmarked ? (
           <BsFillBookmarkFill className="icon black" onClick={togglesave} />
         ) : (
           <BsBookmark className="icon" onClick={togglesave} />
-        )}
+        )} */}
+
+        <ModalBookmark saved={item.saved} postid={item._id} />
       </div>
       <div className="like-count">{postState.likecount} likes</div>
     </Wrapper>

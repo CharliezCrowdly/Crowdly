@@ -27,6 +27,10 @@ const Tabs = ({activeindex,setTab}) => {
          id: 5,
          text: "saved jobs",
        },
+       {
+         id: 6,
+         text: "Saved Posts",
+       },
      ];
 
      
