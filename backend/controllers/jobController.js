@@ -8,8 +8,6 @@ const { BAD_REQUESTError, UnAuthenticatedError } = require("../errors/index");
 const path = require("path");
 const { StatusCodes } = require("http-status-codes");
 
-
-
 module.exports.addJob = async (req, res, next) => {
   const {
     title,
@@ -43,7 +41,7 @@ module.exports.addJob = async (req, res, next) => {
     experiencelvl: experiencelvl,
     jobtype: jobtype,
   });
-  console.log(responsibilities)
+  console.log(responsibilities);
 
   responsibilities.forEach((item) => {
     job.responsibilities.push(item);
@@ -368,7 +366,11 @@ module.exports.getApplicants = async (req, res, next) => {
   try {
     Job.findById(req.params.id)
       .select("applicants")
-      .populate("applicants.applicant","profilePicture username location skill name email followers").sort("-appliedDate")
+      .populate(
+        "applicants.applicant",
+        "profilePicture username location skill name email followers"
+      )
+      .sort("-appliedDate")
       .then((result) => {
         console.log(result);
         res.status(200).json({
@@ -466,5 +468,17 @@ module.exports.unsaveJobs = async (req, res) => {
     res.status(StatusCodes.OK).json({ bookmark });
   } else {
     res.status(StatusCodes.OK).json({ post });
+  }
+};
+
+module.exports.savedJobs = async (req, res) => {
+  try {
+    const jobs = await Job.find({
+      saved: req.user.userId,
+    });
+
+    res.status(StatusCodes.OK).json({ jobs });
+  } catch (error) {
+    console.log(error);
   }
 };

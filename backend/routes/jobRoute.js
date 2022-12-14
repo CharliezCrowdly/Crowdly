@@ -17,6 +17,7 @@ const {
   unsaveJob,
   saveJobs,
   unsaveJobs,
+  savedJobs
 } = require("../controllers/jobController");
 // const { protect } = require("../middleware/authMiddleware");
 
@@ -32,6 +33,8 @@ router.get("/getCompanyJob", getCompanyJobs);
 router.get("/getApplicants/:id", getApplicants);
 router.route("/savejob/:id").patch(saveJobs);
 router.route("/unsavejob/:id").patch(unsaveJobs);
+router.route("/savedjobs").get(savedJobs);
+
 
 
 //   router.get("/getCompanyJobDetail", getCompanyJobDetail);
