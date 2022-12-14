@@ -9,7 +9,8 @@ const {
   unsavePosts,
   UpdatePost,
   postDetail,
-  explorePost
+  explorePost,
+  savedPost
 } = require("../controllers/postContorller");
 
 router.route("/upload").post(postUpload);
@@ -22,6 +23,7 @@ router.route("/explorepost").get(explorePost);
 router.route("/unsavepost/:id").patch(unsavePosts);
 router.route("/updatepost/:id").patch(UpdatePost);
 router.route("/postdetail/:id").get(postDetail)
+router.route("/savedPost").get(savedPost);
 
 
 

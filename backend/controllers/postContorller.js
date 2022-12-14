@@ -196,6 +196,22 @@ const UpdatePost = async (req, res) => {
   res.status(StatusCodes.OK).json({ post });
 };
 
+const savedPost = async (req, res) => {
+  try {
+    const posts = await Post.find({
+      saved: req.user.userId,
+    })
+      .populate("userid likesid", "profilePicture username location")
+      .sort("-createdAt");
+
+    console.log(posts.length);
+
+    res.status(StatusCodes.OK).json({ posts });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   postUpload,
   getPosts,
@@ -206,4 +222,5 @@ module.exports = {
   postDetail,
   UpdatePost,
   explorePost,
+  savedPost
 };
