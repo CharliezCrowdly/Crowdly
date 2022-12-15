@@ -137,7 +137,7 @@ const SideDrawer = () => {
         </Tooltip>
 
         <Text fontSize="2x1" fontWeight="bold">
-          HireHub Messenger
+          Crowdly Messenger
         </Text>
         <div>
           <Menu>
