@@ -6,10 +6,10 @@ import {
   isSameSender,
   isSameSenderMargin,
 } from "../../config/ChatLogic";
-import { ChatState } from "../../context/ChatProvider";
+import { useAppContext } from "../../context/appContext";
 
 const ScrollableChat = ({ messages }) => {
-  const { user } = ChatState();
+  const { user } = useAppContext();
   return (
     <ScrollableFeed>
       {messages &&
@@ -19,7 +19,7 @@ const ScrollableChat = ({ messages }) => {
               {(isSameSender(messages, m, i, user._id) ||
                 isLastMessage(messages, i, user._id)) && (
                 <Tooltip
-                  label={m.sender.name }
+                  label={m.sender.name}
                   placement="bottom-start"
                   hasArrow
                 >

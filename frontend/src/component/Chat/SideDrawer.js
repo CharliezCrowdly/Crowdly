@@ -26,6 +26,7 @@ import NotificationBadge, { Effect } from "react-notification-badge";
 import { useNavigate } from "react-router-dom";
 import { getSender } from "../../config/ChatLogic";
 import { useAppContext } from "../../context/appContext";
+import { ChatState } from "../../context/ChatProvider";
 import { accessUserChat, chatUserSearch } from "../../utils/APIRoutes";
 import ChatLoading from "./ChatLoading";
 import UserListItem from "./UserAvatar/UserListItem";
@@ -35,14 +36,9 @@ const SideDrawer = () => {
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingChat, setLoadingChat] = useState(false);
-  const {
-    user,
-    setSelectedChat,
-    chats,
-    setChats,
-    notification,
-    setNotification,
-  } = useAppContext();
+  const { setSelectedChat, chats, setChats, notification, setNotification } =
+    ChatState();
+  const { user } = useAppContext();
   const navigate = useNavigate();
   const { isOpen, onClose, onOpen } = useDisclosure();
 
@@ -52,7 +48,7 @@ const SideDrawer = () => {
   };
 
   const accessChat = async (userId) => {
-    const token = await JSON.parse(localStorage.getItem("token"));
+    const token = localStorage.getItem("token");
 
     try {
       setLoadingChat(true);
@@ -82,7 +78,7 @@ const SideDrawer = () => {
   };
   const toast = useToast();
   const handleSearch = async () => {
-    const token = await JSON.parse(localStorage.getItem("token"));
+    const token = localStorage.getItem("token");
 
     if (!search) {
       toast({
@@ -174,7 +170,7 @@ const SideDrawer = () => {
                 size="sm"
                 cursor="pointer"
                 name={user.name}
-                src={user.avatarImage}
+                src={user.profilePicture}
               />
             </MenuButton>
             <MenuList>

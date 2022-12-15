@@ -2,6 +2,7 @@ import { Avatar, Box, Text } from "@chakra-ui/react";
 import React from "react";
 
 const UserListItem = ({ user, handleFunction }) => {
+  console.log(user);
   return (
     <Box
       onClick={handleFunction}
@@ -20,14 +21,9 @@ const UserListItem = ({ user, handleFunction }) => {
       my={3}
       borderRadius="lg"
     >
-      <Avatar
-        mr={2}
-        size="sm"
-        name={user.firstName + " " + user.lastName}
-        src={user.avatarImage}
-      />
+      <Avatar mr={2} size="sm" name={user.name} src={user.profilePicture} />
       <Box>
-        <Text>{user.firstName + " " + user.lastName}</Text>
+        <Text>{user.name}</Text>
         <Text fontSize="xs" color="gray.500">
           {user.email}
         </Text>

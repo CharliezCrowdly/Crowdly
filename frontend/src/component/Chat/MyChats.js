@@ -88,24 +88,27 @@ const MyChats = ({ fetchAgain }) => {
       >
         {chats ? (
           <Stack overflowy="scroll">
-            {chats.map((chat) => (
-              <Box
-                onClick={() => setSelectedChat(chat)}
-                key={chat._id}
-                cursor="pointer"
-                borderRadius="lg"
-                bg={selectedChat === chat ? "#38b2ac" : "e8e8e8"}
-                color={selectedChat === chat ? "white" : "black"}
-                px={3}
-                py={2}
-              >
-                <Text>
-                  {!chat.isGroupChat
-                    ? getSender(loggedUser, chat.users)
-                    : chat.chatName}
-                </Text>
-              </Box>
-            ))}
+            {chats.map((chat) => {
+              console.log(chat);
+              return (
+                <Box
+                  onClick={() => setSelectedChat(chat)}
+                  key={chat._id}
+                  cursor="pointer"
+                  borderRadius="lg"
+                  bg={selectedChat === chat ? "#38b2ac" : "e8e8e8"}
+                  color={selectedChat === chat ? "white" : "black"}
+                  px={3}
+                  py={2}
+                >
+                  <Text>
+                    {!chat.isGroupChat
+                      ? getSender(loggedUser, chat.users)
+                      : chat.chatName}
+                  </Text>
+                </Box>
+              );
+            })}
           </Stack>
         ) : (
           <ChatLoading />

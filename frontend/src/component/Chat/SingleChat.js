@@ -60,7 +60,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
   const fetchMessages = async () => {
     if (!selectedChat) return;
-    const token = await JSON.parse(localStorage.getItem("token"));
+    const token = localStorage.getItem("token");
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -117,7 +117,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const sendMessage = async (e) => {
     if (e.key === "Enter" && e.target.value.trim() !== "") {
       socket.emit("stop typing", selectedChat._id);
-      const token = await JSON.parse(localStorage.getItem("token"));
+      const token = localStorage.getItem("token");
 
       try {
         const config = {

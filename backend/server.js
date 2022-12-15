@@ -24,6 +24,7 @@ const profileRouter = require("./routes/profileRoute");
 const todoRouter = require("./routes/todoRoute");
 const chatRoute = require("./routes/chatRoute");
 const jobRouter = require("./routes/jobRoute");
+const messagesRoute = require("./routes/messageRoute");
 
 // middleware import
 const errorHandlerMiddleware = require("./middleware/error-handler");
@@ -50,6 +51,7 @@ app.use("/api/v1/profile", authenticateUser, profileRouter);
 app.use("/api/v1/todo", authenticateUser, todoRouter);
 app.use("/api/v1/job", authenticateUser, jobRouter);
 app.use("/api/chat", authenticateUser, chatRoute);
+app.use("/api/message", authenticateUser, messagesRoute);
 
 app.use(errorHandlerMiddleware);
 

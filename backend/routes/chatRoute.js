@@ -1,4 +1,5 @@
 const express = require("express");
+const { allUsers } = require("../controllers/authController");
 const {
   fetchChats,
   createGroupChat,
@@ -19,5 +20,6 @@ router.route("/groups").post(createGroupChat);
 router.route("/rename").put(renameGroup);
 router.route("/groupremove").put(removeFromGroup);
 router.route("/groupadd").put(addToGroup);
+router.route("/getAllUsers").get(allUsers);
 
 module.exports = router;

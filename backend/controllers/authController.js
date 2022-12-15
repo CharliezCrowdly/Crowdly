@@ -122,4 +122,23 @@ const login = async (req, res) => {
   res.status(StatusCodes.OK).json({ user, token, location: user.location });
 };
 
-module.exports = { register, login };
+const allUsers = async (req, res, next) => {
+  const keyword = req.query.search
+    ? {
+        $or: [
+          { name: { $regex: req.query.search, $options: "i" } },
+          { username: { $regex: req.query.search, $options: "i" } },
+          { email: { $regex: req.query.search, $options: "i" } },
+        ],
+      }
+    : {};
+
+  const users = await User.find(keyword)
+    .find({ _id: { $ne: req.user._id } })
+    .select(
+      "-password -__v -isVerified -createdAt "
+    );
+  res.send(users);
+};
+
+module.exports = { register, login, allUsers };
