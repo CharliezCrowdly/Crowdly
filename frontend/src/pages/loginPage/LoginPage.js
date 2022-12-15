@@ -10,6 +10,7 @@ import {
 import { useAppContext } from "../../context/appContext";
 
 import { useNavigate } from "react-router-dom";
+import { ChatState } from "../../context/ChatProvider";
 
 const initialState = {
   name: "",
@@ -26,6 +27,7 @@ const initialState = {
 const LoginPage = () => {
   const [values, setValues] = useState(initialState);
   const { setupUser, isLoading, showAlert, user } = useAppContext();
+  const { setUser } = ChatState();
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
@@ -33,6 +35,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (user) {
+      setUser(user);
       setTimeout(() => {
         navigate("/user/feeds");
       }, 3000);
@@ -50,7 +53,7 @@ const LoginPage = () => {
       location,
       username,
       usertype,
-      cpassword
+      cpassword,
     } = values;
 
     const currentUser = {
@@ -78,7 +81,7 @@ const LoginPage = () => {
       });
     }
   };
-  function setUser(usertype) {
+  function setUser1(usertype) {
     setValues({ ...values, usertype: usertype });
   }
 
@@ -121,7 +124,7 @@ const LoginPage = () => {
             type={!values.isMember ? "email" : "text"}
             name={"email"}
           />
-          {!values.isMember ? <SingleSelectInput setUser={setUser} /> : ""}
+          {!values.isMember ? <SingleSelectInput setUser={setUser1} /> : ""}
           <UnderlineInput
             handleChange={handleChange}
             placeholder={"Enter Password"}
@@ -172,7 +175,7 @@ const LoginPage = () => {
           <img src={loginImage} alt="no " />
 
           <h4 className="login-info">
-            {values.isMember ? " Login To" : "Create Your"}  Crowdly Account
+            {values.isMember ? " Login To" : "Create Your"} Crowdly Account
           </h4>
         </div>
       </div>

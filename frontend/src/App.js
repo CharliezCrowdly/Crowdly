@@ -22,67 +22,72 @@ import {
   ProfilePage,
 } from "./pages";
 import EditProfilePage from "./pages/EditProfile/EditProfilePage";
+import ChatProvider from "./context/ChatProvider";
+import ChatPage from "./pages/ChatPage";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="login" element={<LoginPage />} />
-        <Route path="/" element={<LandingPage />} />
-        <Route
-          path="/user"
-          element={
-            <ProtectedRoute>
-              <SharedLayout />
-            </ProtectedRoute>
-          }
-        >
-          <Route path="work" element={<YourWorkPage />} />
-          <Route path="feeds" element={<FeedPage />} />
-          <Route path="explore" element={<ExplorePage />} />
-        </Route>
-        <Route
-          path="/user"
-          element={
-            <ProtectedRoute>
-              <SharedLayout3 />
-            </ProtectedRoute>
-          }
-        >
-          <Route path="add/job" element={<AddJobPage />} />
-          <Route path="edit" element={<EditProfilePage />} />
-          <Route path="payment" element={<PaymentPage />} />
+    <ChatProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="login" element={<LoginPage />} />
+          <Route path="/" element={<LandingPage />} />
+          <Route
+            path="/user"
+            element={
+              <ProtectedRoute>
+                <SharedLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route path="work" element={<YourWorkPage />} />
+            <Route path="feeds" element={<FeedPage />} />
+            <Route path="explore" element={<ExplorePage />} />
+          </Route>
+          <Route
+            path="/user"
+            element={
+              <ProtectedRoute>
+                <SharedLayout3 />
+              </ProtectedRoute>
+            }
+          >
+            <Route path="add/job" element={<AddJobPage />} />
+            <Route path="edit" element={<EditProfilePage />} />
+            <Route path="payment" element={<PaymentPage />} />
 
-          <Route path="message" element={<MessagePage />} />
-          <Route path="applicants" element={<ApplicantPage />} />
-          <Route path="profile/:id" element={<ProfilePage />} />
-        </Route>
+            <Route path="message" element={<MessagePage />} />
+            <Route path="applicants" element={<ApplicantPage />} />
+            <Route path="profile/:id" element={<ProfilePage />} />
+          </Route>
 
-        <Route
-          path="/job"
-          element={
-            <ProtectedRoute>
-              <SharedLayout />
-            </ProtectedRoute>
-          }
-        >
-          <Route path="jobDetail/:id" element={<JobDetail />} />
-        </Route>
+          <Route
+            path="/job"
+            element={
+              <ProtectedRoute>
+                <SharedLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route path="jobDetail/:id" element={<JobDetail />} />
+          </Route>
+          <Route path="/chats" element={<ChatPage />} />
 
-        <Route
-          path="/crowdly"
-          element={
-            <ProtectedRoute>
-              <SharedLayout2 />
-            </ProtectedRoute>
-          }
-        >
-          <Route path="postedit/:id" element={<PostEditPage />} />
-        </Route>
+          <Route
+            path="/crowdly"
+            element={
+              <ProtectedRoute>
+                <SharedLayout2 />
+              </ProtectedRoute>
+            }
+          >
+            <Route path="postedit/:id" element={<PostEditPage />} />
+          </Route>
 
-        <Route path="*" element={<h2>error</h2>}></Route>
-      </Routes>
-    </BrowserRouter>
+          <Route path="*" element={<h2>error</h2>}></Route>
+        </Routes>
+      </BrowserRouter>
+    </ChatProvider>
   );
 }
 

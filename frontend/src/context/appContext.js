@@ -70,11 +70,19 @@ const initialState = {
   profilePost: [],
   followings: [],
   followers: [],
+  notification: [],
+  chats:[],
+  selectedChat: null,
+
 };
 
 const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
+  // const [user, setUser] = useState();
+  // const [selectedChat, setSelectedChat] = useState();
+  // const [chats, setChats] = useState([]);
+  // const [notification, setNotification] = useState([]);
   const [state, dispatch] = useReducer(reducer, initialState);
   // axios.defaults.headers.common['Authorization'] = `Bearer ${state.token}`
   const authFetch = axios.create({
