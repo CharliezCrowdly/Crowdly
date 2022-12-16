@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import {  Coverimage } from "../components/index";
+import { Coverimage } from "../components/index";
 import Wrapper from "../wrappers/RightContainer";
-import Tabs from "../components/Tabs"
+import Tabs from "../components/Tabs";
 import {
   Cv,
   UserPost,
   JobHistory,
   PendingApplication,
   SavedJobs,
-  SavedPosts
+  SavedPosts,
 } from "../components/tabs/index";
 const RightContainer = React.memo(({ profileUser, profilePost }) => {
   const [activeindex, setActive] = useState(0);
@@ -18,15 +18,14 @@ const RightContainer = React.memo(({ profileUser, profilePost }) => {
   };
   return (
     <Wrapper className="">
-      <Coverimage />
+      <Coverimage coverimage={profileUser.coverpage} />
       <Tabs activeindex={activeindex} setTab={setTab} />
 
       {activeindex === 0 ? <UserPost /> : null}
-      {activeindex === 1 ? <JobHistory /> : null}
-      {activeindex === 2 ? <PendingApplication /> : null}
-      {activeindex === 3 ? <Cv /> : null}
-      {activeindex === 4 ? <SavedJobs /> : null}
-      {activeindex === 5 ? <SavedPosts /> : null}
+      {activeindex === 1 ? <Cv /> : null}
+      {activeindex === 2 ? <SavedPosts /> : null}
+      {activeindex === 3 ? <SavedJobs /> : null}
+      {activeindex === 4 ? <JobHistory /> : null}
     </Wrapper>
   );
 });

@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Wrapper from "../wrappers/Coverimage";
+import { useAppContext } from "../../../context/appContext";
 
 const Coverimage = ({ coverimage }) => {
+  const { profileUser,isLoading } = useAppContext();
+
   const option = {
     preview: null,
-    coverimg:
-      "https://images.unsplash.com/photo-1635465756673-e7dee593d3fc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
+    coverimg:null,
     isedit: false,
   };
   const [coverpage, setCover] = useState(option);
+
+ 
   const fileselection = (e) => {
     if (e.target.files && e.target.files[0]) {
       let file = e.target.files[0];
@@ -30,11 +34,17 @@ const Coverimage = ({ coverimage }) => {
     });
   };
 
+  
+
+  if(isLoading){
+    return <div>  </div>
+  }
+
   return (
     <Wrapper>
       <img
         className="coverimg"
-        src={coverpage.preview ?? coverpage.coverimg}
+        src={coverpage.preview ?? coverpage.coverimg ?? profileUser.coverpage}
         alt=""
       />
       <input
