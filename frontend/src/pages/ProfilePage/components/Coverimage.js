@@ -1,15 +1,61 @@
-import React from "react";
+import React, { useState } from "react";
 import Wrapper from "../wrappers/Coverimage";
 
 const Coverimage = ({ coverimage }) => {
+  const option = {
+    preview: null,
+    coverimg:
+      "https://images.unsplash.com/photo-1635465756673-e7dee593d3fc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
+    isedit: false,
+  };
+  const [coverpage, setCover] = useState(option);
+  const fileselection = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      let file = e.target.files[0];
+      let blobURL = URL.createObjectURL(file);
+      setCover({ ...coverpage, isedit: true, preview: blobURL });
+    }
+  };
+
+  const oncancel = () => {
+    setCover({ ...coverpage, isedit: false, preview: null });
+  };
+
+  const onsave = () => {
+    setCover({
+      ...coverpage,
+      isedit: false,
+      coverimg: coverpage.preview,
+      preview: null,
+    });
+  };
+
   return (
     <Wrapper>
       <img
-      className="coverimg"
-        src="https://images.unsplash.com/photo-1635465756673-e7dee593d3fc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
+        className="coverimg"
+        src={coverpage.preview ?? coverpage.coverimg}
         alt=""
       />
-      <button className="btn-edit ">Edit Cover Page</button>
+      <input
+        type="file"
+        accept="image/*"
+        id="cover"
+        name="cover"
+        className="d-none"
+        onChange={fileselection}
+      />
+      <div className="btns">
+        {!coverpage.isedit ? (
+          <label htmlFor="cover" className="btn-edit ">
+            Edit Cover Page
+          </label>
+        ) : (
+          <button onClick={oncancel}>cancel</button>
+        )}
+
+        {coverpage.isedit ? <button onClick={onsave}>save</button> : null}
+      </div>
     </Wrapper>
   );
 };
