@@ -20,6 +20,7 @@ import {
   PaymentPage,
   ApplicantPage,
   ProfilePage,
+  ResetPage
 } from "./pages";
 import EditProfilePage from "./pages/EditProfile/EditProfilePage";
 import ChatProvider from "./context/ChatProvider";
@@ -31,6 +32,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="login" element={<LoginPage />} />
+          <Route path="resetpassword" element={<ResetPage />} />
+
           <Route path="/" element={<LandingPage />} />
           <Route
             path="/user"

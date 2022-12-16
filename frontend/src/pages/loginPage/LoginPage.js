@@ -169,6 +169,14 @@ const LoginPage = () => {
           >
             Submit
           </button>
+          {values.isMember ? (
+            <p
+              className="toggle-account"
+              onClick={() => navigate("/resetpassword")}
+            >
+              forgot password ?
+            </p>
+          ) : null}
         </form>
 
         <div className="image-container">

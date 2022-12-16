@@ -16,6 +16,7 @@ import AddJobPage from "./AddJobPage/AddJobPage";
 import PaymentPage from "./PaymentPage/PaymentPage"
 import ApplicantPage from "./ApplicantPage/ApplicantPage";
 import ProfilePage from './ProfilePage/ProfilePage'
+import ResetPage from "./ResetPage/ResetPage";
 export {
   LoginPage,
   ProtectedRoute,
@@ -34,6 +35,7 @@ export {
   AddJobPage,
   PaymentPage,
   ApplicantPage,
-  ProfilePage
+  ProfilePage,
+  ResetPage
 
 };
