@@ -146,7 +146,8 @@ const postDetail = async (req, res) => {
 };
 
 const explorePost = async (req, res) => {
-  const post = await Post.aggregate([{ $sample: { size: 27 } }]);
+  const post = await Post.aggregate([{ $sample: { size: 27 } }
+  ]);
 
   const posts = await Post.populate(post, { path: "userid" });
   res.status(StatusCodes.OK).json({ posts });

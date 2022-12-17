@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Coverimage } from "../components/index";
+import { Coverimage,Followinglst,Followlst } from "../components/index";
 import Wrapper from "../wrappers/RightContainer";
 import Tabs from "../components/Tabs";
 import {
@@ -16,9 +16,17 @@ const RightContainer = React.memo(({ profileUser, profilePost }) => {
   const setTab = (index) => {
     setActive(index);
   };
+
+  const changeactive = (index)=>{
+    setActive(index)
+  }
   return (
     <Wrapper className="">
-      <Coverimage coverimage={profileUser.coverpage} />
+      <Coverimage
+        coverimage={profileUser.coverpage}
+        changeactive={changeactive}
+        activeindex={activeindex}
+      />
       <Tabs activeindex={activeindex} setTab={setTab} />
 
       {activeindex === 0 ? <UserPost /> : null}
@@ -26,6 +34,8 @@ const RightContainer = React.memo(({ profileUser, profilePost }) => {
       {activeindex === 2 ? <SavedPosts /> : null}
       {activeindex === 3 ? <SavedJobs /> : null}
       {activeindex === 4 ? <JobHistory /> : null}
+      {activeindex === 6 ? <Followinglst /> : null}
+      {activeindex === 5 ? <Followlst /> : null}
     </Wrapper>
   );
 });

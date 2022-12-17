@@ -46,6 +46,7 @@ const Wrapper = styled.div`
             & > .location {
               font-size: 0.6rem;
               color: var(--black-500);
+              white-space: nowrap;
             }
           }
         }

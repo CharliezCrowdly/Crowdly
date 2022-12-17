@@ -4,12 +4,15 @@ import Profileinfo from "./Profileinfo";
 import Tabs from "./Tabs";
 import Coverimage from "./Coverimage";
 import Postbox from "./Postbox";
-
+import Followinglst from "./Followinglst"
+import Followlst from "./Followlst"
 export {
   LeftContainer,
   RightContainer,
   Profileinfo,
   Tabs,
   Coverimage,
-  Postbox
+  Postbox,
+  Followinglst,
+  Followlst
 };

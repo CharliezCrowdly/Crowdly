@@ -38,6 +38,7 @@ import {
   UPDATE_PROFILE_BEGIN,
   UPDATE_PROFILE_ERROR,
   UPDATE_PROFILE_SUCCESS,
+  REMOVE_FOLLOWER_SUCCESS
 } from "./action";
 
 import axios from "axios";
@@ -521,6 +522,16 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const removefollower = async(userid) =>{
+    try{
+      // await authFetch.delete(`/posts/postdetail/${postId}`);
+        dispatch({type:REMOVE_FOLLOWER_SUCCESS,payload:{id:userid}})
+
+    }catch{
+
+    }
+  }
+
   return (
     <AppContext.Provider
       value={{
@@ -549,6 +560,7 @@ const AppProvider = ({ children }) => {
         userProfile,
         updateUser,
         delPost,
+        removefollower
       }}
     >
       {children}

@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import Wrapper from "../wrappers/Coverimage";
 import { useAppContext } from "../../../context/appContext";
 
-const Coverimage = ({ coverimage }) => {
+const Coverimage = ({ coverimage,changeactive,activeindex }) => {
   const { profileUser,isLoading } = useAppContext();
 
   const option = {
     preview: null,
     coverimg:null,
     isedit: false,
+    file:""
   };
   const [coverpage, setCover] = useState(option);
 
@@ -17,7 +18,7 @@ const Coverimage = ({ coverimage }) => {
     if (e.target.files && e.target.files[0]) {
       let file = e.target.files[0];
       let blobURL = URL.createObjectURL(file);
-      setCover({ ...coverpage, isedit: true, preview: blobURL });
+      setCover({ ...coverpage, isedit: true, preview: blobURL,file:e.target.files[0] });
     }
   };
 
@@ -47,6 +48,32 @@ const Coverimage = ({ coverimage }) => {
         src={coverpage.preview ?? coverpage.coverimg ?? profileUser.coverpage}
         alt=""
       />
+
+      <div className="foll">
+        <div
+          className={
+            activeindex === 5
+              ? "followers glassmorphism active"
+              : "followers glassmorphism"
+          }
+          onClick={() => changeactive(5)}
+        >
+          <h2>1000</h2>
+          <p>followers</p>
+        </div>
+
+        <div
+          className={
+            activeindex === 6
+              ? "following glassmorphism active"
+              : "following glassmorphism"
+          }
+          onClick={() => changeactive(6)}
+        >
+          <h2>1000</h2>
+          <p>following</p>
+        </div>
+      </div>
       <input
         type="file"
         accept="image/*"

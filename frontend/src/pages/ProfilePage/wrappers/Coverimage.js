@@ -9,6 +9,41 @@ const Wrapper = styled.div`
     border-radius: 15px;
   }
 
+  & > .foll {
+    position: absolute;
+    left: 2%;
+    bottom: -20px;
+    display: flex;
+    gap: 5px;
+    text-transform: capitalize;
+    & > .followers {
+      background-color: white;
+
+      padding: 4%;
+      text-align: center;
+      color: var(--blue-900);
+      border-radius: 5px;
+      cursor: pointer;
+
+      &.active {
+        border: 3px solid var(--blue-900);
+      }
+    }
+
+    & > .following {
+      background-color: white;
+
+      padding: 4%;
+      text-align: center;
+      color: var(--blue-900);
+      border-radius: 5px;
+      cursor: pointer;
+      &.active {
+        border: 3px solid var(--blue-900);
+      }
+    }
+  }
+
   & > .btns {
     position: absolute;
     bottom: 9%;
