@@ -71,9 +71,8 @@ const initialState = {
   followings: [],
   followers: [],
   notification: [],
-  chats:[],
+  chats: [],
   selectedChat: null,
-
 };
 
 const AppContext = React.createContext();
@@ -514,6 +513,14 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  const delPost = async (postId) => {
+    try {
+      await authFetch.delete(`/posts/postdetail/${postId}`);
+    } catch (error) {
+      logoutUser();
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -541,6 +548,7 @@ const AppProvider = ({ children }) => {
         unsavejob,
         userProfile,
         updateUser,
+        delPost,
       }}
     >
       {children}

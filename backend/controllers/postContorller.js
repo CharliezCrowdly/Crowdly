@@ -212,6 +212,24 @@ const savedPost = async (req, res) => {
   }
 };
 
+
+const deletePost = async (req, res) => {
+  const { id: postId } = req.params;
+
+  const post = await Post.findOne({ _id: postId });
+
+  if (!post) {
+    throw new CustomError.NotFoundError(`No post with id : ${postId}`);
+  }
+  console.log(req.user);
+  console.log(req.createdBy);
+
+  checkPermissions(req.user, post.userid);
+
+  await post.remove();
+  res.status(StatusCodes.OK).json({ msg: "Success! Job removed" });
+};
+
 module.exports = {
   postUpload,
   getPosts,
@@ -222,5 +240,6 @@ module.exports = {
   postDetail,
   UpdatePost,
   explorePost,
-  savedPost
+  savedPost,
+  deletePost
 };
