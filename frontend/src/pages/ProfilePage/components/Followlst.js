@@ -3,12 +3,11 @@ import Wrapper from "../wrappers/Following";
 import { useAppContext } from "../../../context/appContext";
 
 const Followlst = () => {
-     const { profileUser,removefollower } = useAppContext();
-     const {  followers } = profileUser;
-     var filterlst = followers;
+  const { profileUser, removefollower, user } = useAppContext();
+  const { followers } = profileUser;
+  var filterlst = followers;
   return (
     <Wrapper>
- 
       {filterlst.map((item) => {
         return (
           <div className="signalfollow " key={item._id}>
@@ -17,7 +16,9 @@ const Followlst = () => {
               <span>{item.username}</span>
             </div>
 
-            <button onClick={()=>removefollower(item._id)}>remove</button>
+            {profileUser._id === user._id ? (
+              <button onClick={() => removefollower(item._id)}>remove</button>
+            ) : null}
           </div>
         );
       })}

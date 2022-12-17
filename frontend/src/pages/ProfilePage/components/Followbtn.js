@@ -9,15 +9,22 @@ const Followbtn = ({ items }) => {
 
     followUser,
 
-    unfollowUser,
+    followProfile,
+    unfollowProfile,
   } = useAppContext();
 
   const togglefollow = () => {
+    const option = {
+      _id: user._id,
+      username: user.username,
+      profilePicture: user.profilePicture,
+    };
     if (!followed) {
-      followUser(userId);
+      followProfile(userId, user._id,option);
+     
       setFollowed(true);
     } else {
-      unfollowUser(userId);
+      unfollowProfile(userId, user._id);
       setFollowed(false);
     }
   };

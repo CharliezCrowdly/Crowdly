@@ -38,7 +38,8 @@ import {
   UPDATE_PROFILE_BEGIN,
   UPDATE_PROFILE_ERROR,
   UPDATE_PROFILE_SUCCESS,
-  REMOVE_FOLLOWER_SUCCESS
+  REMOVE_FOLLOWER_SUCCESS,
+  ADD_FOLLOWER_SUCCESS,
 } from "./action";
 
 import axios from "axios";
@@ -464,13 +465,10 @@ const AppProvider = ({ children }) => {
   const followUser = async (userId) => {
     try {
       await authFetch.patch(`/profile/${userId}`);
-
-      dispatch({ type: FOLLOW_SUCCESS });
     } catch (e) {
       console.log(e);
     }
   };
-  
 
   const savejob = async (jobid) => {
     try {
@@ -523,16 +521,38 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  const removefollower = async(userid) =>{
-    try{
-     await authFetch.patch(`/profile/removefollower/${userid}`);
-        dispatch({type:REMOVE_FOLLOWER_SUCCESS,payload:{id:userid}})
-
-    }catch(error){
-      console.log(error)
-
+  const removefollower = async (userid) => {
+    try {
+      await authFetch.patch(`/profile/removefollower/${userid}`);
+      dispatch({ type: REMOVE_FOLLOWER_SUCCESS, payload: { id: userid } });
+    } catch (error) {
+      console.log(error);
     }
-  }
+  };
+
+  const unfollowProfile = async (profileuser, userId) => {
+    try {
+      await authFetch.patch(`/profile/unfollow/${profileuser}`);
+      dispatch({
+        type: REMOVE_FOLLOWER_SUCCESS,
+        payload: { id: userId },
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const followProfile = async (profileuser, userId,option) => {
+    try {
+      await authFetch.patch(`/profile/${profileuser}`);
+      dispatch({
+        type: ADD_FOLLOWER_SUCCESS,
+        payload: { id: userId,option:option },
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <AppContext.Provider
@@ -562,7 +582,9 @@ const AppProvider = ({ children }) => {
         userProfile,
         updateUser,
         delPost,
-        removefollower
+        removefollower,
+        unfollowProfile,
+        followProfile,
       }}
     >
       {children}

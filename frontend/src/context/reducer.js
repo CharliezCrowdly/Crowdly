@@ -37,6 +37,7 @@ import {
   UPDATE_PROFILE_ERROR,
   UPDATE_PROFILE_SUCCESS,
   REMOVE_FOLLOWER_SUCCESS,
+  ADD_FOLLOWER_SUCCESS,
 } from "./action";
 import { initialState } from "./appContext";
 
@@ -333,6 +334,22 @@ const reducer = (state, action) => {
       ...state,
 
       profileUser: profileuser,
+    };
+  }
+
+  if (action.type === ADD_FOLLOWER_SUCCESS) {
+    let profile = state.profileUser;
+    const yes = profile.followers.find(
+      (item) => item._id === action.payload.id
+    );
+    if (yes) {
+    } else {
+      profile.followers.push(action.payload.option);
+    }
+    return {
+      ...state,
+
+      profileUser: profile,
     };
   }
 
