@@ -470,6 +470,7 @@ const AppProvider = ({ children }) => {
       console.log(e);
     }
   };
+  
 
   const savejob = async (jobid) => {
     try {
@@ -524,10 +525,11 @@ const AppProvider = ({ children }) => {
 
   const removefollower = async(userid) =>{
     try{
-      // await authFetch.delete(`/posts/postdetail/${postId}`);
+     await authFetch.patch(`/profile/removefollower/${userid}`);
         dispatch({type:REMOVE_FOLLOWER_SUCCESS,payload:{id:userid}})
 
-    }catch{
+    }catch(error){
+      console.log(error)
 
     }
   }

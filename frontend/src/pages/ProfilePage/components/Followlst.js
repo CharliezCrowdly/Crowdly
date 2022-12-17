@@ -12,8 +12,10 @@ const Followlst = () => {
       {filterlst.map((item) => {
         return (
           <div className="signalfollow " key={item._id}>
-            <img src={item.profilePicture} alt="" />
-            <span>{item.username}</span>
+            <div className="info">
+              <img src={item.profilePicture} alt="" />
+              <span>{item.username}</span>
+            </div>
 
             <button onClick={()=>removefollower(item._id)}>remove</button>
           </div>

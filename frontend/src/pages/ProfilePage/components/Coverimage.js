@@ -2,23 +2,27 @@ import React, { useState, useEffect } from "react";
 import Wrapper from "../wrappers/Coverimage";
 import { useAppContext } from "../../../context/appContext";
 
-const Coverimage = ({ coverimage,changeactive,activeindex }) => {
-  const { profileUser,isLoading } = useAppContext();
+const Coverimage = ({ coverimage, changeactive, activeindex,subtract,add }) => {
+  const { profileUser, isLoading } = useAppContext();
 
   const option = {
     preview: null,
-    coverimg:null,
+    coverimg: null,
     isedit: false,
-    file:""
+    file: "",
   };
   const [coverpage, setCover] = useState(option);
 
- 
   const fileselection = (e) => {
     if (e.target.files && e.target.files[0]) {
       let file = e.target.files[0];
       let blobURL = URL.createObjectURL(file);
-      setCover({ ...coverpage, isedit: true, preview: blobURL,file:e.target.files[0] });
+      setCover({
+        ...coverpage,
+        isedit: true,
+        preview: blobURL,
+        file: e.target.files[0],
+      });
     }
   };
 
@@ -35,10 +39,8 @@ const Coverimage = ({ coverimage,changeactive,activeindex }) => {
     });
   };
 
-  
-
-  if(isLoading){
-    return <div>  </div>
+  if (isLoading) {
+    return <div> </div>;
   }
 
   return (
@@ -58,7 +60,7 @@ const Coverimage = ({ coverimage,changeactive,activeindex }) => {
           }
           onClick={() => changeactive(5)}
         >
-          <h2>1000</h2>
+          <h2>{profileUser?.followers?.length}</h2>
           <p>followers</p>
         </div>
 
@@ -70,7 +72,7 @@ const Coverimage = ({ coverimage,changeactive,activeindex }) => {
           }
           onClick={() => changeactive(6)}
         >
-          <h2>1000</h2>
+          <h2>{profileUser?.following?.length - subtract + add}</h2>
           <p>following</p>
         </div>
       </div>

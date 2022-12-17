@@ -25,6 +25,10 @@ const Wrapper = styled.div`
       border-radius: 5px;
       cursor: pointer;
 
+      & > h2 {
+        color: black;
+      }
+
       &.active {
         border: 3px solid var(--blue-900);
       }
@@ -38,6 +42,9 @@ const Wrapper = styled.div`
       color: var(--blue-900);
       border-radius: 5px;
       cursor: pointer;
+      & > h2 {
+        color: black;
+      }
       &.active {
         border: 3px solid var(--blue-900);
       }
