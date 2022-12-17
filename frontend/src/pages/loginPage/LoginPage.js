@@ -19,7 +19,7 @@ const initialState = {
   profilePicture: null,
   password: "",
   cpassword: "",
-  isMember: false,
+  isMember: true,
   location: "",
   usertype: null,
 };

@@ -14,9 +14,9 @@ const {
 
 } = require("../controllers/profileController");
 
+router.route("/search").get(searchProfile);
 router.route("/userrandom").get(recommend);
 router.route("/:id").patch(followUser).get(userProfile);
-router.route("/search").get(searchProfile);
 router.route("/unfollow/:id").patch(unfollowUser);
 
 router.route("/removefollower/:id").patch(removefollower);
