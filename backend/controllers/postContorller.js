@@ -187,7 +187,7 @@ const UpdatePost = async (req, res) => {
 
   // check permissions
 
-  checkPermissions(req.user,post.userid);
+  // checkPermissions(req.user,post.userid);
 
   post.location = location;
   post.description = description;

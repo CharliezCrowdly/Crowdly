@@ -9,6 +9,7 @@ import axios from "axios";
 import { Alert } from "../../component";
 import PostBox from "./component/PostBox";
 import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 const uploadState = {
   location: false,
@@ -62,6 +63,9 @@ const PostEditPage = () => {
           })
           .then((res) => {
             const { post } = res.data;
+            if (post.userid != user._id) {
+              <Navigate to="/user/feeds" />;
+            }
             setUpload({
               location: false,
               image: false,
@@ -75,6 +79,7 @@ const PostEditPage = () => {
               preview: post.postfile,
               item: post,
             });
+
             setPreview(post.postfile);
             if (user._id !== post.userid._id) {
               navigate("/errors");
