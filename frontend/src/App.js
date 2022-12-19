@@ -20,7 +20,7 @@ import {
   PaymentPage,
   ApplicantPage,
   ProfilePage,
-  ResetPage
+  ResetPage,
 } from "./pages";
 import EditProfilePage from "./pages/EditProfile/EditProfilePage";
 import ChatProvider from "./context/ChatProvider";
@@ -33,6 +33,7 @@ function App() {
         <Routes>
           <Route path="login" element={<LoginPage />} />
           <Route path="resetpassword" element={<ResetPage />} />
+          <Route path="resetpassword/:id/:token" element={<ResetPage />} />
 
           <Route path="/" element={<LandingPage />} />
           <Route
