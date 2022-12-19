@@ -226,11 +226,7 @@ const resetpassword = async (req, res, next) => {
 
   try {
     const user = await User.findById(id).select("+password");
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-    console.log(user.password);
-    user.password = hashedPassword;
-    console.log(user.password);
+    user.password = password;
     await user.save();
     res.status(200).json({
       success: true,
