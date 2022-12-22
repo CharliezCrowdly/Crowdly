@@ -29,6 +29,10 @@ const Wrapper = styled.aside`
       color: var(--black-800);
       font-weight: bold;
     }
+
+    & > .userskill{
+      text-transform: capitalize;
+    }
     & > .edit-profile {
       color: var(--blue-900);
     }

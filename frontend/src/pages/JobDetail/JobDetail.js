@@ -179,11 +179,7 @@ const JobDetail = () => {
             )}
             {owner ? (
               <div className="buttons">
-                <button
-                  className="btn-easy"
-                  onClick={onbid}
-                  style={{ width: "auto" }}
-                >
+                <button className="btn-easy" style={{ width: "auto" }}>
                   Deactivate
                 </button>
                 <button

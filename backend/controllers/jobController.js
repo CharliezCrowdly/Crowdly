@@ -368,7 +368,7 @@ module.exports.getApplicants = async (req, res, next) => {
       .select("applicants")
       .populate(
         "applicants.applicant",
-        "profilePicture username location skill name email followers"
+        "profilePicture username location skill name email followers skillSet"
       )
       .sort("-appliedDate")
       .then((result) => {

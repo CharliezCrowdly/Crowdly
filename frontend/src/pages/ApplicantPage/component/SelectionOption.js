@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Wrapper from "../wrappers/SelectionOption";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
-const SelectionOption = () => {
+const SelectionOption = ({handleskill,skills}) => {
   const options = {
     drop: true,
     add: false,
@@ -10,11 +10,13 @@ const SelectionOption = () => {
   const [option, setOption] = useState(options);
   const onEnter = (e) => {
     if (e.key === "Enter") {
-      console.log(e.target.value);
-      var newvalue = value;
-      newvalue.push(e.target.value);
-      setValue([...newvalue]);
+   
+
+      var newskills = skills;
+      newskills.push(e.target.value.toLowerCase());
+      handleskill([...newskills])
       e.target.value = "";
+
     }
   };
   return (
@@ -33,7 +35,7 @@ const SelectionOption = () => {
         placeholder="Enter skills"
       />
       <div className="list">
-        {value.map((item, index) => {
+        {skills.map((item, index) => {
           return (
             <button key={index}>
               {item}
@@ -42,7 +44,7 @@ const SelectionOption = () => {
           );
         })}
       </div>
-      <button className="add-skill">
+      <button className="add-skill" onClick={()=> handleskill([])}>
         <span>x</span> clear all
       </button>
     </Wrapper>

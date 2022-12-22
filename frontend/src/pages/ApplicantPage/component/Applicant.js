@@ -40,7 +40,11 @@ const Applicant = ({ item }) => {
           <TiTick />
         </div>
 
-        <p>Design ,ui/ux,react +50more</p>
+        <p>
+          {applicant.skillSet.map((item, index) => {
+            return <span key={index}>{item.skill},</span>;
+          })}
+        </p>
         <div className="action">
           {liked ? (
             <AiFillStar className="icon" onClick={onpinned} />
@@ -78,7 +82,7 @@ const Applicant = ({ item }) => {
           <div className="skills">
             <p>Skill</p>
             <div className="list">
-              {lstskill.map((item, index) => {
+              {applicant.skillSet.map((item, index) => {
                 return <button key={index}>{item.skill}</button>;
               })}
             </div>

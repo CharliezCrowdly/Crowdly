@@ -19,7 +19,7 @@ const UserInfoCard = ({ profileUser }) => {
           />
         </div>
         <div className="username">{profileUser.username}</div>
-        <div className="userskill">FrontEnd Developer</div>
+        <div className="userskill">{profileUser.usertype}</div>
         {profileUser._id != user._id ? (
 
           <Followbtn items={profileUser}/>
