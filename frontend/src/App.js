@@ -90,7 +90,7 @@ function App() {
             <Route path="payment" element={<PaymentPage />} />
 
             <Route path="message" element={<MessagePage />} />
-            <Route path="applicants" element={<ApplicantPage />} />
+            <Route path="applicants/:id" element={<ApplicantPage />} />
             <Route path="profile/:id" element={<ProfilePage />} />
           </Route>
 

@@ -6,7 +6,9 @@ import { useAppContext } from "../../context/appContext";
 import axios from "axios";
 import SearechFilter from "./component/SearechFilter";
 import Applicantlst from "./component/Applicantlst";
+import { useParams } from "react-router-dom";
 const ApplicantPage = () => {
+  const { id } = useParams();
   const { token } = useAppContext();
   const [applicants, setApplicants] = useState([]);
   const [search, setsearch] = useState({
@@ -30,7 +32,7 @@ const ApplicantPage = () => {
   const fetch = async () => {
     await axios
       .get(
-        `http://localhost:5000/api/v1/job/getApplicants/${"639332c29bfdb09ea78d679e"}`,
+        `http://localhost:5000/api/v1/job/getApplicants/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

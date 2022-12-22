@@ -13,6 +13,7 @@ import axios from "axios";
 import { useAppContext } from "../../context/appContext";
 import Table from "react-bootstrap/Table";
 import { ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import { IoTime } from "react-icons/io5";
 import Countdown from "react-countdown";
 const JobDetail = () => {
@@ -32,6 +33,8 @@ const JobDetail = () => {
   const [applied, setApplied] = useState(false);
   const [status, setStatus] = useState("");
   //get job id from params and fetch job detail
+
+  const navigate = useNavigate();
   const fetch = async () => {
     const id = window.location.pathname.split("/")[3];
 
@@ -186,7 +189,11 @@ const JobDetail = () => {
             )} */}
             {owner ? (
               <div className="buttons">
-                <button className="btn-easy" style={{ width: "auto" }}>
+                <button
+                  className="btn-easy"
+                  style={{ width: "auto" }}
+                  onClick={() => navigate(`/user/applicants/${job._id}`)}
+                >
                   View Applicants
                 </button>
                 <button
