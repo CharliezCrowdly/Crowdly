@@ -275,6 +275,7 @@ const reducer = (state, action) => {
       showAlert: true,
       alertType: "success",
       alertText: "New JOB ADDED!",
+      jobid:action.payload.id
     };
   }
   if (action.type === ADD_JOB_ERROR) {

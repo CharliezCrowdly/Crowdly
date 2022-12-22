@@ -75,6 +75,7 @@ const initialState = {
   notification: [],
   chats: [],
   selectedChat: null,
+  jobid:""
 };
 
 const AppContext = React.createContext();
@@ -423,7 +424,7 @@ const AppProvider = ({ children }) => {
       formData.append("requirments", requirments);
       formData.append("closeTime", closeTime);
 
-      await authFetch.post("job/addJob", {
+     const {data} = await authFetch.post("job/addJob", {
         title,
         sector,
         experiencelvl,
@@ -435,8 +436,10 @@ const AppProvider = ({ children }) => {
         requirments,
         closeTime,
       });
+      console.log(data)
       dispatch({
         type: ADD_JOB_SUCCESS,
+        payload:{id: data.data._id }
       });
 
       // dispatch({ type: CLEAR_VALUES });
