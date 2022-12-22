@@ -53,7 +53,7 @@ const JobDetail = () => {
         setJob(res.data.data);
         setLoading(false);
         setOwner(res.data.data.company._id == user._id);
-      
+
         if (res.data.data.saved.find((like) => like === user._id)) {
           Setbookmark(true);
           // postState.bookmarked= true
@@ -117,6 +117,10 @@ const JobDetail = () => {
     setModal((ismodal) => !ismodal);
   };
 
+  if (loading) {
+    return <div></div>;
+  }
+
   return (
     <>
       <Wrapper className="">
@@ -124,25 +128,24 @@ const JobDetail = () => {
         <div className="left-section glassmorphism">
           <section className="one">
             <div className="title">
-              {loading ? (
-                <h1>Data Analyst / Reports / SQL Developer</h1>
-              ) : (
-                <h1>{job.title}</h1>
-              )}
-              <div className="dropdown">
-                <BsThreeDots
-                  onClick={() => setDropdown((dropdown) => !dropdown)}
-                />
-                <div
-                  className={
-                    dropdown ? "dropdown-option glassmorphism " : "d-none"
-                  }
-                >
-                  <AiTwotoneEdit className="icon" />
+              <h1>{job.title}</h1>
 
-                  <AiTwotoneDelete />
+              {job.company === user._id ? (
+                <div className="dropdown">
+                  <BsThreeDots
+                    onClick={() => setDropdown((dropdown) => !dropdown)}
+                  />
+                  <div
+                    className={
+                      dropdown ? "dropdown-option glassmorphism " : "d-none"
+                    }
+                  >
+                    <AiTwotoneEdit className="icon" />
+
+                    <AiTwotoneDelete />
+                  </div>
                 </div>
-              </div>
+              ) : null}
             </div>
             {/* <div className="place">
               <span className="location">Nepal,kathmandu</span>
@@ -154,10 +157,10 @@ const JobDetail = () => {
             </div>
             <div className="jobtype">
               <IoTime className="icon" />
-              
-                <Countdown date={job?.closeDate} />
-                
-             
+
+              <span>
+                <Countdown date={job.closeDate} />
+              </span>
             </div>
             <div className="jobtype">
               <RiMoneyDollarCircleLine className="icon" />
@@ -184,7 +187,7 @@ const JobDetail = () => {
             {owner ? (
               <div className="buttons">
                 <button className="btn-easy" style={{ width: "auto" }}>
-                  Deactivate
+                  View Applicants
                 </button>
                 <button
                   className="btn-save"

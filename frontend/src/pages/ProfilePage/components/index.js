@@ -6,6 +6,7 @@ import Coverimage from "./Coverimage";
 import Postbox from "./Postbox";
 import Followinglst from "./Followinglst"
 import Followlst from "./Followlst"
+import CreatedJob from "./CreatedJob";
 export {
   LeftContainer,
   RightContainer,
@@ -14,5 +15,6 @@ export {
   Coverimage,
   Postbox,
   Followinglst,
-  Followlst
+  Followlst,
+  CreatedJob
 };

@@ -2,13 +2,13 @@ import styled from "styled-components";
 
 const Wrapper = styled.div`
   margin-top: 10px;
-  width: 455px;
 
   .comment-form {
-    border-radius: 7px;
+    border-radius: 50px;
     display: flex;
     align-items: center;
-    padding: 2%;
+   
+    border: 1px solid var(--black-600);
 
     & > .description {
       width: 100%;

@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { Coverimage, Followinglst, Followlst } from "../components/index";
+import {
+  Coverimage,
+  Followinglst,
+  Followlst,
+  CreatedJob,
+} from "../components/index";
 import Wrapper from "../wrappers/RightContainer";
 import Tabs from "../components/Tabs";
 import {
@@ -50,6 +55,7 @@ const RightContainer = React.memo(({ profileUser, profilePost }) => {
       {activeindex === 6 ? (
         <Followinglst ufother={ufother} fother={fother} />
       ) : null}
+      {activeindex === 7 ? <CreatedJob /> : null}
     </Wrapper>
   );
 });

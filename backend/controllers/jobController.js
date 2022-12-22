@@ -494,3 +494,28 @@ module.exports.savedJobs = async (req, res) => {
     console.log(error);
   }
 };
+
+
+module.exports.createdJobs = async (req, res) => {
+  try {
+    const jobs = await Job.find({
+      company: req.user.userId,
+    })
+      .populate("company")
+      .then((result) => {
+        return res.json({
+          success: true,
+          data: result,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        return res.json({
+          success: false,
+          msg: err,
+        });
+      });
+  } catch (error) {
+    console.log(error);
+  }
+};

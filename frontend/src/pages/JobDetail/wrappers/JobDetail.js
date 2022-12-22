@@ -26,8 +26,8 @@ const Wrapper = styled.div`
         display: flex;
         justify-content: space-between;
         & > h1 {
-          font-size: 1.5rem;
-          font-weight: 400;
+          font-size: 1.8rem;
+          font-weight: 700;
         }
 
         & > .dropdown {
@@ -98,7 +98,7 @@ const Wrapper = styled.div`
 
       & > .status {
         font-weight: bold;
-        margin-top:10px;
+        margin-top: 10px;
 
         & > span {
           background-color: purple;
@@ -117,6 +117,11 @@ const Wrapper = styled.div`
 
         & > .icon {
           font-size: 1.4rem;
+          color: var(--light-blue-600);
+        }
+
+        & > span{
+          font-weight: 400;
         }
       }
       & > .recommend {

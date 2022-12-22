@@ -16,7 +16,7 @@ const PostComment = ({ startCommentload, postId }) => {
 
   return (
     <Wrapper>
-      <form className="comment-form glassmorphism">
+      <form className="comment-form ">
         <img className="profile-pic-sm" src={user.profilePicture} alt="" />
 
         <input
