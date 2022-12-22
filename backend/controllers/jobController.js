@@ -495,11 +495,14 @@ module.exports.savedJobs = async (req, res) => {
   }
 };
 
-
 module.exports.createdJobs = async (req, res) => {
   try {
     const jobs = await Job.find({
-      company: req.user.userId,
+      applicants: {
+        $elemMatch: {
+          applicant: req.user.UserId,
+        },
+      },
     })
       .populate("company")
       .then((result) => {

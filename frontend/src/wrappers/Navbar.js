@@ -30,8 +30,25 @@ const Wrapper = styled.aside`
       align-items: center;
       gap: 4px;
       position: relative;
-      & > .bell-icon {
-        font-size: 1.7rem;
+      & > .notify {
+        position: relative;
+        margin-right: 10px;
+        & > .bell-icon {
+          font-size: 1.7rem;
+        }
+        & > span{
+          background-color: red;
+          color: white;
+          border-radius: 50px;
+          font-size: 0.7rem;
+          font-weight: bold;
+          position: absolute;
+          top: -5px;
+          right: -10px;
+          width: 25px;
+          text-align: center;
+          height: 15px;
+        }
       }
       & > .dropdown-menus {
         position: relative;
@@ -86,7 +103,6 @@ const Wrapper = styled.aside`
         font-size: 1.2rem;
         color: var(--blue-400);
         transform: translateY(3px);
-        
       }
 
       &.active {

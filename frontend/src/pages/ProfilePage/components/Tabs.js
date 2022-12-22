@@ -3,8 +3,7 @@ import Wrapper from "../wrappers/Tabs";
 import { useAppContext } from "../../../context/appContext";
 
 const Tabs = ({ activeindex, setTab }) => {
-  const {user} = useAppContext()
-  
+  const { user } = useAppContext();
 
   const userlst = [
     {
@@ -48,11 +47,6 @@ const Tabs = ({ activeindex, setTab }) => {
     {
       id: 3,
       text: "saved jobs",
-    },
-
-    {
-      id: 7,
-      text: "Created Jobs",
     },
   ];
 

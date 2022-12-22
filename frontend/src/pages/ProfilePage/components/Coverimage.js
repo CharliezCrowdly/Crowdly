@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Wrapper from "../wrappers/Coverimage";
 import { useAppContext } from "../../../context/appContext";
 
-const Coverimage = ({ coverimage, changeactive, activeindex,subtract,add }) => {
+const Coverimage = ({ coverimage, changeactive, activeindex,subtract }) => {
   const { profileUser, isLoading } = useAppContext();
 
   const option = {
@@ -72,7 +72,7 @@ const Coverimage = ({ coverimage, changeactive, activeindex,subtract,add }) => {
           }
           onClick={() => changeactive(6)}
         >
-          <h2>{profileUser?.following?.length - subtract + add}</h2>
+          <h2>{Number(profileUser?.following?.length) - Number(subtract)}</h2>
           <p>following</p>
         </div>
       </div>

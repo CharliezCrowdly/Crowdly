@@ -243,6 +243,7 @@ const Step2 = ({
                       <TextField
                         name="startDate"
                         label="Start Date"
+                        type={"date"}
                         value={work.startDate}
                         onChange={(e) => {
                           handleOnWorkChange(e, "startDate", index);
@@ -259,6 +260,7 @@ const Step2 = ({
                       <TextField
                         name="endDate"
                         label="End Date"
+                        type={"date"}
                         value={work.endDate}
                         onChange={(e) => {
                           handleOnWorkChange(e, "endDate", index);

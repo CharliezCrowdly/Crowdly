@@ -17,7 +17,7 @@ import {
 const RightContainer = React.memo(({ profileUser, profilePost }) => {
   const [activeindex, setActive] = useState(0);
   const [subtract, setSubtract] = useState(0);
-  const [add, setAdd] = useState(0);
+ 
 
   const setTab = (index) => {
     setActive(index);
@@ -42,7 +42,7 @@ const RightContainer = React.memo(({ profileUser, profilePost }) => {
         changeactive={changeactive}
         activeindex={activeindex}
         subtract={subtract}
-        add={add}
+       
       />
       <Tabs activeindex={activeindex} setTab={setTab} />
 

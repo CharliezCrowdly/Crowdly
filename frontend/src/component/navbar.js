@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 const Navbar = () => {
   const { user, logoutUser } = useAppContext();
   const [dropdown, setDropdown] = useState(false);
+  const [notify, setnotify] = useState(false)
 
   const navigate = useNavigate()
 
@@ -25,14 +26,17 @@ const Navbar = () => {
         <NavLinks />
 
         <div className="nav-content ">
-          <IoIosNotifications className="bell-icon" />
+          <div className="notify">
+            <IoIosNotifications className="bell-icon" />
+            <span>20</span>
+          </div>
           <img
             className="profile-pic-sm"
             src="https://us.123rf.com/450wm/molokowall/molokowall2201/molokowall220100015/180568257-young-smiling-man-adam-avatar-3d-vector-people-character-illustration-cartoon-minimal-style-.jpg?ver=6"
             alt=""
           />
           <div className="dropdown-menus">
-            <h5 onClick={() => setDropdown((prev) => !prev)}>
+            <h5 onClick={() => setDropdown((prev) => !prev)} >
               {user.username}
             </h5>
 
