@@ -21,6 +21,7 @@ import {
   ApplicantPage,
   ProfilePage,
   ResetPage,
+  IsLoggedin,
 } from "./pages";
 import EditProfilePage from "./pages/EditProfile/EditProfilePage";
 import ChatProvider from "./context/ChatProvider";
@@ -31,11 +32,39 @@ function App() {
     <ChatProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="login" element={<LoginPage />} />
-          <Route path="resetpassword" element={<ResetPage />} />
-          <Route path="resetpassword/:id/:token" element={<ResetPage />} />
+          <Route
+            path="login"
+            element={
+              <IsLoggedin>
+                <LoginPage />
+              </IsLoggedin>
+            }
+          />
+          <Route
+            path="resetpassword"
+            element={
+              <IsLoggedin>
+                <ResetPage />
+              </IsLoggedin>
+            }
+          />
+          <Route
+            path="resetpassword/:id/:token"
+            element={
+              <IsLoggedin>
+                <ResetPage />
+              </IsLoggedin>
+            }
+          />
 
-          <Route path="/" element={<LandingPage />} />
+          <Route
+            path="/"
+            element={
+              <IsLoggedin>
+                <LandingPage />
+              </IsLoggedin>
+            }
+          />
           <Route
             path="/user"
             element={

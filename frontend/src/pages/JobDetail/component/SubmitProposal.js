@@ -15,7 +15,6 @@ const SubmitProporsal = React.memo(({ ismodal, onbid }) => {
     theme: "dark",
   };
   const { user } = useAppContext();
-  console.log(user);
   const [selectedFile, setSelectedFile] = React.useState(null);
   const [setBid, setSelectedBid] = React.useState(0);
 
@@ -29,7 +28,6 @@ const SubmitProporsal = React.memo(({ ismodal, onbid }) => {
   };
   // const onBidChange = async (e) => {};
   const handleApply = (e) => {
-    // console.log(e);
     e.preventDefault();
     const formData = new FormData();
     formData.append("bid", setBid);
@@ -43,13 +41,11 @@ const SubmitProporsal = React.memo(({ ismodal, onbid }) => {
         "content-type": `multipart/form-data; boundary=${formData._boundary}`,
       },
     };
-    console.log(jobId);
-    console.log(setBid);
+    
 
     axios
       .post("/api/v1/job/sendProposal", formData, config)
       .then((result) => {
-        console.log(result.data.file);
         axios
           .post(
             "/api/v1/job/applyForJob",
@@ -65,25 +61,21 @@ const SubmitProporsal = React.memo(({ ismodal, onbid }) => {
             }
           )
           .then((result) => {
-            console.log(result);
+           
             toast.success(result.data.msg, toastOptions);
             window.location.reload();
           })
           .catch((err) => {
-            console.log(err);
             toast.error("Already Applied for this job", toastOptions);
-            console.log(err);
           });
       })
       .catch((err) => {
-        console.log(err);
         toast.error(err, toastOptions);
-        console.log(err);
       });
   };
   return (
     <Wrapper className={ismodal ? "glassmorphism active " : "glassmorphism"}>
-      <form className="form-container" enctype="multipart/form-data">
+      <form className="form-container" encType="multipart/form-data">
         <h1>Place Bid</h1>
         <label htmlFor="">Bid</label>
         <input

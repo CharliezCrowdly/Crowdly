@@ -13,6 +13,8 @@ import axios from "axios";
 import { useAppContext } from "../../context/appContext";
 import Table from "react-bootstrap/Table";
 import { ToastContainer } from "react-toastify";
+import { IoTime } from "react-icons/io5";
+import Countdown from "react-countdown";
 const JobDetail = () => {
   const { requirement, company } = joblists;
   const [isReadmore, setReadmore] = useState(false);
@@ -51,6 +53,7 @@ const JobDetail = () => {
         setJob(res.data.data);
         setLoading(false);
         setOwner(res.data.data.company._id == user._id);
+      
         if (res.data.data.saved.find((like) => like === user._id)) {
           Setbookmark(true);
           // postState.bookmarked= true
@@ -77,8 +80,6 @@ const JobDetail = () => {
       .then((res) => {
         setApplicants(res.data.data.applicants);
         setApplicantsLoading(false);
-        console.log("Applicants");
-        console.log(res.data.data.applicants);
 
         res.data.data.applicants.find((applicant) => {
           if (applicant.applicant._id === user._id) {
@@ -143,17 +144,20 @@ const JobDetail = () => {
                 </div>
               </div>
             </div>
-            <div className="place">
+            {/* <div className="place">
               <span className="location">Nepal,kathmandu</span>
               <span>8 hours ago</span>
-            </div>
+            </div> */}
             <div className="jobtype">
               <FaBriefcase className="icon" />
               <span>{job.jobtype}</span>
             </div>
             <div className="jobtype">
-              <BiBuilding className="icon" />
-              <span>10 - 15 Employee</span>
+              <IoTime className="icon" />
+              
+                <Countdown date={job?.closeDate} />
+                
+             
             </div>
             <div className="jobtype">
               <RiMoneyDollarCircleLine className="icon" />
