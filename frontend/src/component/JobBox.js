@@ -5,6 +5,8 @@ import { RiMoneyDollarCircleFill } from "react-icons/ri";
 import Wrapper from "../wrappers/JobBox";
 import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../context/appContext";
+import { IoTime } from "react-icons/io5";
+import Countdown from "react-countdown";
 const JobBox = (job) => {
   const navigate = useNavigate();
   const { user, savejob, unsavejob } = useAppContext();
@@ -79,8 +81,10 @@ const JobBox = (job) => {
               </p>
             </div>
             <div className="jobLocation">
-              <HiLocationMarker className="blue-icon" />
-              <span className="light-text">kathmandu</span>
+              <IoTime className="blue-icon" />
+              <span className="light-text">
+                <Countdown date={job.job.closeDate} />
+              </span>
             </div>
           </div>
 

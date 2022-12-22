@@ -163,7 +163,7 @@ const JobDetail = () => {
                 <span>Rs. {job.sallary}</span>
               )}
             </div>
-            {owner ? (
+            {/* {owner ? (
               <div>
                 <hr />
               </div>
@@ -176,7 +176,7 @@ const JobDetail = () => {
                 />
                 <span>Your profile match this job</span>
               </div>
-            )}
+            )} */}
             {owner ? (
               <div className="buttons">
                 <button className="btn-easy" style={{ width: "auto" }}>
@@ -220,13 +220,11 @@ const JobDetail = () => {
             )}
 
             {applied ? (
-              <p>
-                Status: {status.status} <br />
+              <p className="status">
+                Status:<span> {status.status}</span> <br />
                 <br />
               </p>
-            ) : (
-              <div></div>
-            )}
+            ) : null}
           </section>
 
           <section className="two">

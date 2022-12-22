@@ -96,6 +96,20 @@ const Wrapper = styled.div`
         }
       }
 
+      & > .status {
+        font-weight: bold;
+        margin-top:10px;
+
+        & > span {
+          background-color: purple;
+          padding: 1%;
+          color: white;
+          font-weight: normal;
+          border-radius: 7px;
+          margin-left: 8px;
+        }
+      }
+
       & > .jobtype {
         display: flex;
         align-items: center;
@@ -140,7 +154,7 @@ const Wrapper = styled.div`
     .three {
       border: 0.1px solid var(--blue-600);
       padding-block: 1%;
-      padding-inline:2%;
+      padding-inline: 2%;
       border-radius: 8px;
       margin-top: 17px;
       & > .info-container {

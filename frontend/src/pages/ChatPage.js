@@ -4,13 +4,13 @@ import ChatBox from "../component/Chat/ChatBox";
 import MyChats from "../component/Chat/MyChats";
 import SideDrawer from "../component/Chat/SideDrawer";
 import { useAppContext } from "../context/appContext";
-
+import Wrapper from "./chatwrapper/ChatPage";
 function ChatPage() {
   const { user } = useAppContext();
   const [fetchAgain, setFetchAgain] = useState(false);
   return (
     <ChakraProvider>
-      <div style={{ width: "100%" }}>
+      <Wrapper>
         {user && <SideDrawer />}
         <Box
           display="flex"
@@ -24,7 +24,7 @@ function ChatPage() {
             <ChatBox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
           )}
         </Box>
-      </div>
+      </Wrapper>
     </ChakraProvider>
   );
 }
