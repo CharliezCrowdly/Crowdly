@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { TiTick } from "react-icons/ti";
-import { FcCancel, FcCheckmark } from "react-icons/fc";
+import { FcApproval, FcCancel, FcCheckmark, FcInfo } from "react-icons/fc";
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import Wrapper from "../wrappers/Applicant";
 import moment from "moment";
@@ -93,11 +93,11 @@ const Applicant = ({ item }) => {
           />
           <span className="username">{applicant.name}</span>
           {itemSet.status === "Hired" ? (
-            <FcCheckmark className="icon" />
+            <FcApproval className="icon" />
           ) : itemSet.status === "Rejected" ? (
             <FcCancel className="icon" />
           ) : (
-            <TiTick className="icon" />
+            <FcInfo className="icon" />
           )}
         </div>
 
