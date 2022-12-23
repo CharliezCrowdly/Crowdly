@@ -133,19 +133,26 @@ const JobDetail = () => {
             <div className="title">
               <h1>{job.title}</h1>
 
-              {job.company === user._id ? (
+              {owner ? (
                 <div className="dropdown">
                   <BsThreeDots
                     onClick={() => setDropdown((dropdown) => !dropdown)}
+                    className="icon"
                   />
                   <div
                     className={
                       dropdown ? "dropdown-option glassmorphism " : "d-none"
                     }
                   >
-                    <AiTwotoneEdit className="icon" />
+                    <div className="deactivate">
+                      <AiTwotoneEdit className="icon" />
+                      <span>Edit Job</span>
+                    </div>
 
-                    <AiTwotoneDelete />
+                    <div className="deactivate">
+                      <AiTwotoneDelete />
+                      <span>Deactivate Job</span>
+                    </div>
                   </div>
                 </div>
               ) : null}

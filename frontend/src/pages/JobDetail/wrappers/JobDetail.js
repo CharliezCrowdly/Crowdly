@@ -40,16 +40,31 @@ const Wrapper = styled.div`
             position: absolute;
             text-align: center;
             top: 15px;
-            left: 0;
-            padding: 10px 15px;
+            left: -120px;
+
             display: flex;
 
             flex-direction: column;
             backdrop-filter: blur(20px);
-
-            & > .icon {
+            & > .deactivate {
+              display: flex;
+              align-items: center;
+              gap: 5px;
+              padding-block: 5px;
+              padding-inline: 15px;
               cursor: pointer;
+
+              & > span {
+                white-space: nowrap;
+              }
+              &:hover {
+                background-color: var(--light-blue-600);
+                color: white;
+              }
             }
+          }
+          & > .icon {
+            cursor: pointer;
           }
         }
       }
@@ -120,7 +135,7 @@ const Wrapper = styled.div`
           color: var(--light-blue-600);
         }
 
-        & > span{
+        & > span {
           font-weight: 400;
         }
       }
