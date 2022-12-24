@@ -179,6 +179,29 @@ const removefollower = async (req, res) => {
   }
 };
 
+const editcoverpage = async (req, res) => {
+  const user = await User.findOne({ _id: req.user.userId });
+
+  if (req.files) {
+    console.log(req.files);
+    const { coverpage } = req.files;
+    const postPath = coverpage;
+
+    const src = `/posts/${coverpage.name}`;
+
+    const imagePath = path.join(
+      __dirname,
+      "../public/posts/" + `${coverpage.name}`
+    );
+
+    await postPath.mv(imagePath);
+    user.coverpage = src;
+    await user.save();
+    console.log(user);
+    res.status(StatusCodes.OK).json({ user });
+  }
+};
+
 module.exports = {
   searchProfile,
   followUser,
@@ -187,4 +210,5 @@ module.exports = {
   userProfile,
   updateUserDetails,
   removefollower,
+  editcoverpage,
 };

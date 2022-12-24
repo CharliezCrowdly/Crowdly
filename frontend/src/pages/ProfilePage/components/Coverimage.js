@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Wrapper from "../wrappers/Coverimage";
 import { useAppContext } from "../../../context/appContext";
+import axios from "axios";
 
-const Coverimage = ({ coverimage, changeactive, activeindex,subtract }) => {
-  const { profileUser, isLoading } = useAppContext();
+const Coverimage = ({ coverimage, changeactive, activeindex, subtract }) => {
+  const { profileUser, isLoading, token } = useAppContext();
 
   const option = {
     preview: null,
@@ -30,13 +31,23 @@ const Coverimage = ({ coverimage, changeactive, activeindex,subtract }) => {
     setCover({ ...coverpage, isedit: false, preview: null });
   };
 
-  const onsave = () => {
-    setCover({
-      ...coverpage,
-      isedit: false,
-      coverimg: coverpage.preview,
-      preview: null,
-    });
+  const onsave = async () => {
+    const formData = new FormData();
+    formData.append("coverpage", coverpage.file);
+    await axios
+      .patch(`/api/v1/profile/editcoverpage`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(
+        setCover({
+          ...coverpage,
+          isedit: false,
+          coverimg: coverpage.preview,
+          preview: null,
+        })
+      );
   };
 
   if (isLoading) {

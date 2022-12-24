@@ -10,10 +10,12 @@ const {
   userProfile,
 
   updateUserDetails,
-  removefollower
+  removefollower,
+  editcoverpage
 
 } = require("../controllers/profileController");
 
+router.route("/editcoverpage").patch(editcoverpage);
 router.route("/search").get(searchProfile);
 router.route("/userrandom").get(recommend);
 router.route("/:id").patch(followUser).get(userProfile);
@@ -24,5 +26,6 @@ router.route("/removefollower/:id").patch(removefollower);
 
 router.route("/:id").patch(followUser);
 router.route("/updateUser").put(updateUserDetails);
+
 
 module.exports = router;
