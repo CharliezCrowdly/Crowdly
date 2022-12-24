@@ -17,12 +17,59 @@ const Wrapper = styled.aside`
     border-radius: 10px;
 
     & > .userimage {
-      width: 8rem;
-      height: 8rem;
+      position: relative;
 
-      border-radius: 70px;
+      & > label {
+        display: block;
+        position: absolute;
+        top: 10%;
+        right: -10%;
+        & > .edit {
+          background-color: black;
+          padding: 9%;
+          color: white;
+          border-radius: 50px;
+          font-size: 1.2rem;
+        }
+      }
 
-      overflow: hidden;
+      & > label {
+        position: absolute;
+        top: 10%;
+        right: 19%;
+      }
+
+      & > input {
+        display: none;
+      }
+
+      & > .cancel {
+        position: absolute;
+        top: 10%;
+        right: 5%;
+        background-color: black;
+        padding: 2%;
+        color: white;
+        border-radius: 50px;
+        font-size: 1.5rem;
+      }
+
+      & > .correct {
+        position: absolute;
+        top: 30%;
+        right: -7%;
+        background-color: black;
+        padding: 2%;
+        color: white;
+        border-radius: 50px;
+        font-size: 1.5rem;
+      }
+      & > img {
+        width: 8rem;
+        height: 8rem;
+
+        border-radius: 70px;
+      }
     }
     & > .username {
       font-size: 1.2rem;
@@ -30,7 +77,7 @@ const Wrapper = styled.aside`
       font-weight: bold;
     }
 
-    & > .userskill{
+    & > .userskill {
       text-transform: capitalize;
     }
     & > .edit-profile {

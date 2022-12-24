@@ -3,10 +3,58 @@ import Wrapper from "../wrappers/UserInfoCard";
 import { useAppContext } from "../../../context/appContext";
 import { useNavigate } from "react-router-dom";
 import Followbtn from "./Followbtn";
+import { MdCancel } from "react-icons/md";
+import { RiEditFill } from "react-icons/ri";
+import { IoCheckmarkCircleSharp } from "react-icons/io5";
+import axios from "axios";
 
 const UserInfoCard = ({ profileUser }) => {
-  const { user } = useAppContext();
+  const { user, token } = useAppContext();
   const navigate = useNavigate();
+  const option = {
+    preview: null,
+    profileimg: null,
+    isedit: false,
+    file: "",
+  };
+  const [profileimg, setprofile] = useState(option);
+
+  const fileselection = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      let file = e.target.files[0];
+      let blobURL = URL.createObjectURL(file);
+      setprofile({
+        ...profileimg,
+        isedit: true,
+        preview: blobURL,
+        file: e.target.files[0],
+      });
+    }
+  };
+
+  const onsave = async () => {
+    const formData = new FormData();
+    formData.append("profileimg", profileimg.file);
+    await axios
+      .patch(`/api/v1/profile/editprofileimg`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(
+        setprofile({
+          ...profileimg,
+          isedit: false,
+          profileimg: profileimg.preview,
+          preview: null,
+          file:""
+        })
+      );
+  };
+
+  const oncancel = () => {
+    setprofile({ ...profileimg, isedit: false, preview: null });
+  };
 
   return (
     <Wrapper className="user-card">
@@ -14,15 +62,30 @@ const UserInfoCard = ({ profileUser }) => {
         <div className="userimage">
           <img
             className="profile-pic-xL"
-            src="https://us.123rf.com/450wm/molokowall/molokowall2201/molokowall220100015/180568257-young-smiling-man-adam-avatar-3d-vector-people-character-illustration-cartoon-minimal-style-.jpg?ver=6"
+            src={
+              profileimg.preview ??
+              profileimg.profileimg ??
+              profileUser.profilePicture
+            }
             alt=""
           />
+          <input type="file" id="profilep" onChange={fileselection} />
+
+          {!profileimg.isedit ? (
+            <label htmlFor="profilep">
+              <RiEditFill className="edit" />
+            </label>
+          ) : (
+            <MdCancel className="cancel" onClick={oncancel} />
+          )}
+          {profileimg.isedit ? (
+            <IoCheckmarkCircleSharp className="correct" onClick={onsave} />
+          ) : null}
         </div>
         <div className="username">{profileUser.username}</div>
         <div className="userskill">{profileUser.usertype}</div>
         {profileUser._id != user._id ? (
-
-          <Followbtn items={profileUser}/>
+          <Followbtn items={profileUser} />
         ) : profileUser.usertype == "individual" ? (
           <div
             className="edit-profile"

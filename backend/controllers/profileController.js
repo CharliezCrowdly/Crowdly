@@ -202,6 +202,29 @@ const editcoverpage = async (req, res) => {
   }
 };
 
+
+const editprofileimg = async (req, res) => {
+  const user = await User.findOne({ _id: req.user.userId });
+
+  if (req.files) {
+    console.log(req.files);
+    const { profileimg } = req.files;
+    const postPath = profileimg;
+
+    const src = `/posts/${profileimg.name}`;
+
+    const imagePath = path.join(
+      __dirname,
+      "../public/posts/" + `${profileimg.name}`
+    );
+
+    await postPath.mv(imagePath);
+    user.profilePicture = src;
+    await user.save();
+    res.status(StatusCodes.OK).json({ user });
+  }
+};
+
 module.exports = {
   searchProfile,
   followUser,
@@ -211,4 +234,5 @@ module.exports = {
   updateUserDetails,
   removefollower,
   editcoverpage,
+  editprofileimg
 };
