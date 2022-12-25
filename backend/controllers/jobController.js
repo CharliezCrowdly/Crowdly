@@ -606,3 +606,20 @@ module.exports.updateJob = async (req, res, next) => {
     data: job,
   });
 };
+
+module.exports.getAppliedJobs = async (req, res) => {
+  try {
+    const appliedJobs = await userModel
+      .findById(req.user.userId)
+      .populate("appliedJobs.job")
+      .select("appliedJobs");
+
+    console.log(appliedJobs);
+    res.status(200).json({
+      success: true,
+      data: appliedJobs,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
