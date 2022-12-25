@@ -315,8 +315,8 @@ const JobDetail = () => {
             </div>
             <div className="company-employee"></div>
             <div className="description">
-              {job.company.description.substring(0, isReadmore ? 600 : 200)}
-              {job.company.description.split(" ").length > 20 ? (
+              {job.company.description?.substring(0, isReadmore ? 600 : 200)}
+              {job.company.description?.split(" ").length > 20 ? (
                 <div className={isReadmore ? "btn-box" : "btn-container"}>
                   <button
                     className={isReadmore ? "readmore " : "readmore active"}
