@@ -118,6 +118,39 @@ const Wrapper = styled.div`
       }
     }
   }
+
+  @media screen and (max-width: 800px) {
+
+    & > .slider{
+
+      & > .slider-content{
+        & > .slider-items{
+
+          & > .slide-model{
+
+            display: flex;
+            flex-direction: column;
+
+            & > .post-img{
+              width: 100%;
+              height: 300px;
+            }
+
+            & > .comment-section{
+              
+              & .comments-lst{
+                height: 400px;
+                overflow: hidden;
+                  overflow-y: scroll;
+              }
+            }
+          }
+        }
+      }
+
+    }
+    
+  }
 `;
 
 export default Wrapper;

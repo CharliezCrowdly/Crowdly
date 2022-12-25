@@ -1,11 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import tabs from "./utils/tab";
 import { Step1, Step2, Step3 } from "./component";
 import Wrapper from "./wrapper/AddJobPage";
 import { useAppContext } from "../../context/appContext";
 import { Alert } from "../../component";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 const AddJobPage = () => {
-  const { addJob, isLoading, alertType } = useAppContext();
+  const { token } = useAppContext();
+  const navigate = useNavigate();
+
+  const { addJob, isLoading, alertType, jobid } = useAppContext();
 
   const formvalue = {
     title: "",
@@ -93,6 +99,18 @@ const AddJobPage = () => {
     }
   };
 
+  const jobadd = async (value) => {
+    await axios.post(
+      "/api/v1/job/addjob",
+      { ...value },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+  };
+
   const onsave = () => {
     const {
       title,
@@ -119,20 +137,28 @@ const AddJobPage = () => {
         requirments[0].requirement
       ) {
         setActive(3);
-      } 
+      }
     }
 
     if (activeindex === 3) {
       if (closeTime && description) {
         addJob({ values });
-
-        if (alertType === "success") {
-          setValue(formvalue);
-          setActive(1);
-        }
       }
     }
   };
+
+  useEffect(() => {
+    if (alertType === "success") {
+      setValue(formvalue);
+      setActive(1);
+
+      if (jobid) {
+        setTimeout(() => {
+          navigate(`/job/jobDetail/${jobid}`);
+        }, 3000);
+      }
+    }
+  }, [alertType]);
   return (
     <Wrapper className="">
       <section className="alerty">

@@ -368,7 +368,7 @@ module.exports.getApplicants = async (req, res, next) => {
       .select("applicants")
       .populate(
         "applicants.applicant",
-        "profilePicture username location skill name email followers"
+        "profilePicture username location skill name email followers skillSet"
       )
       .sort("-appliedDate")
       .then((result) => {
@@ -492,5 +492,68 @@ module.exports.savedJobs = async (req, res) => {
       });
   } catch (error) {
     console.log(error);
+  }
+};
+
+module.exports.createdJobs = async (req, res) => {
+  try {
+    const jobs = await Job.find({
+      applicants: {
+        $elemMatch: {
+          applicant: req.user.UserId,
+        },
+      },
+    })
+      .populate("company")
+      .then((result) => {
+        return res.json({
+          success: true,
+          data: result,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        return res.json({
+          success: false,
+          msg: err,
+        });
+      });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports.updateJobStatus = async (req, res, next) => {
+  try {
+    console.log("Hre");
+    const { job_id, user_id, status } = req.body;
+    const job = await Job.findById(job_id);
+    const user = await userModel.findById(user_id);
+
+    if (job.applicants) {
+      job.applicants.forEach((applicant) => {
+        if (applicant.applicant == user_id) {
+          applicant.status = status;
+          user.appliedJobs.forEach((appliedJob) => {
+            if (appliedJob.job == job_id) {
+              appliedJob.status = status;
+            }
+          });
+        }
+      });
+    }
+    job.save();
+    user.save();
+    console.log("Saved");
+    return res.json({
+      success: true,
+      msg: "Job Status Updated Successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.json({
+      success: false,
+      msg: error,
+    });
   }
 };

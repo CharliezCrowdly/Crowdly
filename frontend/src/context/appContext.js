@@ -38,6 +38,8 @@ import {
   UPDATE_PROFILE_BEGIN,
   UPDATE_PROFILE_ERROR,
   UPDATE_PROFILE_SUCCESS,
+  REMOVE_FOLLOWER_SUCCESS,
+  ADD_FOLLOWER_SUCCESS,
 } from "./action";
 
 import axios from "axios";
@@ -70,11 +72,19 @@ const initialState = {
   profilePost: [],
   followings: [],
   followers: [],
+  notification: [],
+  chats: [],
+  selectedChat: null,
+  jobid:""
 };
 
 const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
+  // const [user, setUser] = useState();
+  // const [selectedChat, setSelectedChat] = useState();
+  // const [chats, setChats] = useState([]);
+  // const [notification, setNotification] = useState([]);
   const [state, dispatch] = useReducer(reducer, initialState);
   // axios.defaults.headers.common['Authorization'] = `Bearer ${state.token}`
   const authFetch = axios.create({
@@ -414,7 +424,7 @@ const AppProvider = ({ children }) => {
       formData.append("requirments", requirments);
       formData.append("closeTime", closeTime);
 
-      await authFetch.post("job/addJob", {
+     const {data} = await authFetch.post("job/addJob", {
         title,
         sector,
         experiencelvl,
@@ -426,8 +436,10 @@ const AppProvider = ({ children }) => {
         requirments,
         closeTime,
       });
+      console.log(data)
       dispatch({
         type: ADD_JOB_SUCCESS,
+        payload:{id: data.data._id }
       });
 
       // dispatch({ type: CLEAR_VALUES });
@@ -456,8 +468,6 @@ const AppProvider = ({ children }) => {
   const followUser = async (userId) => {
     try {
       await authFetch.patch(`/profile/${userId}`);
-
-      dispatch({ type: FOLLOW_SUCCESS });
     } catch (e) {
       console.log(e);
     }
@@ -506,6 +516,47 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  const delPost = async (postId) => {
+    try {
+      await authFetch.delete(`/posts/postdetail/${postId}`);
+    } catch (error) {
+      logoutUser();
+    }
+  };
+
+  const removefollower = async (userid) => {
+    try {
+      await authFetch.patch(`/profile/removefollower/${userid}`);
+      dispatch({ type: REMOVE_FOLLOWER_SUCCESS, payload: { id: userid } });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const unfollowProfile = async (profileuser, userId) => {
+    try {
+      await authFetch.patch(`/profile/unfollow/${profileuser}`);
+      dispatch({
+        type: REMOVE_FOLLOWER_SUCCESS,
+        payload: { id: userId },
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const followProfile = async (profileuser, userId,option) => {
+    try {
+      await authFetch.patch(`/profile/${profileuser}`);
+      dispatch({
+        type: ADD_FOLLOWER_SUCCESS,
+        payload: { id: userId,option:option },
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -533,6 +584,10 @@ const AppProvider = ({ children }) => {
         unsavejob,
         userProfile,
         updateUser,
+        delPost,
+        removefollower,
+        unfollowProfile,
+        followProfile,
       }}
     >
       {children}

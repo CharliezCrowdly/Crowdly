@@ -1,13 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { TiTick } from "react-icons/ti";
+import { FcApproval, FcCancel, FcCheckmark, FcInfo } from "react-icons/fc";
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import Wrapper from "../wrappers/Applicant";
-import lstskill from "../utils/lstskill";
 import moment from "moment";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { useAppContext } from "../../../context/appContext";
 const Applicant = ({ item }) => {
-  const { applicant, appliedDate, bid } = item;
+  const [itemSet, setItem] = useState(item);
+  //get job id from url
+  const { id } = useParams();
+  const { token } = useAppContext();
+
+  const { applicant, appliedDate, bid } = itemSet;
+  console.log(applicant);
   useEffect(() => {
-    console.log(item);
+    console.log(itemSet);
   }, []);
   const options = {
     drop: false,
@@ -24,6 +33,52 @@ const Applicant = ({ item }) => {
     }
     e.stopPropagation();
   };
+
+  const handleReject = async (e) => {
+    e.stopPropagation();
+    const appId = applicant._id;
+    await axios
+      .post(
+        `/api/v1/job/updateStatus`,
+        {
+          job_id: id,
+          user_id: appId,
+          status: "Rejected",
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        setItem({ ...itemSet, status: "Rejected" });
+        console.log(res);
+      });
+  };
+  const handleHire = async (e) => {
+    e.stopPropagation();
+    const appId = applicant._id;
+    await axios
+      .post(
+        `/api/v1/job/updateStatus`,
+        {
+          job_id: id,
+          user_id: appId,
+          status: "Hired",
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        setItem({ ...itemSet, status: "Hired" });
+
+        console.log(res);
+      });
+  };
   return (
     <Wrapper
       className={option.drop ? "active" : ""}
@@ -37,10 +92,20 @@ const Applicant = ({ item }) => {
             alt=""
           />
           <span className="username">{applicant.name}</span>
-          <TiTick />
+          {itemSet.status === "Hired" ? (
+            <FcApproval className="icon" />
+          ) : itemSet.status === "Rejected" ? (
+            <FcCancel className="icon" />
+          ) : (
+            <FcInfo className="icon" />
+          )}
         </div>
 
-        <p>Design ,ui/ux,react +50more</p>
+        <p>
+          {applicant.skillSet.map((itemSet, index) => {
+            return <span key={index}>{itemSet.skill},</span>;
+          })}
+        </p>
         <div className="action">
           {liked ? (
             <AiFillStar className="icon" onClick={onpinned} />
@@ -48,7 +113,7 @@ const Applicant = ({ item }) => {
             <AiOutlineStar className="icon" onClick={onpinned} />
           )}
           <a
-            href={`http://localhost:5000/${item.proposal}`}
+            href={`http://localhost:5000/${itemSet.proposal}`}
             download
             className="send-msg"
             onClick={(e) => e.stopPropagation()}
@@ -78,7 +143,7 @@ const Applicant = ({ item }) => {
           <div className="skills">
             <p>Skill</p>
             <div className="list">
-              {lstskill.map((item, index) => {
+              {applicant.skillSet.map((item, index) => {
                 return <button key={index}>{item.skill}</button>;
               })}
             </div>
@@ -113,8 +178,12 @@ const Applicant = ({ item }) => {
       </section>
 
       <section className="options">
-        <button className="btn reject">Reject</button>
-        <button className="btn hire">Hire</button>
+        <button className="btn reject" onClick={handleReject}>
+          Reject
+        </button>
+        <button className="btn hire" onClick={handleHire}>
+          Hire
+        </button>
       </section>
     </Wrapper>
   );

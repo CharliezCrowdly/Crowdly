@@ -9,7 +9,10 @@ const path = require("path");
 const userProfile = async (req, res) => {
   const { id: userId } = req.params;
 
-  const user = await User.findOne({ _id: userId });
+  const user = await User.findOne({ _id: userId }).populate(
+    "followers following",
+    "profilePicture username"
+  );
   const post = await Post.find({ userid: userId })
     .populate("userid likesid", "profilePicture username location")
     .sort("-createdAt");
@@ -146,6 +149,82 @@ const updateUserDetails = async (req, res, next) => {
   });
 };
 
+const removefollower = async (req, res) => {
+  const user = await User.find({
+    _id: req.user.userId,
+    followers: req.params.id,
+  });
+  if (!user) {
+    throw new BAD_REQUESTError("user not found");
+  }
+
+  if (user.length > 0) {
+    const followers = await User.findOneAndUpdate(
+      { _id: req.user.userId },
+      {
+        $pull: { followers: req.params.id },
+      },
+      { new: true }
+    );
+    const following = await User.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        $pull: { following: req.user.userId },
+      },
+      { new: true }
+    );
+    res.status(StatusCodes.OK).json({ success: false, followers, following });
+  } else {
+    res.status(StatusCodes.OK).json({ success: true });
+  }
+};
+
+const editcoverpage = async (req, res) => {
+  const user = await User.findOne({ _id: req.user.userId });
+
+  if (req.files) {
+    console.log(req.files);
+    const { coverpage } = req.files;
+    const postPath = coverpage;
+
+    const src = `/posts/${coverpage.name}`;
+
+    const imagePath = path.join(
+      __dirname,
+      "../public/posts/" + `${coverpage.name}`
+    );
+
+    await postPath.mv(imagePath);
+    user.coverpage = src;
+    await user.save();
+    console.log(user);
+    res.status(StatusCodes.OK).json({ user });
+  }
+};
+
+
+const editprofileimg = async (req, res) => {
+  const user = await User.findOne({ _id: req.user.userId });
+
+  if (req.files) {
+    console.log(req.files);
+    const { profileimg } = req.files;
+    const postPath = profileimg;
+
+    const src = `/posts/${profileimg.name}`;
+
+    const imagePath = path.join(
+      __dirname,
+      "../public/posts/" + `${profileimg.name}`
+    );
+
+    await postPath.mv(imagePath);
+    user.profilePicture = src;
+    await user.save();
+    res.status(StatusCodes.OK).json({ user });
+  }
+};
+
 module.exports = {
   searchProfile,
   followUser,
@@ -153,4 +232,7 @@ module.exports = {
   recommend,
   userProfile,
   updateUserDetails,
+  removefollower,
+  editcoverpage,
+  editprofileimg
 };

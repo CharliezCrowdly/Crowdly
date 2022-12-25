@@ -146,7 +146,8 @@ const postDetail = async (req, res) => {
 };
 
 const explorePost = async (req, res) => {
-  const post = await Post.aggregate([{ $sample: { size: 27 } }]);
+  const post = await Post.aggregate([{ $sample: { size: 27 } }
+  ]);
 
   const posts = await Post.populate(post, { path: "userid" });
   res.status(StatusCodes.OK).json({ posts });
@@ -186,7 +187,7 @@ const UpdatePost = async (req, res) => {
 
   // check permissions
 
-  checkPermissions(req.user,post.userid);
+  // checkPermissions(req.user,post.userid);
 
   post.location = location;
   post.description = description;
@@ -212,6 +213,24 @@ const savedPost = async (req, res) => {
   }
 };
 
+
+const deletePost = async (req, res) => {
+  const { id: postId } = req.params;
+
+  const post = await Post.findOne({ _id: postId });
+
+  if (!post) {
+    throw new CustomError.NotFoundError(`No post with id : ${postId}`);
+  }
+  console.log(req.user);
+  console.log(req.createdBy);
+
+  checkPermissions(req.user, post.userid);
+
+  await post.remove();
+  res.status(StatusCodes.OK).json({ msg: "Success! Job removed" });
+};
+
 module.exports = {
   postUpload,
   getPosts,
@@ -222,5 +241,6 @@ module.exports = {
   postDetail,
   UpdatePost,
   explorePost,
-  savedPost
+  savedPost,
+  deletePost
 };

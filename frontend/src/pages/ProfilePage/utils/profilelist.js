@@ -11,10 +11,7 @@ const profilelist = [
     tab: <UserPost />,
   },
 
-  {
-    id: 2,
-    tab: <JobHistory />,
-  },
+ 
 
   {
     id: 3,
@@ -27,7 +24,11 @@ const profilelist = [
   {
     id:5,
     tab:<SavedJobs/>
-  }
+  },
+   {
+    id: 2,
+    tab: <JobHistory />,
+  },
 ];
 
 export default profilelist;

@@ -26,8 +26,8 @@ const Wrapper = styled.div`
         display: flex;
         justify-content: space-between;
         & > h1 {
-          font-size: 1.5rem;
-          font-weight: 400;
+          font-size: 1.8rem;
+          font-weight: 700;
         }
 
         & > .dropdown {
@@ -40,16 +40,31 @@ const Wrapper = styled.div`
             position: absolute;
             text-align: center;
             top: 15px;
-            left: 0;
-            padding: 10px 15px;
+            left: -120px;
+
             display: flex;
 
             flex-direction: column;
             backdrop-filter: blur(20px);
-
-            & > .icon {
+            & > .deactivate {
+              display: flex;
+              align-items: center;
+              gap: 5px;
+              padding-block: 5px;
+              padding-inline: 15px;
               cursor: pointer;
+
+              & > span {
+                white-space: nowrap;
+              }
+              &:hover {
+                background-color: var(--light-blue-600);
+                color: white;
+              }
             }
+          }
+          & > .icon {
+            cursor: pointer;
           }
         }
       }
@@ -96,6 +111,20 @@ const Wrapper = styled.div`
         }
       }
 
+      & > .status {
+        font-weight: bold;
+        margin-top: 10px;
+
+        & > span {
+          background-color: purple;
+          padding: 1%;
+          color: white;
+          font-weight: normal;
+          border-radius: 7px;
+          margin-left: 8px;
+        }
+      }
+
       & > .jobtype {
         display: flex;
         align-items: center;
@@ -103,6 +132,11 @@ const Wrapper = styled.div`
 
         & > .icon {
           font-size: 1.4rem;
+          color: var(--light-blue-600);
+        }
+
+        & > span {
+          font-weight: 400;
         }
       }
       & > .recommend {
@@ -140,7 +174,7 @@ const Wrapper = styled.div`
     .three {
       border: 0.1px solid var(--blue-600);
       padding-block: 1%;
-      padding-inline:2%;
+      padding-inline: 2%;
       border-radius: 8px;
       margin-top: 17px;
       & > .info-container {

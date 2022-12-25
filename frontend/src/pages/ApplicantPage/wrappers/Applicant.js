@@ -14,9 +14,9 @@ const Wrapper = styled.div`
       & > .img-container {
         & > .profilePicture {
           transform: translateX(-30px);
-          box-shadow: -10px 11px 69px 7px rgba(255, 236, 0, 0.75);
-          -webkit-box-shadow: -10px 11px 69px 7px rgba(255, 236, 0, 0.75);
-          -moz-box-shadow: -10px 11px 69px 7px rgba(255, 236, 0, 0.75);
+          box-shadow: -10px 11px 69px 7px #badedc;
+          -webkit-box-shadow: -10px 11px 69px 7px #badedc;
+          -moz-box-shadow: -10px 11px 69px 7px #badedc;
           width: 70px;
           height: 70px;
         }

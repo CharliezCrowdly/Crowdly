@@ -10,12 +10,14 @@ import PostEditPage from "./PostEditPage/PostEditPage";
 import SharedLayout2 from "./SharedLayout2/SharedLayout2";
 import LandingPage from "./LandingPage/Landing";
 import ExplorePage from "./ExplorePage/ExplorePage";
-import MessagePage from "./MessagePage/MessagePage"
+import MessagePage from "./MessagePage/MessagePage";
 import SharedLayout3 from "./SharedLayouts3/SharedLayout3";
 import AddJobPage from "./AddJobPage/AddJobPage";
-import PaymentPage from "./PaymentPage/PaymentPage"
+import PaymentPage from "./PaymentPage/PaymentPage";
 import ApplicantPage from "./ApplicantPage/ApplicantPage";
-import ProfilePage from './ProfilePage/ProfilePage'
+import ProfilePage from "./ProfilePage/ProfilePage";
+import ResetPage from "./ResetPage/ResetPage";
+import IsLoggedin from "./IsLoggedin";
 export {
   LoginPage,
   ProtectedRoute,
@@ -34,6 +36,7 @@ export {
   AddJobPage,
   PaymentPage,
   ApplicantPage,
-  ProfilePage
-
+  ProfilePage,
+  ResetPage,
+  IsLoggedin,
 };

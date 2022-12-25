@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { BsThreeDots,  } from "react-icons/bs";
+import { BsThreeDots } from "react-icons/bs";
 import { AiFillHeart, AiFillEdit } from "react-icons/ai";
 import { FaComment, FaShare } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
@@ -14,7 +14,8 @@ import Bookmark from "./Bookmark";
 import { useNavigate } from "react-router-dom";
 
 const PostBox = React.memo(({ item }) => {
-  const { user, likepost, unlikepost, savepost, unsavepost } = useAppContext();
+  const { user, likepost, unlikepost, savepost, unsavepost, delPost } =
+    useAppContext();
 
   const loadComment = useRef(false);
   const navigate = useNavigate();
@@ -127,10 +128,11 @@ const PostBox = React.memo(({ item }) => {
     }
   };
 
-  const deletePost = () => {
+  const deletePost = (postid) => {
     if (postState.isDelete) {
       SetPost({ ...postState, isDelete: false });
     } else {
+      delPost(postid);
       SetPost({ ...postState, isDelete: true });
     }
   };
@@ -193,7 +195,7 @@ const PostBox = React.memo(({ item }) => {
                   className="icon"
                   onClick={() => navigate(`/crowdly/postedit/${_id}`)}
                 />
-                <MdDelete className="icon" onClick={deletePost} />
+                <MdDelete className="icon" onClick={()=>deletePost(item._id)} />
               </div>
             </div>
           </div>

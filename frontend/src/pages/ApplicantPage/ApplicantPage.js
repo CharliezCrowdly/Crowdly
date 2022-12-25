@@ -6,7 +6,9 @@ import { useAppContext } from "../../context/appContext";
 import axios from "axios";
 import SearechFilter from "./component/SearechFilter";
 import Applicantlst from "./component/Applicantlst";
+import { useParams } from "react-router-dom";
 const ApplicantPage = () => {
+  const { id } = useParams();
   const { token } = useAppContext();
   const [applicants, setApplicants] = useState([]);
   const [search, setsearch] = useState({
@@ -15,6 +17,7 @@ const ApplicantPage = () => {
     experiencelvl: [],
     status: [],
     wage: "0",
+    skills: [],
   });
   const [applicantslst, setApplicantslst] = useState([]);
 
@@ -22,10 +25,14 @@ const ApplicantPage = () => {
     setsearch({ ...search, [e.target.name]: e.target.value });
   };
 
+  const handleskill = (value) => {
+    setsearch({ ...search, skills: value });
+  };
+
   const fetch = async () => {
     await axios
       .get(
-        `http://localhost:5000/api/v1/job/getApplicants/${"639332c29bfdb09ea78d679e"}`,
+        `http://localhost:5000/api/v1/job/getApplicants/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -73,7 +80,7 @@ const ApplicantPage = () => {
       );
     }
 
-    if (search.wage) {
+    if (search.wage && search.wage > 0) {
       filterlist = filterlist.filter(
         (item) => parseInt(item.bid) <= parseInt(search.wage)
       );
@@ -84,13 +91,27 @@ const ApplicantPage = () => {
         return search.status.includes(item.status);
       });
     }
+
+    if (search.skills.length > 0) {
+      console.log("hello");
+      filterlist = filterlist.filter((item) => {
+        return item.applicant.skillSet.some((item) => {
+          return search.skills.includes(item.skill.toLowerCase());
+        });
+      });
+    }
     setApplicants(filterlist);
   };
 
   return (
     <Wrapper>
       <div className="left-container">
-        <Filter handleChange={handleChange} search={search} statusfilter ={statusfilter} />
+        <Filter
+          handleChange={handleChange}
+          handleskill={handleskill}
+          search={search}
+          statusfilter={statusfilter}
+        />
       </div>
       <div className="right-container glassmorphism">
         <SearechFilter filter={applyFilters} handleChange={handleChange} />

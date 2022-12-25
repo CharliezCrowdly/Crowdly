@@ -10,19 +10,20 @@ const {
   UpdatePost,
   postDetail,
   explorePost,
-  savedPost
+  savedPost,
+  deletePost
 } = require("../controllers/postContorller");
 
 router.route("/upload").post(postUpload);
 router.route("/getposts").get(getPosts);
+router.route("/updatepost/:id").patch(UpdatePost);
 router.route("/likepost/:id").patch(likePosts);
 router.route("/unlikepost/:id").patch(unlikePost);
 router.route("/savepost/:id").patch(savePosts);
 router.route("/explorepost").get(explorePost);
 
 router.route("/unsavepost/:id").patch(unsavePosts);
-router.route("/updatepost/:id").patch(UpdatePost);
-router.route("/postdetail/:id").get(postDetail)
+router.route("/postdetail/:id").get(postDetail).delete(deletePost)
 router.route("/savedPost").get(savedPost);
 
 

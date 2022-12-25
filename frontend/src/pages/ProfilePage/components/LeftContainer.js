@@ -1,12 +1,12 @@
 import React from "react";
 import Wrapper from "../wrappers/LeftContainer";
 
-import {UserInfoCard} from "../../../component"
+import UserInfoCard from "./UserInfoCard";
 
-const LeftContainer = React.memo(({profileUser}) => {
+const LeftContainer = React.memo(({ profileUser }) => {
   return (
-    <Wrapper >
-      <UserInfoCard  />
+    <Wrapper>
+      <UserInfoCard profileUser={profileUser} />
     </Wrapper>
   );
 });

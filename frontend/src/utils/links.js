@@ -1,14 +1,13 @@
 import { AiFillMessage } from "react-icons/ai";
 import { MdWork } from "react-icons/md";
 import { FaPhotoVideo } from "react-icons/fa";
-
-import { ImProfile } from "react-icons/im";
 import { MdExplore } from "react-icons/md";
+
 
 const links = [
   {
     id: 1,
-    text: "Find Work",
+    text: "Jobs",
     path: "/user/work",
     icon: <MdWork />,
   },

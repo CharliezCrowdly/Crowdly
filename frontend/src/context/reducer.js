@@ -36,6 +36,8 @@ import {
   UPDATE_PROFILE_BEGIN,
   UPDATE_PROFILE_ERROR,
   UPDATE_PROFILE_SUCCESS,
+  REMOVE_FOLLOWER_SUCCESS,
+  ADD_FOLLOWER_SUCCESS,
 } from "./action";
 import { initialState } from "./appContext";
 
@@ -273,6 +275,7 @@ const reducer = (state, action) => {
       showAlert: true,
       alertType: "success",
       alertText: "New JOB ADDED!",
+      jobid:action.payload.id
     };
   }
   if (action.type === ADD_JOB_ERROR) {
@@ -319,6 +322,35 @@ const reducer = (state, action) => {
       showAlert: true,
       alertType: "danger",
       alertText: "Invalide credential",
+    };
+  }
+
+  if (action.type === REMOVE_FOLLOWER_SUCCESS) {
+    const filterlst = state.profileUser.followers.filter(
+      (item) => item._id != action.payload.id
+    );
+    var profileuser = state.profileUser;
+    profileuser.followers = filterlst;
+    return {
+      ...state,
+
+      profileUser: profileuser,
+    };
+  }
+
+  if (action.type === ADD_FOLLOWER_SUCCESS) {
+    let profile = state.profileUser;
+    const yes = profile.followers.find(
+      (item) => item._id === action.payload.id
+    );
+    if (yes) {
+    } else {
+      profile.followers.push(action.payload.option);
+    }
+    return {
+      ...state,
+
+      profileUser: profile,
     };
   }
 

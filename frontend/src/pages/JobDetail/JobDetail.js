@@ -13,6 +13,9 @@ import axios from "axios";
 import { useAppContext } from "../../context/appContext";
 import Table from "react-bootstrap/Table";
 import { ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { IoTime } from "react-icons/io5";
+import Countdown from "react-countdown";
 const JobDetail = () => {
   const { requirement, company } = joblists;
   const [isReadmore, setReadmore] = useState(false);
@@ -30,6 +33,8 @@ const JobDetail = () => {
   const [applied, setApplied] = useState(false);
   const [status, setStatus] = useState("");
   //get job id from params and fetch job detail
+
+  const navigate = useNavigate();
   const fetch = async () => {
     const id = window.location.pathname.split("/")[3];
 
@@ -51,6 +56,7 @@ const JobDetail = () => {
         setJob(res.data.data);
         setLoading(false);
         setOwner(res.data.data.company._id == user._id);
+
         if (res.data.data.saved.find((like) => like === user._id)) {
           Setbookmark(true);
           // postState.bookmarked= true
@@ -77,8 +83,6 @@ const JobDetail = () => {
       .then((res) => {
         setApplicants(res.data.data.applicants);
         setApplicantsLoading(false);
-        console.log("Applicants");
-        console.log(res.data.data.applicants);
 
         res.data.data.applicants.find((applicant) => {
           if (applicant.applicant._id === user._id) {
@@ -116,6 +120,10 @@ const JobDetail = () => {
     setModal((ismodal) => !ismodal);
   };
 
+  if (loading) {
+    return <div></div>;
+  }
+
   return (
     <>
       <Wrapper className="">
@@ -123,37 +131,46 @@ const JobDetail = () => {
         <div className="left-section glassmorphism">
           <section className="one">
             <div className="title">
-              {loading ? (
-                <h1>Data Analyst / Reports / SQL Developer</h1>
-              ) : (
-                <h1>{job.title}</h1>
-              )}
-              <div className="dropdown">
-                <BsThreeDots
-                  onClick={() => setDropdown((dropdown) => !dropdown)}
-                />
-                <div
-                  className={
-                    dropdown ? "dropdown-option glassmorphism " : "d-none"
-                  }
-                >
-                  <AiTwotoneEdit className="icon" />
+              <h1>{job.title}</h1>
 
-                  <AiTwotoneDelete />
+              {owner ? (
+                <div className="dropdown">
+                  <BsThreeDots
+                    onClick={() => setDropdown((dropdown) => !dropdown)}
+                    className="icon"
+                  />
+                  <div
+                    className={
+                      dropdown ? "dropdown-option glassmorphism " : "d-none"
+                    }
+                  >
+                    <div className="deactivate">
+                      <AiTwotoneEdit className="icon" />
+                      <span>Edit Job</span>
+                    </div>
+
+                    <div className="deactivate">
+                      <AiTwotoneDelete />
+                      <span>Deactivate Job</span>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              ) : null}
             </div>
-            <div className="place">
+            {/* <div className="place">
               <span className="location">Nepal,kathmandu</span>
               <span>8 hours ago</span>
-            </div>
+            </div> */}
             <div className="jobtype">
               <FaBriefcase className="icon" />
               <span>{job.jobtype}</span>
             </div>
             <div className="jobtype">
-              <BiBuilding className="icon" />
-              <span>10 - 15 Employee</span>
+              <IoTime className="icon" />
+
+              <span>
+                <Countdown date={job.closeDate} />
+              </span>
             </div>
             <div className="jobtype">
               <RiMoneyDollarCircleLine className="icon" />
@@ -163,7 +180,7 @@ const JobDetail = () => {
                 <span>Rs. {job.sallary}</span>
               )}
             </div>
-            {owner ? (
+            {/* {owner ? (
               <div>
                 <hr />
               </div>
@@ -176,15 +193,15 @@ const JobDetail = () => {
                 />
                 <span>Your profile match this job</span>
               </div>
-            )}
+            )} */}
             {owner ? (
               <div className="buttons">
                 <button
                   className="btn-easy"
-                  onClick={onbid}
                   style={{ width: "auto" }}
+                  onClick={() => navigate(`/user/applicants/${job._id}`)}
                 >
-                  Deactivate
+                  View Applicants
                 </button>
                 <button
                   className="btn-save"
@@ -224,13 +241,11 @@ const JobDetail = () => {
             )}
 
             {applied ? (
-              <p>
-                Status: {status.status} <br />
+              <p className="status">
+                Status:<span> {status.status}</span> <br />
                 <br />
               </p>
-            ) : (
-              <div></div>
-            )}
+            ) : null}
           </section>
 
           <section className="two">
