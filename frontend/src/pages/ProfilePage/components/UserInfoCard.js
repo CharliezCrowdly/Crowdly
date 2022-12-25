@@ -9,7 +9,7 @@ import { IoCheckmarkCircleSharp } from "react-icons/io5";
 import axios from "axios";
 
 const UserInfoCard = ({ profileUser }) => {
-  const { user, token } = useAppContext();
+  const { user, token, changevalue } = useAppContext();
   const navigate = useNavigate();
   const option = {
     preview: null,
@@ -48,7 +48,8 @@ const UserInfoCard = ({ profileUser }) => {
           profileimg: profileimg.preview,
           preview: null,
           file: "",
-        })
+        }),
+        changevalue({ name: "photo", value: profileimg.preview })
       );
   };
 

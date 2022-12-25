@@ -40,7 +40,8 @@ import {
   ADD_FOLLOWER_SUCCESS,
   UPDATE_JOB_BEGIN,
   UPDATE_JOB_SUCCESS,
-  UPDATE_JOB_ERROR
+  UPDATE_JOB_ERROR,
+  CHANGE_VALUE_BEGIN
 } from "./action";
 import { initialState } from "./appContext";
 
@@ -98,6 +99,8 @@ const reducer = (state, action) => {
       user: action.payload.user,
       userLocation: action.payload.location,
       jobLocation: action.payload.location,
+      photo:action.payload.photo,
+      naam:action.payload.naam,
 
       showAlert: true,
       alertType: "success",
@@ -383,6 +386,15 @@ const reducer = (state, action) => {
        alertText: action.payload.msg,
      };
    }
+
+
+    if (action.type ===CHANGE_VALUE_BEGIN) {
+      return {
+        ...state,
+
+        [action.payload.name]: action.payload.value,
+      };
+    }
 
   throw new Error(`no such action: ${action.type}`);
 };

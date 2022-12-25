@@ -43,6 +43,7 @@ import {
   UPDATE_JOB_BEGIN,
   UPDATE_JOB_SUCCESS,
   UPDATE_JOB_ERROR,
+  CHANGE_VALUE_BEGIN
 } from "./action";
 
 import axios from "axios";
@@ -62,6 +63,8 @@ const initialState = {
   showSidebar: false,
 
   isEditing: false,
+  photo:"",
+  naam:"",
 
   isSubmit: true,
   loadPost: true,
@@ -181,16 +184,14 @@ const AppProvider = ({ children }) => {
 
       const { user, token } = data;
       const username = user.username;
-      const profilePicture = user.profilePicture;
-      const name = user.name;
+      const photo = user.profilePicture;
+      const naam = user.name;
 
       addUserToLocalStorage({
         user,
         token,
 
-        profilePicture,
-        username,
-        name,
+        
       });
       dispatch({
         type: SETUP_USER_SUCCESS,
@@ -198,10 +199,9 @@ const AppProvider = ({ children }) => {
           user,
           token,
           username,
-          profilePicture,
-
+          photo,
           alertText,
-          name,
+          naam,
         },
       });
     } catch (error) {
@@ -584,6 +584,14 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  const changevalue = async({name,value})=>{
+    try{
+      dispatch({type:CHANGE_VALUE_BEGIN,payload:{name,value}})
+    }catch(e){
+      console.log(e)
+    }
+  }
+
   return (
     <AppContext.Provider
       value={{
@@ -615,7 +623,8 @@ const AppProvider = ({ children }) => {
         removefollower,
         unfollowProfile,
         followProfile,
-        updateJob
+        updateJob,
+        changevalue
       }}
     >
       {children}

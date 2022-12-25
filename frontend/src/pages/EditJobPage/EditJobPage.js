@@ -9,12 +9,11 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
 const EditJobPage = () => {
-  const { token, user, updateJob, isLoading } = useAppContext();
+  const { token, user, updateJob, isLoading,alertType } = useAppContext();
   const navigate = useNavigate();
   const [owner, setOwner] = useState(false);
   const [loading, setLoading] = useState(true);
   const [job, setJob] = useState("");
-
 
   const formvalue = {
     title: "",
@@ -103,8 +102,6 @@ const EditJobPage = () => {
     }
   };
 
-
-
   const onsave = () => {
     const {
       title,
@@ -185,7 +182,7 @@ const EditJobPage = () => {
         } = res.data.data;
 
         const newvalue = {
-          id:_id,
+          id: _id,
           title: title,
           sector: sector,
           experiencelvl: experiencelvl,
@@ -208,6 +205,18 @@ const EditJobPage = () => {
   useEffect(() => {
     fetch();
   }, []);
+
+  useEffect(() => {
+    if (alertType === "success") {
+      setActive(1);
+
+      if (values.id) {
+        setTimeout(() => {
+          navigate(`/job/jobDetail/${values.id}`);
+        }, 3000);
+      }
+    }
+  }, [alertType]);
 
   if (loading) {
     return <div></div>;
