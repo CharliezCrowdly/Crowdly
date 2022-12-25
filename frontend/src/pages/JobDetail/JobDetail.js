@@ -12,7 +12,6 @@ import { Recommendationlst } from "../../component";
 import axios from "axios";
 import { useAppContext } from "../../context/appContext";
 import Table from "react-bootstrap/Table";
-import { ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { IoTime } from "react-icons/io5";
 import Countdown from "react-countdown";
@@ -245,7 +244,7 @@ const JobDetail = () => {
 
             {applied ? (
               <p className="status">
-                Status:<span> {status.status}</span> <br />
+                Status:<p> {status.status}</p> <br />
                 <br />
               </p>
             ) : null}
@@ -297,24 +296,27 @@ const JobDetail = () => {
             <h3>About Company</h3>
             <div className="info-container">
               <img
-                src={company.profilepicture}
+                src={job.company.profilePicture}
                 alt=""
                 className="company-pic"
               />
               <div className="info">
-                <span className="username">{company.username}</span>
+                <span className="username">{job.company.username}</span>
                 <span className="followercount">
-                  {company.followers.length} followers
+                  {job.company.followers.length} followers
                 </span>
               </div>
-              <button className="btn-follow">+ follow</button>
+              <button
+                className="btn-follow"
+                onClick={() => navigate(`/user/profile/${job.company._id}`)}
+              >
+                View Profile
+              </button>
             </div>
-            <div className="company-employee">
-              IT Developer <span>.</span> <span>11 - 15 employees</span>
-            </div>
+            <div className="company-employee"></div>
             <div className="description">
-              {company.description.substring(0, isReadmore ? 600 : 200)}
-              {company.description.split(" ").length > 20 ? (
+              {job.company.description.substring(0, isReadmore ? 600 : 200)}
+              {job.company.description.split(" ").length > 20 ? (
                 <div className={isReadmore ? "btn-box" : "btn-container"}>
                   <button
                     className={isReadmore ? "readmore " : "readmore active"}

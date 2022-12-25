@@ -114,14 +114,19 @@ const Wrapper = styled.div`
       & > .status {
         font-weight: bold;
         margin-top: 10px;
+        display: flex;
+        align-items: center;
 
-        & > span {
-          background-color: purple;
-          padding: 1%;
+        & > p {
+          background-color: var(--blue-1100);
+          padding-inline:5px;
+          width: max-content;
+          height: 30px;
           color: white;
-          font-weight: normal;
-          border-radius: 7px;
+          font-weight: bold;
+          border-radius: 3px;
           margin-left: 8px;
+          padding-top: 2.5px;
         }
       }
 
