@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import axios from "axios";
 import "./PaymentStyles.css";
+import { useAppContext } from "../context/appContext";
 
 const CARD_OPTIONS = {
   iconStyle: "solid",
@@ -24,11 +25,13 @@ const CARD_OPTIONS = {
 };
 
 export default function PaymentForm() {
+  const { token } = useAppContext();
   const [success, setSuccess] = useState(false);
   const stripe = useStripe();
   const elements = useElements();
 
   const handleSubmit = async (event) => {
+    console.log("Here");
     event.preventDefault();
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
@@ -37,10 +40,18 @@ export default function PaymentForm() {
     if (!error) {
       try {
         const { id } = paymentMethod;
-        const response = await axios.post("http://localhost:5000/payment", {
-          amount: 1000,
-          id,
-        });
+        const response = await axios.post(
+          "http://localhost:5000/api/v1/job/payment",
+          {
+            amount: 1000,
+            id,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         if (response.data.success) {
           console.log("Payment Successful");
           setSuccess(true);
@@ -62,10 +73,10 @@ export default function PaymentForm() {
                 <CardElement options={CARD_OPTIONS} />
               </div>
             </fieldset>
+            <button className="buttonStripe" type="submit">
+              Pay
+            </button>
           </form>
-          <button className="buttonStripe" type="submit" disabled={!stripe}>
-            Pay
-          </button>
         </div>
       ) : (
         <>
