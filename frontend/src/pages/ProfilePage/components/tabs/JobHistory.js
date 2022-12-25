@@ -1,38 +1,38 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAppContext } from "../../../../context/appContext";
-import JobBox from "../JobBox";
+import JobBox2 from "../JobBox2";
 
 const JobHistory = () => {
-  const { token } = useAppContext();
+  const { token, profileUser } = useAppContext();
   const [jobs, setjobs] = useState([]);
-
   const getsavedjob = async () => {
     await axios
-      .get(`/api/v1/job/appliedjobs`, {
+      .get(`/api/v1/job/getAppliedJobs`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((res) => {
-        setjobs(res.data.data);
-        console.log(res);
+        setjobs(res.data.data.appliedJobs);
+        console.log(res.data.data.appliedJobs);
       });
   };
 
   useEffect(() => {
     getsavedjob();
   }, []);
-    if (jobs.length < 1) {
-      return <h1>no jobs found</h1>;
-    }
-    return (
-      <div>
-        {jobs.map((item, index) => {
-          return <JobBox job={item} key={index} />;
-        })}
-      </div>
-    );
+
+  if (jobs.length < 1) {
+    return <h1>no jobs found</h1>;
+  }
+  return (
+    <div>
+      {jobs.map((item, index) => {
+        return <JobBox2 job={item} key={index} />;
+      })}
+    </div>
+  );
 };
 
 export default JobHistory;

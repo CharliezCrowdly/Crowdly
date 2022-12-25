@@ -614,7 +614,9 @@ module.exports.getAppliedJobs = async (req, res) => {
       .populate("appliedJobs.job")
       .select("appliedJobs");
 
-    console.log(appliedJobs);
+    const ajobs = await appliedJobs.populate("appliedJobs.job.company");
+
+    console.log(ajobs);
     res.status(200).json({
       success: true,
       data: appliedJobs,

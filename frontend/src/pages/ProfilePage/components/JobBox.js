@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
-import { HiLocationMarker } from "react-icons/hi";
 import { RiMoneyDollarCircleFill } from "react-icons/ri";
 import Wrapper from "../../../wrappers/JobBox";
 import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../../../context/appContext";
+import Countdown from "react-countdown";
+import { IoTime } from "react-icons/io5";
+
 const JobBox = (job) => {
   const navigate = useNavigate();
   const { user, savejob, unsavejob } = useAppContext();
@@ -14,7 +16,7 @@ const JobBox = (job) => {
       Setbookmark(true);
       // postState.bookmarked= true
     } else {
-      // postState.bookmarked = false
+      // postState.bookmarked = falsea
       Setbookmark(false);
     }
   }, [job.job.saved, user._id]);
@@ -31,7 +33,7 @@ const JobBox = (job) => {
     }
   };
   return (
-    <Wrapper className={bookmarked ? "" : "d-none"}>
+    <Wrapper>
       <div className="jobbox glassmorphism">
         {/* header */}
 
@@ -39,7 +41,7 @@ const JobBox = (job) => {
           <div className="companyinfo">
             <img
               className="profile-pic-sm"
-              src="https://i.pinimg.com/736x/0d/0b/21/0d0b211c1ecc0562b9f4c2a4305c9436.jpg"
+              src={job.job.company.profilePicture}
               alt=""
             />
             <div className="jobfield">
@@ -79,8 +81,10 @@ const JobBox = (job) => {
               </p>
             </div>
             <div className="jobLocation">
-              <HiLocationMarker className="blue-icon" />
-              <span className="light-text">kathmandu</span>
+              <IoTime className="blue-icon" />
+              <span className="light-text">
+                <Countdown date={job.job.closeDate} />
+              </span>
             </div>
           </div>
 
@@ -99,3 +103,4 @@ const JobBox = (job) => {
 };
 
 export default JobBox;
+

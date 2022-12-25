@@ -292,87 +292,40 @@ const JobDetail = () => {
                   })}
             </div>
           </section>
-          {/* {owner ? (
-            <div>
-              <br />
-              <hr />
-              <br />
-              <h2>Applicants</h2>
-              <br />
 
-              <Table striped style={{ width: "100%" }}>
-                <thead>
-                  <tr>
-                    <th>S.N.</th>
-                    <th>Name</th>
-                    <th>Bid</th>
-                    <th>Proposal</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {applicantsLoading ? (
-                    <tr>
-                      <td>Loading...</td>
-                    </tr>
-                  ) : (
-                    applicants.map((item, index) => {
-                      let proposal = item.proposal;
-                      proposal = decodeURI(proposal);
-                      proposal = "http://localhost:5000/" + proposal;
-                      return (
-                        <tr key={item._id} style={{ textAlign: "center" }}>
-                          <td>{index + 1}</td>
-                          <td>{item.applicant.name}</td>
-                          <td>{item.bid}</td>
-                          <td>
-                            <a href={proposal}>Proposal</a>
-                          </td>
-                          <td>
-                            <button className="btn-easy">Hire</button>
-                          </td>
-                        </tr>
-                      );
-                    })
-                  )}
-                </tbody>
-              </Table>
+          <div className="three">
+            <h3>About Company</h3>
+            <div className="info-container">
+              <img
+                src={company.profilepicture}
+                alt=""
+                className="company-pic"
+              />
+              <div className="info">
+                <span className="username">{company.username}</span>
+                <span className="followercount">
+                  {company.followers.length} followers
+                </span>
+              </div>
+              <button className="btn-follow">+ follow</button>
             </div>
-          ) : (
-            <div className="three">
-              <h3>About Company</h3>
-              <div className="info-container">
-                <img
-                  src={company.profilepicture}
-                  alt=""
-                  className="company-pic"
-                />
-                <div className="info">
-                  <span className="username">{company.username}</span>
-                  <span className="followercount">
-                    {company.followers.length} followers
-                  </span>
+            <div className="company-employee">
+              IT Developer <span>.</span> <span>11 - 15 employees</span>
+            </div>
+            <div className="description">
+              {company.description.substring(0, isReadmore ? 600 : 200)}
+              {company.description.split(" ").length > 20 ? (
+                <div className={isReadmore ? "btn-box" : "btn-container"}>
+                  <button
+                    className={isReadmore ? "readmore " : "readmore active"}
+                    onClick={() => setReadmore((isReadmore) => !isReadmore)}
+                  >
+                    {isReadmore ? "Readless" : "Readmore"}
+                  </button>
                 </div>
-                <button className="btn-follow">+ follow</button>
-              </div>
-              <div className="company-employee">
-                IT Developer <span>.</span> <span>11 - 15 employees</span>
-              </div>
-              <div className="description">
-                {company.description.substring(0, isReadmore ? 600 : 200)}
-                {company.description.split(" ").length > 20 ? (
-                  <div className={isReadmore ? "btn-box" : "btn-container"}>
-                    <button
-                      className={isReadmore ? "readmore " : "readmore active"}
-                      onClick={() => setReadmore((isReadmore) => !isReadmore)}
-                    >
-                      {isReadmore ? "Readless" : "Readmore"}
-                    </button>
-                  </div>
-                ) : null}
-              </div>
+              ) : null}
             </div>
-          )} */}
+          </div>
         </div>
         <div className="right-section ">
           <Recommendationlst />
