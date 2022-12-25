@@ -9,7 +9,7 @@ import { IoCheckmarkCircleSharp } from "react-icons/io5";
 import axios from "axios";
 
 const UserInfoCard = ({ profileUser }) => {
-  const { user, token, changevalue } = useAppContext();
+  const { user, token, changevalue, picupdate } = useAppContext();
   const navigate = useNavigate();
   const option = {
     preview: null,
@@ -35,22 +35,24 @@ const UserInfoCard = ({ profileUser }) => {
   const onsave = async () => {
     const formData = new FormData();
     formData.append("profileimg", profileimg.file);
+    // picupdate({ profileimg: profileimg.file });
     await axios
       .patch(`/api/v1/profile/editprofileimg`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then(
+      .then((res) => {
         setprofile({
           ...profileimg,
           isedit: false,
-          profileimg: profileimg.preview,
+          profileimg: res.data.user.profilePicture,
           preview: null,
           file: "",
         }),
-        changevalue({ name: "photo", value: profileimg.preview })
-      );
+          changevalue({ name: "photo", value: res.data.user.profilePicture });
+          console.log(res.data.user.profilePicture)
+      });
   };
 
   const oncancel = () => {

@@ -495,7 +495,7 @@ module.exports.savedJobs = async (req, res) => {
   }
 };
 
-module.exports.createdJobs = async (req, res) => {
+module.exports.appliedJobs = async (req, res) => {
   try {
     const jobs = await Job.find({
       applicants: {
@@ -572,7 +572,7 @@ module.exports.updateJob = async (req, res, next) => {
     jobtype,
   } = req.body;
 
-  const {id} = req.params
+  const { id } = req.params;
   if (title.length < 4) {
     throw new BAD_REQUESTError("title is too short");
   }
@@ -600,7 +600,6 @@ module.exports.updateJob = async (req, res, next) => {
       },
     }
   );
-
 
   res.status(200).json({
     success: true,

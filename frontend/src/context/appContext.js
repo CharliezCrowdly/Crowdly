@@ -43,7 +43,7 @@ import {
   UPDATE_JOB_BEGIN,
   UPDATE_JOB_SUCCESS,
   UPDATE_JOB_ERROR,
-  CHANGE_VALUE_BEGIN
+  CHANGE_VALUE_BEGIN,
 } from "./action";
 
 import axios from "axios";
@@ -51,6 +51,7 @@ import axios from "axios";
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
 const userLocation = localStorage.getItem("location");
+const photo = localStorage.getItem("photo");
 
 const initialState = {
   isLoading: false,
@@ -63,8 +64,8 @@ const initialState = {
   showSidebar: false,
 
   isEditing: false,
-  photo:"",
-  naam:"",
+  photo: photo,
+  naam: "",
 
   isSubmit: true,
   loadPost: true,
@@ -143,10 +144,11 @@ const AppProvider = ({ children }) => {
     }, 3000);
   };
 
-  const addUserToLocalStorage = ({ user, token, location }) => {
+  const addUserToLocalStorage = ({ user, token, photo, naam }) => {
     localStorage.setItem("user", JSON.stringify(user));
     localStorage.setItem("token", token);
-    // localStorage.setItem("location", location);
+    localStorage.setItem("photo", photo);
+    localStorage.setItem("naam", naam);
   };
 
   const logoutUser = () => {
@@ -190,8 +192,8 @@ const AppProvider = ({ children }) => {
       addUserToLocalStorage({
         user,
         token,
-
-        
+        photo,
+        naam
       });
       dispatch({
         type: SETUP_USER_SUCCESS,
@@ -563,8 +565,6 @@ const AppProvider = ({ children }) => {
   const updateJob = async ({ values, id }) => {
     dispatch({ type: UPDATE_JOB_BEGIN });
     try {
-     
-
       const { data } = await authFetch.put(`job/updatejob/${id}`, {
         ...values,
       });
@@ -584,13 +584,21 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
-  const changevalue = async({name,value})=>{
-    try{
-      dispatch({type:CHANGE_VALUE_BEGIN,payload:{name,value}})
-    }catch(e){
-      console.log(e)
+  const picupdate = async ({ profileimg }) => {
+    const formData = new FormData();
+    formData.append("profileimg", profileimg);
+    const { data } = authFetch.patch("profile/editprofileimg", formData);
+    changevalue({ name: "photo", value: data.profilePicture });
+  };
+
+  const changevalue = async ({ name, value }) => {
+    try {
+      dispatch({ type: CHANGE_VALUE_BEGIN, payload: { name, value } });
+      localStorage.setItem([name], value);
+    } catch (e) {
+      console.log(e);
     }
-  }
+  };
 
   return (
     <AppContext.Provider
@@ -624,7 +632,8 @@ const AppProvider = ({ children }) => {
         unfollowProfile,
         followProfile,
         updateJob,
-        changevalue
+        changevalue,
+        picupdate,
       }}
     >
       {children}
