@@ -47,7 +47,7 @@ const UserInfoCard = ({ profileUser }) => {
           isedit: false,
           profileimg: profileimg.preview,
           preview: null,
-          file:""
+          file: "",
         })
       );
   };
@@ -71,13 +71,15 @@ const UserInfoCard = ({ profileUser }) => {
           />
           <input type="file" id="profilep" onChange={fileselection} />
 
-          {!profileimg.isedit ? (
-            <label htmlFor="profilep">
-              <RiEditFill className="edit" />
-            </label>
-          ) : (
-            <MdCancel className="cancel" onClick={oncancel} />
-          )}
+          {user._id === profileUser._id ? (
+            !profileimg.isedit ? (
+              <label htmlFor="profilep">
+                <RiEditFill className="edit" />
+              </label>
+            ) : (
+              <MdCancel className="cancel" onClick={oncancel} />
+            )
+          ) : null}
           {profileimg.isedit ? (
             <IoCheckmarkCircleSharp className="correct" onClick={onsave} />
           ) : null}

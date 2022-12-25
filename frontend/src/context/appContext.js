@@ -40,6 +40,9 @@ import {
   UPDATE_PROFILE_SUCCESS,
   REMOVE_FOLLOWER_SUCCESS,
   ADD_FOLLOWER_SUCCESS,
+  UPDATE_JOB_BEGIN,
+  UPDATE_JOB_SUCCESS,
+  UPDATE_JOB_ERROR,
 } from "./action";
 
 import axios from "axios";
@@ -75,7 +78,7 @@ const initialState = {
   notification: [],
   chats: [],
   selectedChat: null,
-  jobid:""
+  jobid: "",
 };
 
 const AppContext = React.createContext();
@@ -424,7 +427,7 @@ const AppProvider = ({ children }) => {
       formData.append("requirments", requirments);
       formData.append("closeTime", closeTime);
 
-     const {data} = await authFetch.post("job/addJob", {
+      const { data } = await authFetch.post("job/addJob", {
         title,
         sector,
         experiencelvl,
@@ -436,10 +439,10 @@ const AppProvider = ({ children }) => {
         requirments,
         closeTime,
       });
-      console.log(data)
+      console.log(data);
       dispatch({
         type: ADD_JOB_SUCCESS,
-        payload:{id: data.data._id }
+        payload: { id: data.data._id },
       });
 
       // dispatch({ type: CLEAR_VALUES });
@@ -545,16 +548,40 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  const followProfile = async (profileuser, userId,option) => {
+  const followProfile = async (profileuser, userId, option) => {
     try {
       await authFetch.patch(`/profile/${profileuser}`);
       dispatch({
         type: ADD_FOLLOWER_SUCCESS,
-        payload: { id: userId,option:option },
+        payload: { id: userId, option: option },
       });
     } catch (e) {
       console.log(e);
     }
+  };
+
+  const updateJob = async ({ values, id }) => {
+    dispatch({ type: UPDATE_JOB_BEGIN });
+    try {
+     
+
+      const { data } = await authFetch.put(`job/updatejob/${id}`, {
+        ...values,
+      });
+      console.log(data);
+      dispatch({
+        type: UPDATE_JOB_SUCCESS,
+      });
+
+      // dispatch({ type: CLEAR_VALUES });
+    } catch (error) {
+      if (error.response.status === 401) return;
+      dispatch({
+        type: UPDATE_JOB_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
   };
 
   return (
@@ -588,6 +615,7 @@ const AppProvider = ({ children }) => {
         removefollower,
         unfollowProfile,
         followProfile,
+        updateJob
       }}
     >
       {children}

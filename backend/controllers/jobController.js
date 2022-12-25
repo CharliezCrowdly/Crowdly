@@ -557,3 +557,53 @@ module.exports.updateJobStatus = async (req, res, next) => {
     });
   }
 };
+
+module.exports.updateJob = async (req, res, next) => {
+  const {
+    title,
+    sallary,
+    description,
+    skills,
+    requirments,
+    responsibilities,
+    closeTime,
+    sector,
+    experiencelvl,
+    jobtype,
+  } = req.body;
+
+  const {id} = req.params
+  if (title.length < 4) {
+    throw new BAD_REQUESTError("title is too short");
+  }
+  if (description.length < 4) {
+    throw new BAD_REQUESTError("description is too short");
+  }
+
+  const job = await Job.findOneAndUpdate(
+    {
+      _id: id,
+    },
+
+    {
+      $set: {
+        title: title,
+        sallary: sallary,
+        description: description,
+        skills: skills,
+        requirements: requirments,
+        responsibilities: responsibilities,
+        closeDate: closeTime,
+        sector: sector,
+        experiencelvl: experiencelvl,
+        jobtype: jobtype,
+      },
+    }
+  );
+
+
+  res.status(200).json({
+    success: true,
+    data: job,
+  });
+};

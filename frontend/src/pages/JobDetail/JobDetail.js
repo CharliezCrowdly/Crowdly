@@ -144,7 +144,10 @@ const JobDetail = () => {
                       dropdown ? "dropdown-option glassmorphism " : "d-none"
                     }
                   >
-                    <div className="deactivate">
+                    <div
+                      className="deactivate"
+                      onClick={() => navigate(`/user/edit/job/${job._id}`)}
+                    >
                       <AiTwotoneEdit className="icon" />
                       <span>Edit Job</span>
                     </div>
@@ -289,7 +292,7 @@ const JobDetail = () => {
                   })}
             </div>
           </section>
-          {owner ? (
+          {/* {owner ? (
             <div>
               <br />
               <hr />
@@ -369,7 +372,7 @@ const JobDetail = () => {
                 ) : null}
               </div>
             </div>
-          )}
+          )} */}
         </div>
         <div className="right-section ">
           <Recommendationlst />

@@ -38,6 +38,9 @@ import {
   UPDATE_PROFILE_SUCCESS,
   REMOVE_FOLLOWER_SUCCESS,
   ADD_FOLLOWER_SUCCESS,
+  UPDATE_JOB_BEGIN,
+  UPDATE_JOB_SUCCESS,
+  UPDATE_JOB_ERROR
 } from "./action";
 import { initialState } from "./appContext";
 
@@ -353,6 +356,33 @@ const reducer = (state, action) => {
       profileUser: profile,
     };
   }
+
+   if (action.type === UPDATE_JOB_BEGIN) {
+     return {
+       ...state,
+       isLoading: true,
+     };
+   }
+   if (action.type === UPDATE_JOB_SUCCESS) {
+     return {
+       ...state,
+       isLoading: false,
+       showAlert: true,
+       alertType: "success",
+       alertText: "JOB UPDATEED!",
+       
+     };
+   }
+   if (action.type === UPDATE_JOB_ERROR) {
+     return {
+       ...state,
+       isLoading: false,
+       showAlert: true,
+       isSubmit: false,
+       alertType: "danger",
+       alertText: action.payload.msg,
+     };
+   }
 
   throw new Error(`no such action: ${action.type}`);
 };
