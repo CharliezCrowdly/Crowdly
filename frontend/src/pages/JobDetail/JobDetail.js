@@ -260,7 +260,7 @@ const JobDetail = () => {
             ) : (
               <p className="description">{job.description}</p>
             )}
-            {/* <div className="responsiblity">
+            <div className="responsiblity">
               <h3>Responsiblity</h3>
               {loading
                 ? requirement.map((item) => {
@@ -269,7 +269,7 @@ const JobDetail = () => {
                 : job.requirements.map((item, index) => {
                     return <li key={index}>{item.requirement}</li>;
                   })}
-            </div> */}
+            </div>
             <div className="responsiblity">
               <h3>Requirement</h3>
               {loading
@@ -280,15 +280,17 @@ const JobDetail = () => {
                     return <li key={index}>{item.responsibility}</li>;
                   })}
             </div>
-            <div className="responsiblity">
+            <div className="skills">
               <h3>Skills Required</h3>
-              {loading
-                ? requirement.map((item, index) => {
-                    return <li key={index}>{item.content}</li>;
-                  })
-                : job.skills.map((item, index) => {
-                    return <li key={index}>{item.skill}</li>;
-                  })}
+              <div className="skill">
+                {loading
+                  ? requirement.map((item, index) => {
+                      return <li key={index}>{item.content}</li>;
+                    })
+                  : job.skills.map((item, index) => {
+                      return <li key={index}>{item.skill}</li>;
+                    })}
+              </div>
             </div>
           </section>
 
