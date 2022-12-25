@@ -191,11 +191,17 @@ const PostBox = React.memo(({ item }) => {
                   postState.isoption ? "edit-option glassmorphism" : "d-none"
                 }
               >
-                <AiFillEdit
-                  className="icon"
-                  onClick={() => navigate(`/crowdly/postedit/${_id}`)}
-                />
-                <MdDelete className="icon" onClick={()=>deletePost(item._id)} />
+                <div className="list">
+                  <AiFillEdit
+                    className="icon"
+                    onClick={() => navigate(`/crowdly/postedit/${_id}`)}
+                  />
+                  <span>Edit</span>
+                </div>
+                <div className="list">
+                  <MdDelete className="icon" onClick={()=>deletePost(item._id)} />
+                <span>Delete</span>
+                </div>
               </div>
             </div>
           </div>
@@ -279,7 +285,6 @@ const PostBox = React.memo(({ item }) => {
             />
 
             <FaComment className="icon comment-btn" onClick={togglepostBar} />
-            <FaShare className="icon" />
           </div>
 
           <Bookmark saved={item.saved} postid={item._id} />

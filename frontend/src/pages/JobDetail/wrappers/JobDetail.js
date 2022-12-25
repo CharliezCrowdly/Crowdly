@@ -193,6 +193,7 @@ const Wrapper = styled.div`
 
 
           & > li {
+            white-space: nowrap;
             min-width: 70px;
             height: 30px;
             background-color: var(--light-blue-600);
@@ -204,6 +205,7 @@ const Wrapper = styled.div`
             justify-content: center;
             text-align: center;
             border-top-right-radius: 15px;
+            padding-inline: 10px;
             
             font-weight: 400;
             text-transform: capitalize;
