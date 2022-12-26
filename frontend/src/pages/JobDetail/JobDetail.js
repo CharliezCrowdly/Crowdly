@@ -385,15 +385,19 @@ const JobDetail = () => {
               ) : null}
             </div>
           </div>
-          {payment ? (
-            <button
-              className={`btn-easy ${showPayment ? "hideNow" : ""}`}
-              onClick={handleShowPayment}
-            >
-              Complete Payment
-            </button>
+          {owner ? (
+            payment ? (
+              <button
+                className={`btn-easy ${showPayment ? "hideNow" : ""}`}
+                onClick={handleShowPayment}
+              >
+                Complete Payment
+              </button>
+            ) : (
+              <>Payment Status: {paymentStatus}</>
+            )
           ) : (
-            <>Payment Status: {paymentStatus}</>
+            <div></div>
           )}
           {showPayment && (
             <StripeContainer
