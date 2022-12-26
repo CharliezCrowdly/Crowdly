@@ -72,7 +72,7 @@ const Applicant = ({ item, changestatus, setrefresh }) => {
       )
       .then((res) => {
         setItem({ ...itemSet, status: "Hired" });
-        changestatus();
+        // changestatus();
         setrefresh(res);
 
         // console.log(itemSet.applicant);
@@ -91,9 +91,9 @@ const Applicant = ({ item, changestatus, setrefresh }) => {
             alt=""
           />
           <span className="username">{applicant.name}</span>
-          {itemSet.status === "Hired" ? (
+          {item.status === "Hired" ? (
             <FcApproval className="icon" />
-          ) : itemSet.status === "Rejected" ? (
+          ) : item.status === "Rejected" ? (
             <FcCancel className="icon" />
           ) : (
             <FcInfo className="icon" />
