@@ -7,14 +7,13 @@ import moment from "moment";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useAppContext } from "../../../context/appContext";
-const Applicant = ({ item,changestatus }) => {
+const Applicant = ({ item, changestatus, setrefresh }) => {
   const [itemSet, setItem] = useState(item);
   //get job id from url
   const { id } = useParams();
   const { token } = useAppContext();
 
   const { applicant, appliedDate, bid } = itemSet;
- 
 
   const options = {
     drop: false,
@@ -73,7 +72,10 @@ const Applicant = ({ item,changestatus }) => {
       )
       .then((res) => {
         setItem({ ...itemSet, status: "Hired" });
-        changestatus()
+        changestatus();
+        setrefresh(res);
+
+        // console.log(itemSet.applicant);
       });
   };
   return (
@@ -174,7 +176,7 @@ const Applicant = ({ item,changestatus }) => {
         <button className="btn reject" onClick={handleReject}>
           Reject
         </button>
-        <button className="btn hire" onClick={(e)=>handleHire(e)}>
+        <button className="btn hire" onClick={(e) => handleHire(e)}>
           Hire
         </button>
       </section>
