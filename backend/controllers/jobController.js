@@ -526,12 +526,12 @@ module.exports.appliedJobs = async (req, res) => {
 
 module.exports.updateJobStatus = async (req, res, next) => {
   try {
-    console.log("Hre");
     const { job_id, user_id, status } = req.body;
+    console.log(req.body);
     const job = await Job.findById(job_id);
     const user = await userModel.findById(user_id);
 
-    if (job.applicants) {
+    if (status == "Rejected") {
       job.applicants.forEach((applicant) => {
         if (applicant.applicant == user_id) {
           applicant.status = status;
@@ -542,9 +542,37 @@ module.exports.updateJobStatus = async (req, res, next) => {
           });
         }
       });
+    } else {
+      if (job.applicants) {
+        job.applicants.forEach((applicant) => {
+          if (applicant.applicant == user_id) {
+            applicant.status = status;
+            user.appliedJobs.forEach((appliedJob) => {
+              if (appliedJob.job == job_id) {
+                appliedJob.status = status;
+              }
+            });
+          } else {
+            applicant.status = "Rejected";
+          }
+        });
+      }
+      job.applicants.forEach((applicant) => {
+        if (applicant.applicant != user_id) {
+          userModel.findById(applicant.applicant).then((user) => {
+            user.appliedJobs.forEach((appliedJob) => {
+              if (appliedJob.job == job_id) {
+                appliedJob.status = "Rejected";
+              }
+            });
+            user.save();
+          });
+        }
+      });
     }
     job.save();
     user.save();
+
     console.log("Saved");
     return res.json({
       success: true,
@@ -559,33 +587,30 @@ module.exports.updateJobStatus = async (req, res, next) => {
   }
 };
 
-
 module.exports.payment = async (req, res) => {
-  let { amount, id, job } = req.body;
-  let total = amount * 100;
-  let userFrom = req.user.userId;
-  let userTo = req.body.userTo;
+  let { amount, id, jobId } = req.body;
+
+  let paymentFrom = req.user.userId;
+  let paymentTo = req.body.paymentTo;
   try {
     stripe.paymentIntents
       .create({
-        amount: total,
+        amount,
         currency: "INR",
         description: "Job Portal",
         payment_method: id,
         confirm: true,
       })
-      .then(async (res) => {
-        console.log(res);
-
+      .then(async () => {
         //create a transaction in database
         const transaction = new Payment({
-          sender: userFrom,
-          receiver: userTo,
-          amount: amount,
-          job: job,
+          sender: paymentFrom,
+          reciver: paymentTo,
+          amount: amount / 100,
+          job: jobId,
         });
         await transaction.save();
-        res.json({
+        return res.json({
           message: "Payment Successful",
           success: true,
         });
@@ -596,7 +621,8 @@ module.exports.payment = async (req, res) => {
       message: "Payment Failed",
       success: false,
     });
-=======
+  }
+};
 module.exports.updateJob = async (req, res, next) => {
   const {
     title,
@@ -662,6 +688,57 @@ module.exports.getAppliedJobs = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
+  }
+};
 
+//get hired applicant
+module.exports.getHiredApplicant = async (req, res) => {
+  try {
+    const job = await Job.findById(req.params.id).populate(
+      "applicants.applicant"
+    );
+    const applicant = job.applicants.filter(
+      (applicant) => applicant.status == "Hired"
+    );
+    if (!applicant) {
+      return res.json({
+        success: false,
+        msg: "No applicant found",
+      });
+    }
+    if (applicant.length == 0) {
+      return res.json({
+        success: false,
+        msg: "No applicant found",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      applicant: applicant,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+//Get payment for a job
+module.exports.getPayment = async (req, res) => {
+  try {
+    const payment = await Payment.find({
+      job: req.params.id,
+    })
+      .populate("sender")
+      .populate("reciver");
+
+    res.status(200).json({
+      success: true,
+      data: payment,
+    });
+  } catch (err) {
+    console.log(err);
+    return res.json({
+      success: false,
+      msg: err.message,
+    });
   }
 };

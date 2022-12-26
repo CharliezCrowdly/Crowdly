@@ -15,7 +15,11 @@ import Table from "react-bootstrap/Table";
 import { useNavigate } from "react-router-dom";
 import { IoTime } from "react-icons/io5";
 import Countdown from "react-countdown";
+import StripeContainer from "../../component/StripeContainer";
 const JobDetail = () => {
+  const [payment, setPayment] = useState(false);
+  const [paymentStatus, setPaymentStatus] = useState(null);
+  const [showPayment, setShowPayment] = useState(false);
   const { requirement, company } = joblists;
   const [isReadmore, setReadmore] = useState(false);
   const [save, setSave] = useState(false);
@@ -31,7 +35,8 @@ const JobDetail = () => {
   const [bookmarked, Setbookmark] = useState(false);
   const [applied, setApplied] = useState(false);
   const [status, setStatus] = useState("");
-  //get job id from params and fetch job detail
+  const [isHired, setIsHired] = useState(false);
+  const [hired, setHired] = useState(null);
 
   const navigate = useNavigate();
   const fetch = async () => {
@@ -90,7 +95,53 @@ const JobDetail = () => {
           }
         });
       });
-  };
+
+    await axios
+      .get(
+        `http://localhost:5000/api/v1/job/hired/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+        {
+          params: {
+            id: id,
+          },
+        }
+      )
+      .then(async (res) => {
+        if (res.data.applicant.length > 0) {
+          setIsHired(true);
+          setHired(res.data.applicant[0]);
+          console.log(res.data.applicant[0]);
+
+          await axios
+            .get(
+              `http://localhost:5000/api/v1/job/getPayment/${id}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              },
+              {
+                params: {
+                  id: id,
+                },
+              }
+            )
+            .then((res) => {
+              console.log(res.data.data);
+              if (res.data.data.length == 0) {
+                setPayment(true);
+                setPaymentStatus("Not Paid");
+              } else {
+                setPaymentStatus(res.data.data[0].status);
+              }
+            });
+        }
+      });
+  }; //getPayment
 
   useEffect(() => {
     fetch();
@@ -122,6 +173,10 @@ const JobDetail = () => {
   if (loading) {
     return <div></div>;
   }
+
+  const handleShowPayment = () => {
+    setShowPayment(true);
+  };
 
   return (
     <>
@@ -330,6 +385,23 @@ const JobDetail = () => {
               ) : null}
             </div>
           </div>
+          {payment ? (
+            <button
+              className={`btn-easy ${showPayment ? "hideNow" : ""}`}
+              onClick={handleShowPayment}
+            >
+              Complete Payment
+            </button>
+          ) : (
+            <>Payment Status: {paymentStatus}</>
+          )}
+          {showPayment && (
+            <StripeContainer
+              paymentTo={hired.applicant._id}
+              amount={hired.bid}
+              jobId={job._id}
+            />
+          )}
         </div>
         <div className="right-section ">
           <Recommendationlst />

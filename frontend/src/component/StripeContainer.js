@@ -7,11 +7,11 @@ const PUBLIC_KEY =
   "pk_test_51MIaOSSGpLd70Ol3BTaOQ6lrTTsx4IYlEenUlJkgYG6oLGlfeAoerMTauCXeJinMkle4bUs5JExFeDdyaFzr4C8y00UKleJPzI";
 const stripeTestPromise = loadStripe(PUBLIC_KEY);
 
-export default function StripeContainer() {
+export default function StripeContainer({ paymentTo, jobId, amount }) {
   return (
-    <div style={{ height: "100vh" }}>
+    <div>
       <Elements stripe={stripeTestPromise}>
-        <PaymentForm />
+        <PaymentForm amount={amount} jobId={jobId} paymentTo={paymentTo} />
       </Elements>
     </div>
   );

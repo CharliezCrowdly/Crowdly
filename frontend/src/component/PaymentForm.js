@@ -24,7 +24,7 @@ const CARD_OPTIONS = {
   },
 };
 
-export default function PaymentForm() {
+export default function PaymentForm({ paymentTo, jobId, amount }) {
   const { token } = useAppContext();
   const [success, setSuccess] = useState(false);
   const stripe = useStripe();
@@ -32,6 +32,7 @@ export default function PaymentForm() {
 
   const handleSubmit = async (event) => {
     console.log("Here");
+
     event.preventDefault();
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
@@ -43,8 +44,10 @@ export default function PaymentForm() {
         const response = await axios.post(
           "http://localhost:5000/api/v1/job/payment",
           {
-            amount: 1000,
+            amount: amount * 100,
             id,
+            paymentTo,
+            jobId,
           },
           {
             headers: {
