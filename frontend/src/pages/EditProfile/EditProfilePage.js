@@ -7,7 +7,7 @@ import { Alert } from "../../component";
 
 const EditProfilePage = () => {
   const { user } = useAppContext();
-  const { updateUser, isLoading, alertType } = useAppContext();
+  const { updateUser, isLoading, alertType, changevalue } = useAppContext();
 
   const formvalue = {
     fullname: user.name,

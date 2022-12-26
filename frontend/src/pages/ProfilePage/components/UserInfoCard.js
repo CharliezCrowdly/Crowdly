@@ -9,7 +9,7 @@ import { IoCheckmarkCircleSharp } from "react-icons/io5";
 import axios from "axios";
 
 const UserInfoCard = ({ profileUser }) => {
-  const { user, token } = useAppContext();
+  const { user, token, changevalue, picupdate } = useAppContext();
   const navigate = useNavigate();
   const option = {
     preview: null,
@@ -35,21 +35,24 @@ const UserInfoCard = ({ profileUser }) => {
   const onsave = async () => {
     const formData = new FormData();
     formData.append("profileimg", profileimg.file);
+    // picupdate({ profileimg: profileimg.file });
     await axios
       .patch(`/api/v1/profile/editprofileimg`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then(
+      .then((res) => {
         setprofile({
           ...profileimg,
           isedit: false,
-          profileimg: profileimg.preview,
+          profileimg: res.data.user.profilePicture,
           preview: null,
-          file:""
-        })
-      );
+          file: "",
+        }),
+          changevalue({ name: "photo", value: res.data.user.profilePicture });
+          console.log(res.data.user.profilePicture)
+      });
   };
 
   const oncancel = () => {
@@ -71,13 +74,15 @@ const UserInfoCard = ({ profileUser }) => {
           />
           <input type="file" id="profilep" onChange={fileselection} />
 
-          {!profileimg.isedit ? (
-            <label htmlFor="profilep">
-              <RiEditFill className="edit" />
-            </label>
-          ) : (
-            <MdCancel className="cancel" onClick={oncancel} />
-          )}
+          {user._id === profileUser._id ? (
+            !profileimg.isedit ? (
+              <label htmlFor="profilep">
+                <RiEditFill className="edit" />
+              </label>
+            ) : (
+              <MdCancel className="cancel" onClick={oncancel} />
+            )
+          ) : null}
           {profileimg.isedit ? (
             <IoCheckmarkCircleSharp className="correct" onClick={onsave} />
           ) : null}

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
-import { HiLocationMarker } from "react-icons/hi";
 import { RiMoneyDollarCircleFill } from "react-icons/ri";
-import Wrapper from "../wrappers/JobBox";
+import Wrapper from "../wrappers/JobBox2";
 import { useNavigate } from "react-router-dom";
-import { useAppContext } from "../context/appContext";
-import { IoTime } from "react-icons/io5";
+import { useAppContext } from "../../../context/appContext";
 import Countdown from "react-countdown";
-const JobBox = (job) => {
+import { IoTime } from "react-icons/io5";
+
+const JobBox2 = ({job}) => {
   const navigate = useNavigate();
   const { user, savejob, unsavejob } = useAppContext();
   const [bookmarked, Setbookmark] = useState(false);
@@ -44,9 +44,12 @@ const JobBox = (job) => {
               src={job.job.company.profilePicture}
               alt=""
             />
-            <div className="jobfield">
-              <span className="jobname">{job.job.title}</span>
-              <p className="companyname">{job.job.company.name}</p>
+            <div className="jobinfo">
+              <div className="jobfield">
+                <span className="jobname">{job.job.title}</span>
+                <p className="companyname">{job.job.company.name}</p>
+              </div>
+              <span>{job.status}</span>
             </div>
           </div>
           <div className="savejob">
@@ -102,4 +105,4 @@ const JobBox = (job) => {
   );
 };
 
-export default JobBox;
+export default JobBox2;

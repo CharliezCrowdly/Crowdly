@@ -26,16 +26,16 @@ const UserFilter = ({ statusfilter }) => {
           id=""
           onClick={statusfilter}
         />
-        <label htmlFor="">pending</label>
+        <label htmlFor="">Under-Review</label>
       </div>
 
       <div className="checkbox">
-        <input type="checkbox" name="Approved" id="" onClick={statusfilter} />
-        <label htmlFor="">approved</label>
+        <input type="checkbox" name="Hired" id="" onClick={statusfilter} />
+        <label htmlFor="">Hired</label>
       </div>
       <div className="checkbox">
-        <input type="checkbox" name="pinned" id="" onClick={statusfilter} />
-        <label htmlFor="">pinned</label>
+        <input type="checkbox" name="Reject" id="" onClick={statusfilter} />
+        <label htmlFor="">Rejected</label>
       </div>
     </Wrapper>
   );

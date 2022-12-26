@@ -8,7 +8,7 @@ const RangeFilter = React.memo(({ bid, handleChange }) => {
     <Wrapper className="glassmorphism">
       <div className="range">
         <p>Bid</p>
-        <p>$ {bid}</p>
+        <p>Rs {bid}</p>
       </div>
       <input
         type="range"

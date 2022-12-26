@@ -13,7 +13,7 @@ const Navbar = () => {
     notify: false,
   };
   const [drop, setdrop] = useState(option);
-  const { user, logoutUser } = useAppContext();
+  const { user, logoutUser,photo } = useAppContext();
 
   const navigate = useNavigate();
 
@@ -44,7 +44,7 @@ const Navbar = () => {
           </div>
           <img
             className="profile-pic-sm"
-            src="https://us.123rf.com/450wm/molokowall/molokowall2201/molokowall220100015/180568257-young-smiling-man-adam-avatar-3d-vector-people-character-illustration-cartoon-minimal-style-.jpg?ver=6"
+            src={photo}
             alt=""
           />
           <div className="dropdown-menus">

@@ -22,6 +22,7 @@ import {
   ProfilePage,
   ResetPage,
   IsLoggedin,
+  EditJobPage
 } from "./pages";
 import EditProfilePage from "./pages/EditProfile/EditProfilePage";
 import ChatProvider from "./context/ChatProvider";
@@ -87,6 +88,7 @@ function App() {
             }
           >
             <Route path="add/job" element={<AddJobPage />} />
+            <Route path="edit/job/:id" element={<EditJobPage/>}/>
             <Route path="edit" element={<EditProfilePage />} />
             {/* <Route path="payment" element={<PaymentPage />} /> */}
 

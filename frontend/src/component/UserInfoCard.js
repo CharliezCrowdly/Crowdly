@@ -4,7 +4,7 @@ import { useAppContext } from "../context/appContext";
 import { useNavigate } from "react-router-dom";
 
 const UserInfoCard = () => {
-  const { user } = useAppContext();
+  const { user,naam,photo } = useAppContext();
   const navigate = useNavigate();
 
   return (
@@ -13,12 +13,12 @@ const UserInfoCard = () => {
         <div className="userimage">
           <img
             className="profile-pic-xL"
-            src="https://us.123rf.com/450wm/molokowall/molokowall2201/molokowall220100015/180568257-young-smiling-man-adam-avatar-3d-vector-people-character-illustration-cartoon-minimal-style-.jpg?ver=6"
+            src={photo}
             alt=""
           />
         </div>
-        <div className="username">{user.username}</div>
-        <div className="userskill">FrontEnd Developer</div>
+        <div className="username">{naam}</div>
+        <div className="userskill">{user.usertype}</div>
         {user.usertype == "individual" ? (
           <div
             className="edit-profile"

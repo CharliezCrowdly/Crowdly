@@ -35,8 +35,7 @@ const LandingPage = () => {
           <ul className="d-flex navbar-link">
             <li>Get Started</li>
             <li className="logo">
-              <span className="circle-border">C</span>{" "}
-              <span>Crowdly</span>
+              <span className="circle-border">C</span> <span>Crowdly</span>
             </li>
             <li>About</li>
           </ul>
@@ -116,25 +115,29 @@ const LandingPage = () => {
         </svg>
       </section>
 
-     
-
       <section className="five">
         <div className="five-content">
           <span className="circle-b">N</span>
           <div className="Why"></div>
         </div>
         <p className="five-p">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque optio
-          provident laboriosam eligendi nisi accusamus deleniti vero dolorum
-          quidem neque consequuntur omnis, ratione ea nobis magni eius
-          reiciendis dignissimos voluptate molestias distinctio obcaecati.
-          Minima architecto nesciunt dolorem provident numquam adipisci quas,
-          obcaecati vero possimus veniam soluta sed est, commodi, voluptatibus
-          rerum eum. Quia!
+          It’s our attention to the small stuff, scheduling of timelines and
+          keen project management that makes us stand out from the rest. We are
+          creative, while keeping a close eye on the calendar and your
+          budget.You want results. We have found that the best way to get them
+          is with up front research – of your company, competitors, target
+          market and customer psychographics. Only after we fully understand you
+          and your customers, do we recommend a plan of attack.
         </p>
         <p className="five-p">
-          We often help start ups to get their first site live! Don’t be shy
-          send a question!
+          We bring our diverse background of advertising, design, branding,
+          public relations, research and strategic planning to work for your
+          company. Not only will your materials look great – they will get
+          results. Yes, we have won awards for our work. But we don’t create
+          concepts in a vacuum – they fit into the standards of your industry.
+          And once we have a total picture of your company, its target audience
+          and goals, we’ll create a detailed plan – that also includes a
+          commitment to stay on budget and on deadline.
         </p>
 
         <p className="five-p">Check out our services.</p>
@@ -171,26 +174,38 @@ const LandingPage = () => {
         </div>
 
         <p className="six-p">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aspernatur
-          veniam sint omnis labore soluta, optio laborum beatae libero modi
-          facere magni nobis ullam dolore quasi cumque voluptatibus sit
-          blanditiis atque in? Illo earum, deleniti voluptatum architecto, neque
-          odio vel laudantium facere consectetur aperiam qui?
+          Crowdly, a free-lancing social media platform, is aimed for
+          simplifying recruiting and hiring process for the parties involved.
+          With this system, employers, and potential employees could connect
+          directly, efficiently cutting out the middleman. Moreover, with a
+          real-time communication system integrated into this platform,
+          employers can be confident about their applicants. In the favor of
+          applicants, Crowdly offers total transparency in their application
+          process by informing them about state of their application. The
+          process of searching jobs remains one of the most hassled tasks in
+          one’s professional life. Furthermore, the lack of transparency in the
+          process leaves the applicants unsure about their application. This
+          creates sort of an unprofessional atmosphere between the employer and
+          the potential employee.
         </p>
         <p className="six-p">
-          Numerous of contacts allow to push the business above the boundaries.
-          We work everyday and we want to make sure that our clients are
-          satisfied as possible with the final result.
+          To address these, Crowdly was founded. With this platform, the job
+          searching process will be made easier and hassle free. The users can
+          apply for any job that matches their qualifications and skill sets.
+          Their profile will directly be sent to the employers without having to
+          upload a CV. In the favor of Employers, the employers can commit to
+          100% transparency of application by providing them with status of
+          their application.
         </p>
       </section>
 
-     
-        <hr></hr>
+      <hr></hr>
       <section className="footer">
         <div className="footer-content">
           <ul className="d-flex navbar-link">
             <li className="logo">
-              <span className="circle-border">N</span> <span>WINKLE MEDIA</span>
+              <span className="circle-border">N</span>{" "}
+              <span>CROWDLY MEDIA</span>
             </li>
             <li>Services</li>
             <li>Get started</li>
@@ -210,14 +225,14 @@ const LandingPage = () => {
             <li className="footer-title">WhatsApp:</li>
             <li className="footer-text">+977 9823447627</li>
             <li className="footer-title">Mail:</li>
-            <li className="footer-text">Nischal@gmail.com</li>
+            <li className="footer-text">crowdly@gmail.com</li>
           </ul>
         </div>
 
         <div className="line-right"></div>
 
         <div className="copyright">
-          Copyrights © 2022 Winkle’Media. All rights reserved.  
+          Copyrights © 2022 Crowdly’Media. All rights reserved.
         </div>
       </section>
     </Wrapper>

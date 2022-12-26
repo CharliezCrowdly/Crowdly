@@ -4,7 +4,7 @@ import { useAppContext } from "../../../context/appContext";
 import axios from "axios";
 
 const Coverimage = ({ coverimage, changeactive, activeindex, subtract }) => {
-  const { profileUser, isLoading, token } = useAppContext();
+  const { profileUser, isLoading, token, user } = useAppContext();
 
   const option = {
     preview: null,
@@ -96,15 +96,21 @@ const Coverimage = ({ coverimage, changeactive, activeindex, subtract }) => {
         onChange={fileselection}
       />
       <div className="btns">
-        {!coverpage.isedit ? (
-          <label htmlFor="cover" className="btn-edit ">
-            Edit Cover Page
-          </label>
-        ) : (
-          <button onClick={oncancel}>cancel</button>
-        )}
+        {user._id === profileUser._id ? (
+          !coverpage.isedit ? (
+            <label htmlFor="cover" className="btn-edit ">
+              Edit Cover Page
+            </label>
+          ) : (
+            <button onClick={oncancel}>cancel</button>
+          )
+        ) : null}
 
-        {coverpage.isedit ? <button onClick={onsave}>save</button> : null}
+        {user._id === profileUser._id ? (
+          coverpage.isedit ? (
+            <button onClick={onsave}>save</button>
+          ) : null
+        ) : null}
       </div>
     </Wrapper>
   );

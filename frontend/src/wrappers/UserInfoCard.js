@@ -17,12 +17,13 @@ const Wrapper = styled.aside`
     border-radius: 10px;
 
     & > .userimage {
-      width: 8rem;
-      height: 8rem;
+      & > img {
+        object-fit: cover;
+        width: 8rem;
+        height: 8rem;
 
-      border-radius: 70px;
-
-      overflow: hidden;
+        border-radius: 70px;
+      }
     }
     & > .username {
       font-size: 1.2rem;
