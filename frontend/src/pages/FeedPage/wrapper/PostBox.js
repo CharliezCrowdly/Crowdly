@@ -53,6 +53,7 @@ const Wrapper = styled.div`
 
         & > .post-edit {
           position: relative;
+
           & > .icon {
             font-size: 1.1rem;
             cursor: pointer;
@@ -60,7 +61,7 @@ const Wrapper = styled.div`
 
           & > .edit-option {
             position: absolute;
-            width: 40px;
+            /* width: 40px; */
             height: 80px;
             text-align: center;
             display: flex;
@@ -71,11 +72,25 @@ const Wrapper = styled.div`
             bottom: -80px;
             left: -10px;
 
-            & > .icon {
-              font-size: 1.5rem;
-              margin-inline: auto;
+            & > .list {
+              display: flex;
+              gap: 5px;
+              width: 100px;
+              padding: 1% 6px;
               cursor: pointer;
+              align-items: center;
+              
+              & > .icon {
+                font-size: 1.5rem;
+                
+                cursor: pointer;
+              }
+
+              & > span{
+                font-weight: 400;
+              }
             }
+
           }
         }
       }

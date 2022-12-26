@@ -41,7 +41,7 @@ const Wrapper = styled.div`
   & > .checkbox {
     display: flex;
     align-items: center;
-    background-color: #ffc9c6;
+    
     text-transform: capitalize;
     padding: 2%;
     padding-right: 9px;

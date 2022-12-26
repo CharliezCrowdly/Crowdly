@@ -114,14 +114,19 @@ const Wrapper = styled.div`
       & > .status {
         font-weight: bold;
         margin-top: 10px;
+        display: flex;
+        align-items: center;
 
-        & > span {
-          background-color: purple;
-          padding: 1%;
+        & > p {
+          background-color: var(--blue-1100);
+          padding-inline: 5px;
+          width: max-content;
+          height: 30px;
           color: white;
-          font-weight: normal;
-          border-radius: 7px;
+          font-weight: bold;
+          border-radius: 3px;
           margin-left: 8px;
+          padding-top: 2.5px;
         }
       }
 
@@ -168,6 +173,46 @@ const Wrapper = styled.div`
           list-style-type: disc;
           margin-top: 5px;
         }
+      }
+
+      & > .skills {
+        margin-block: 5px;
+        font-size: 14px;
+        margin-top: 10px;
+
+        & > h3 {
+          font-size: 1em;
+          color: black;
+        }
+
+        & > .skill{
+          display: flex;
+          gap: 5px;
+          width: 300px;
+          flex-wrap: wrap;
+
+
+          & > li {
+            white-space: nowrap;
+            min-width: 70px;
+            height: 30px;
+            background-color: var(--light-blue-600);
+            margin-top: 5px;
+            color: white;
+            width: max-content;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border-top-right-radius: 15px;
+            padding-inline: 10px;
+            
+            font-weight: 400;
+            text-transform: capitalize;
+            border-bottom-right-radius: 15px;
+          }
+        }
+
       }
     }
 

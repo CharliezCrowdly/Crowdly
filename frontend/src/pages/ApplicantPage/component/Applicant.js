@@ -7,17 +7,15 @@ import moment from "moment";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useAppContext } from "../../../context/appContext";
-const Applicant = ({ item }) => {
+const Applicant = ({ item,changestatus }) => {
   const [itemSet, setItem] = useState(item);
   //get job id from url
   const { id } = useParams();
   const { token } = useAppContext();
 
   const { applicant, appliedDate, bid } = itemSet;
-  console.log(applicant);
-  useEffect(() => {
-    console.log(itemSet);
-  }, []);
+ 
+
   const options = {
     drop: false,
   };
@@ -75,8 +73,7 @@ const Applicant = ({ item }) => {
       )
       .then((res) => {
         setItem({ ...itemSet, status: "Hired" });
-
-        console.log(res);
+        changestatus()
       });
   };
   return (
@@ -101,11 +98,7 @@ const Applicant = ({ item }) => {
           )}
         </div>
 
-        <p>
-          {applicant.skillSet.map((itemSet, index) => {
-            return <span key={index}>{itemSet.skill},</span>;
-          })}
-        </p>
+        <p>Rs {bid}</p>
         <div className="action">
           {liked ? (
             <AiFillStar className="icon" onClick={onpinned} />
@@ -181,7 +174,7 @@ const Applicant = ({ item }) => {
         <button className="btn reject" onClick={handleReject}>
           Reject
         </button>
-        <button className="btn hire" onClick={handleHire}>
+        <button className="btn hire" onClick={(e)=>handleHire(e)}>
           Hire
         </button>
       </section>

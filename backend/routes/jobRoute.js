@@ -1,15 +1,13 @@
 const {
   addJob,
   getAllJobs,
-  getJobsForSpecificSector,
+
   getJob,
   applyForJob,
-  getCompanyJobDetail,
+
   updateJobStatus,
   getAppliedJobs,
-  getAppliedJobsApp,
-  getSavedJobs,
-  editJob,
+
   submitProposal,
   getCompanyJobs,
   getApplicants,
@@ -18,7 +16,8 @@ const {
   saveJobs,
   unsaveJobs,
   savedJobs,
-  createdJobs,
+  appliedJobs,
+  updateJob,
 } = require("../controllers/jobController");
 // const { protect } = require("../middleware/authMiddleware");
 
@@ -32,11 +31,13 @@ router.post("/saveJob", saveJob);
 router.post("/unsaveJob", unsaveJob);
 router.get("/getCompanyJob", getCompanyJobs);
 router.get("/getApplicants/:id", getApplicants);
+router.get("/getAppliedJobs", getAppliedJobs);
 router.route("/savejob/:id").patch(saveJobs);
 router.route("/unsavejob/:id").patch(unsaveJobs);
 router.route("/savedjobs").get(savedJobs);
-router.route("/createdjobs").get(createdJobs);
+router.route("/appliedjobs").get(appliedJobs);
 router.route("/updateStatus").post(updateJobStatus);
+router.route("/updatejob/:id").put(updateJob);
 
 //   router.get("/getCompanyJobDetail", getCompanyJobDetail);
 //   router.route("/getCompanyJobDetailApp").get(protect, getCompanyJobDetailApp);

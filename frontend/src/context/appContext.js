@@ -40,6 +40,10 @@ import {
   UPDATE_PROFILE_SUCCESS,
   REMOVE_FOLLOWER_SUCCESS,
   ADD_FOLLOWER_SUCCESS,
+  UPDATE_JOB_BEGIN,
+  UPDATE_JOB_SUCCESS,
+  UPDATE_JOB_ERROR,
+  CHANGE_VALUE_BEGIN,
 } from "./action";
 
 import axios from "axios";
@@ -47,6 +51,7 @@ import axios from "axios";
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
 const userLocation = localStorage.getItem("location");
+const photo = localStorage.getItem("photo");
 
 const initialState = {
   isLoading: false,
@@ -59,6 +64,8 @@ const initialState = {
   showSidebar: false,
 
   isEditing: false,
+  photo: photo,
+  naam: "",
 
   isSubmit: true,
   loadPost: true,
@@ -75,7 +82,7 @@ const initialState = {
   notification: [],
   chats: [],
   selectedChat: null,
-  jobid:""
+  jobid: "",
 };
 
 const AppContext = React.createContext();
@@ -137,10 +144,11 @@ const AppProvider = ({ children }) => {
     }, 3000);
   };
 
-  const addUserToLocalStorage = ({ user, token, location }) => {
+  const addUserToLocalStorage = ({ user, token, photo, naam }) => {
     localStorage.setItem("user", JSON.stringify(user));
     localStorage.setItem("token", token);
-    // localStorage.setItem("location", location);
+    localStorage.setItem("photo", photo);
+    localStorage.setItem("naam", naam);
   };
 
   const logoutUser = () => {
@@ -178,16 +186,14 @@ const AppProvider = ({ children }) => {
 
       const { user, token } = data;
       const username = user.username;
-      const profilePicture = user.profilePicture;
-      const name = user.name;
+      const photo = user.profilePicture;
+      const naam = user.name;
 
       addUserToLocalStorage({
         user,
         token,
-
-        profilePicture,
-        username,
-        name,
+        photo,
+        naam
       });
       dispatch({
         type: SETUP_USER_SUCCESS,
@@ -195,10 +201,9 @@ const AppProvider = ({ children }) => {
           user,
           token,
           username,
-          profilePicture,
-
+          photo,
           alertText,
-          name,
+          naam,
         },
       });
     } catch (error) {
@@ -424,7 +429,7 @@ const AppProvider = ({ children }) => {
       formData.append("requirments", requirments);
       formData.append("closeTime", closeTime);
 
-     const {data} = await authFetch.post("job/addJob", {
+      const { data } = await authFetch.post("job/addJob", {
         title,
         sector,
         experiencelvl,
@@ -436,10 +441,10 @@ const AppProvider = ({ children }) => {
         requirments,
         closeTime,
       });
-      console.log(data)
+      console.log(data);
       dispatch({
         type: ADD_JOB_SUCCESS,
-        payload:{id: data.data._id }
+        payload: { id: data.data._id },
       });
 
       // dispatch({ type: CLEAR_VALUES });
@@ -545,13 +550,51 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  const followProfile = async (profileuser, userId,option) => {
+  const followProfile = async (profileuser, userId, option) => {
     try {
       await authFetch.patch(`/profile/${profileuser}`);
       dispatch({
         type: ADD_FOLLOWER_SUCCESS,
-        payload: { id: userId,option:option },
+        payload: { id: userId, option: option },
       });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const updateJob = async ({ values, id }) => {
+    dispatch({ type: UPDATE_JOB_BEGIN });
+    try {
+      const { data } = await authFetch.put(`job/updatejob/${id}`, {
+        ...values,
+      });
+      console.log(data);
+      dispatch({
+        type: UPDATE_JOB_SUCCESS,
+      });
+
+      // dispatch({ type: CLEAR_VALUES });
+    } catch (error) {
+      if (error.response.status === 401) return;
+      dispatch({
+        type: UPDATE_JOB_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
+  };
+
+  const picupdate = async ({ profileimg }) => {
+    const formData = new FormData();
+    formData.append("profileimg", profileimg);
+    const { data } = authFetch.patch("profile/editprofileimg", formData);
+    changevalue({ name: "photo", value: data.profilePicture });
+  };
+
+  const changevalue = async ({ name, value }) => {
+    try {
+      dispatch({ type: CHANGE_VALUE_BEGIN, payload: { name, value } });
+      localStorage.setItem([name], value);
     } catch (e) {
       console.log(e);
     }
@@ -588,6 +631,9 @@ const AppProvider = ({ children }) => {
         removefollower,
         unfollowProfile,
         followProfile,
+        updateJob,
+        changevalue,
+        picupdate,
       }}
     >
       {children}

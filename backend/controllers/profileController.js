@@ -202,7 +202,6 @@ const editcoverpage = async (req, res) => {
   }
 };
 
-
 const editprofileimg = async (req, res) => {
   const user = await User.findOne({ _id: req.user.userId });
 
@@ -234,5 +233,5 @@ module.exports = {
   updateUserDetails,
   removefollower,
   editcoverpage,
-  editprofileimg
+  editprofileimg,
 };

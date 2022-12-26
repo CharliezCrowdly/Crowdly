@@ -29,6 +29,12 @@ const ApplicantPage = () => {
     setsearch({ ...search, skills: value });
   };
 
+  const changestatus = (index) => {
+    let newapplicant = applicantslst;
+    newapplicant[index].status = "Hired";
+    setApplicantslst(newapplicant);
+  };
+
   const fetch = async () => {
     await axios
       .get(
@@ -115,7 +121,7 @@ const ApplicantPage = () => {
       </div>
       <div className="right-container glassmorphism">
         <SearechFilter filter={applyFilters} handleChange={handleChange} />
-        <Applicantlst applicants={applicants} />
+        <Applicantlst applicants={applicants} changestatus={changestatus} />
       </div>
     </Wrapper>
   );
