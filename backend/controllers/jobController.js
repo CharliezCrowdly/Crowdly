@@ -7,7 +7,8 @@ const asyncHandler = require("express-async-handler");
 const { BAD_REQUESTError, UnAuthenticatedError } = require("../errors/index");
 const path = require("path");
 const { StatusCodes } = require("http-status-codes");
-
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const Payment = require("../models/paymentModel");
 module.exports.addJob = async (req, res, next) => {
   const {
     title,
@@ -558,6 +559,44 @@ module.exports.updateJobStatus = async (req, res, next) => {
   }
 };
 
+
+module.exports.payment = async (req, res) => {
+  let { amount, id, job } = req.body;
+  let total = amount * 100;
+  let userFrom = req.user.userId;
+  let userTo = req.body.userTo;
+  try {
+    stripe.paymentIntents
+      .create({
+        amount: total,
+        currency: "INR",
+        description: "Job Portal",
+        payment_method: id,
+        confirm: true,
+      })
+      .then(async (res) => {
+        console.log(res);
+
+        //create a transaction in database
+        const transaction = new Payment({
+          sender: userFrom,
+          receiver: userTo,
+          amount: amount,
+          job: job,
+        });
+        await transaction.save();
+        res.json({
+          message: "Payment Successful",
+          success: true,
+        });
+      });
+  } catch (error) {
+    console.log(error);
+    res.json({
+      message: "Payment Failed",
+      success: false,
+    });
+=======
 module.exports.updateJob = async (req, res, next) => {
   const {
     title,
@@ -623,5 +662,6 @@ module.exports.getAppliedJobs = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
+
   }
 };

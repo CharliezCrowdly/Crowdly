@@ -6,7 +6,9 @@ const {
   applyForJob,
 
   updateJobStatus,
+
   getAppliedJobs,
+
 
   submitProposal,
   getCompanyJobs,
@@ -16,10 +18,14 @@ const {
   saveJobs,
   unsaveJobs,
   savedJobs,
+
+  createdJobs,
+  payment,
+
   appliedJobs,
   updateJob,
+
 } = require("../controllers/jobController");
-// const { protect } = require("../middleware/authMiddleware");
 
 const router = require("express").Router();
 router.get("/getAllJobs", getAllJobs);
@@ -37,6 +43,9 @@ router.route("/unsavejob/:id").patch(unsaveJobs);
 router.route("/savedjobs").get(savedJobs);
 router.route("/appliedjobs").get(appliedJobs);
 router.route("/updateStatus").post(updateJobStatus);
+
+router.route("/payment").post(payment);
+
 router.route("/updatejob/:id").put(updateJob);
 
 //   router.get("/getCompanyJobDetail", getCompanyJobDetail);
@@ -51,5 +60,6 @@ router.route("/updatejob/:id").put(updateJob);
 //   router.route("/appliedJobsApp").get(protect, getAppliedJobsApp);
 //   router.route("/applyForJob").post(protect, applyForJob);
 //   router.route("/editJob").put(protect, editJob);
+
 
 module.exports = router;

@@ -27,6 +27,7 @@ import {
 import EditProfilePage from "./pages/EditProfile/EditProfilePage";
 import ChatProvider from "./context/ChatProvider";
 import ChatPage from "./pages/ChatPage";
+import StripeContainer from "./component/StripeContainer";
 
 function App() {
   return (
@@ -89,7 +90,7 @@ function App() {
             <Route path="add/job" element={<AddJobPage />} />
             <Route path="edit/job/:id" element={<EditJobPage/>}/>
             <Route path="edit" element={<EditProfilePage />} />
-            <Route path="payment" element={<PaymentPage />} />
+            {/* <Route path="payment" element={<PaymentPage />} /> */}
 
             <Route path="message" element={<MessagePage />} />
             <Route path="applicants/:id" element={<ApplicantPage />} />
@@ -107,6 +108,7 @@ function App() {
             <Route path="jobDetail/:id" element={<JobDetail />} />
           </Route>
           <Route path="/chats" element={<ChatPage />} />
+          <Route path="/payment" element={<StripeContainer />} />
 
           <Route
             path="/crowdly"
