@@ -97,6 +97,11 @@ const jobSchema = new mongoose.Schema({
       },
     },
   ],
+
+  payment: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Payment",
+  },
 });
 
 module.exports = mongoose.model("Job", jobSchema);
