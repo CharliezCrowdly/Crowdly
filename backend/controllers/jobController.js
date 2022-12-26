@@ -596,7 +596,8 @@ module.exports.payment = async (req, res) => {
       message: "Payment Failed",
       success: false,
     });
-=======
+  }}
+
 module.exports.updateJob = async (req, res, next) => {
   const {
     title,
