@@ -29,6 +29,22 @@ const UserPaymentPage = () => {
     setsearch({ ...search, skills: value });
   };
 
+  const getAllPayment = async () => {
+    const response = await axios.get(
+      "http://localhost:5000/api/v1/job/payments",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    setApplicants(response.data.payments);
+  };
+
+  useEffect(() => {
+    getAllPayment();
+  }, []);
+
   const changestatus = (index) => {
     let newapplicant = applicantslst;
     //change status of all applicants to rejected
@@ -38,8 +54,6 @@ const UserPaymentPage = () => {
     setApplicantslst(newapplicant);
     setApplicants(newapplicant);
   };
-
-
 
   const statusfilter = (e) => {
     var newsearch = search.status;

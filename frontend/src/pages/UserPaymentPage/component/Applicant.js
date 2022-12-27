@@ -6,13 +6,15 @@ import Wrapper from "../wrappers/Applicant";
 import moment from "moment";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import dateFormat from "dateformat";
 import { useAppContext } from "../../../context/appContext";
-const Applicant = ({ item, changestatus, setrefresh }) => {
-  //get job id from url
-  const { id } = useParams();
-  const { token } = useAppContext();
+const Applicant = ({ trans, changestatus, setrefresh }) => {
+  const [transaction, setTransaction] = useState(trans);
+  const [editable, setEditable] = useState(
+    transaction.status == "Rejected" || transaction.status == "Under-Review"
+  );
 
-  // const { applicant, appliedDate, bid } = itemSet;
+  const { token } = useAppContext();
 
   const options = {
     drop: false,
@@ -30,6 +32,52 @@ const Applicant = ({ item, changestatus, setrefresh }) => {
     e.stopPropagation();
   };
 
+  const handleAccept = async (e) => {
+    e.stopPropagation();
+    try {
+      const response = await axios.put(
+        `http://localhost:5000/api/v1/job/updateTransaction`,
+        {
+          paymentId: transaction._id,
+          status: "Completed",
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.data.success) {
+        setTransaction({ ...transaction, status: "Completed" });
+        setEditable(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleReject = async (e) => {
+    e.stopPropagation();
+    try {
+      const response = await axios.put(
+        `http://localhost:5000/api/v1/job/updateTransaction`,
+        {
+          paymentId: transaction._id,
+          status: "Rejected",
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.data.success) {
+        setTransaction({ ...transaction, status: "Rejected" });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Wrapper
       className={option.drop ? "active" : ""}
@@ -39,19 +87,19 @@ const Applicant = ({ item, changestatus, setrefresh }) => {
         <div className="img-container">
           <img
             className="profilePicture"
-            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80"
+            src={transaction.reciver.profilePicture}
             alt=""
           />
           <div className="info">
-            <span className="username">nischal</span>
-            <p>from sujan</p>
+            <span className="username">{transaction.sender.name}</span>
+            <p>To {transaction.reciver.name}</p>
           </div>
         </div>
 
-        <p>Rs 1000</p>
+        <p>Rs {transaction.amount}</p>
 
         <div className="action">
-          <p className="sta">Status</p>
+          <p className="sta">{transaction.status}</p>
         </div>
       </div>
       <hr />
@@ -60,65 +108,83 @@ const Applicant = ({ item, changestatus, setrefresh }) => {
           <div className="info">
             <h1>Reciever</h1>
 
-            <p>Username</p>
-            <p>nischal cha</p>
+            <p>Name</p>
+            <p>{transaction.reciver.name}</p>
           </div>
           <div className="info">
             <p>Email</p>
-            <p>nischal@gmail.com</p>
+            <p>{transaction.reciver.email}</p>
           </div>
           <div className="info">
             <p>Followers</p>
-            <p>200</p>
+            <p>{transaction.reciver.followers.length}</p>
           </div>
         </div>
 
         <div className="userinfo">
           <h1>Sender</h1>
           <div className="info">
-            <p>Username</p>
-            <p>nischal cha</p>
+            <p>Name</p>
+            <p>{transaction.sender.name}</p>
           </div>
           <div className="info">
             <p>Email</p>
-            <p>nischal@gmail.com</p>
+            <p>{transaction.sender.email}</p>
           </div>
           <div className="info">
             <p>Followers</p>
-            <p>200</p>
+            <p>{transaction.sender.followers.length}</p>
           </div>
         </div>
 
         <div className="bid">
           <h3>Bid</h3>
-          <h1>Rs 1000</h1>
+          <h1>Rs {transaction.amount}</h1>
         </div>
       </div>
       <hr />
       <section className="about">
         <div className="userinfo">
           <div className="info">
-            <p>Payment Date</p>
-            <p>{moment(new Date()).fromNow()}</p>
+            <p>Payment Initiated On</p>
+            <p>{dateFormat(transaction.createdAt, "mmmm dS, yyyy")}</p>
+            {/* <p>{format(transaction.createdAt, "yyyy/MM/dd kk:mm:ss")}</p> */}
           </div>
           <div className="info">
-            <p>Applied Date</p>
-            <p>{moment(new Date()).fromNow()}</p>
+            <p>Payment Updated On</p>
+            <p>{dateFormat(transaction.updatedAt, "mmmm dS, yyyy")}</p>
           </div>
         </div>
         <div className="content">
-          <h3>Title</h3>
+          <h3>{transaction.job.title}</h3>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas
-            maiores perspiciatis aperiam magni voluptatem ipsa eligendi, illum
-            quisquam aut possimus corrupti pariatur?
+            {transaction.job.description.length > 100 ? (
+              <span>
+                {transaction.job.description.substring(0, 100)}...
+                <a href="#">Read More</a>
+              </span>
+            ) : (
+              <span>{transaction.job.description}</span>
+            )}
           </p>
         </div>
       </section>
 
       <section className="options">
-        <button className="btn reject">Reject</button>
-        <button className="btn hire">Hire</button>
+        <button
+          className="btn reject"
+          onClick={handleReject}
+          disabled={!editable}
+        >
+          Decline
+        </button>
+        <button
+          className="btn hire"
+          onClick={handleAccept}
+          disabled={!editable}
+        >
+          Approve
+        </button>
       </section>
     </Wrapper>
   );

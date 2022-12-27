@@ -742,3 +742,45 @@ module.exports.getPayment = async (req, res) => {
     });
   }
 };
+
+//get all payment
+module.exports.getAllPayment = async (req, res) => {
+  try {
+    const payment = await Payment.find()
+      .populate("sender")
+      .populate("reciver")
+      .populate("job");
+
+    res.status(200).json({
+      success: true,
+      payments: payment,
+    });
+  } catch (err) {
+    console.log(err);
+    return res.json({
+      success: false,
+      msg: err.message,
+    });
+  }
+};
+
+// Update Transaction status
+module.exports.updateTransactionStatus = async (req, res) => {
+  try {
+    const { paymentId, status } = req.body;
+
+    const transaction = await Payment.findById(paymentId);
+    transaction.status = status;
+    await transaction.save();
+    res.status(200).json({
+      success: true,
+      data: transaction,
+    });
+  } catch (err) {
+    console.log(err);
+    return res.json({
+      success: false,
+      msg: err.message,
+    });
+  }
+};

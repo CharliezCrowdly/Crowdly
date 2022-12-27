@@ -25,6 +25,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
     "chromedriver": "^107.0.3",
+    "dateformat": "^5.0.3",
     "framer-motion": "^7.9.1",
     "g": "^2.0.1",
     "moment": "^2.29.4",

@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import Applicant from "./Applicant";
 const Applicantlst = React.memo(({ applicants, changestatus, setrefresh }) => {
+  console.log(applicants);
   return (
     <div className="applicants">
-      {[...Array(8)].map((item, index) => (
+      {applicants.map((item, index) => (
         <Applicant
           key={index}
-          item={item}
+          trans={item}
           changestatus={() => changestatus(index)}
           setrefresh={setrefresh}
         />
