@@ -23,7 +23,8 @@ import {
   ResetPage,
   IsLoggedin,
   EditJobPage,
-  UserPaymentPage
+  UserPaymentPage,
+  ViewCardPage,
 } from "./pages";
 import EditProfilePage from "./pages/EditProfile/EditProfilePage";
 import ChatProvider from "./context/ChatProvider";
@@ -123,6 +124,7 @@ function App() {
           >
             <Route path="postedit/:id" element={<PostEditPage />} />
           </Route>
+          <Route path="pay" element={<ViewCardPage />}></Route>
 
           <Route path="*" element={<h2>error</h2>}></Route>
         </Routes>

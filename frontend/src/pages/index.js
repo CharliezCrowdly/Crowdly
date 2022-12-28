@@ -20,6 +20,7 @@ import ResetPage from "./ResetPage/ResetPage";
 import IsLoggedin from "./IsLoggedin";
 import EditJobPage from "./EditJobPage/EditJobPage";
 import UserPaymentPage from "./UserPaymentPage/UserPaymentPage";
+import ViewCardPage from "./ViewCardPage/ViewCardPage"
 export {
   LoginPage,
   ProtectedRoute,
@@ -42,5 +43,7 @@ export {
   ResetPage,
   IsLoggedin,
   EditJobPage,
-  UserPaymentPage
+  UserPaymentPage,
+
+  ViewCardPage
 };
