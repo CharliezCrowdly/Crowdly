@@ -97,6 +97,7 @@ function App() {
             <Route path="message" element={<MessagePage />} />
             <Route path="applicants/:id" element={<ApplicantPage />} />
             <Route path="payments" element={<UserPaymentPage />} />
+            <Route path="card" element={<ViewCardPage />} />
 
             <Route path="profile/:id" element={<ProfilePage />} />
           </Route>
@@ -124,7 +125,6 @@ function App() {
           >
             <Route path="postedit/:id" element={<PostEditPage />} />
           </Route>
-          <Route path="pay" element={<ViewCardPage />}></Route>
 
           <Route path="*" element={<h2>error</h2>}></Route>
         </Routes>

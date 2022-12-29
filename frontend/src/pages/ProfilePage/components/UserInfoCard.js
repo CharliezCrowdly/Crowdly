@@ -51,7 +51,7 @@ const UserInfoCard = ({ profileUser }) => {
           file: "",
         }),
           changevalue({ name: "photo", value: res.data.user.profilePicture });
-          console.log(res.data.user.profilePicture)
+        console.log(res.data.user.profilePicture);
       });
   };
 
@@ -92,13 +92,22 @@ const UserInfoCard = ({ profileUser }) => {
         {profileUser._id != user._id ? (
           <Followbtn items={profileUser} />
         ) : profileUser.usertype == "individual" ? (
-          <div
-            className="edit-profile"
-            style={{ cursor: "pointer" }}
-            onClick={() => navigate("/user/edit")}
-          >
-            Edit Profile
-          </div>
+          <>
+            <div
+              className="edit-profile"
+              style={{ cursor: "pointer" }}
+              onClick={() => navigate("/user/edit")}
+            >
+              Edit Profile
+            </div>
+            <div
+              className="edit-profile"
+              style={{ cursor: "pointer" }}
+              onClick={() => navigate("/user/card")}
+            >
+              My Card
+            </div>
+          </>
         ) : (
           <div
             className="edit-profile"

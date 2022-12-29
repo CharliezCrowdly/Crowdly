@@ -1,7 +1,65 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useAppContext } from "../../context/appContext";
 import Labelinput from "./component/Labelinput";
 import Wrapper from "./wrapper/ViewCardPage";
 const ViewCardPage = () => {
+  const { token } = useAppContext();
+
+  const fetchCard = async () => {
+    const res = await fetch("http://localhost:5000/api/v1/job/card", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    res.json().then((res) => {
+      console.log(res);
+      const data = res.card;
+      console.log(data);
+      if (data.holdername.length > 0) {
+        setValue({
+          cvv: data.cvc,
+          holdername: data.holdername,
+          edate: data.exp_year + "-" + data.exp_month + "-" + data.exp_day,
+          cardnumber: data.number,
+        });
+      }
+    });
+  };
+  useEffect(() => {
+    fetchCard();
+  }, []);
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const data = {
+      number: value.cardnumber,
+      cvc: value.cvv,
+      exp_year: value.edate.split("-")[0],
+      exp_month: value.edate.split("-")[1],
+      exp_day: value.edate.split("-")[2],
+      holdername: value.holdername,
+    };
+
+    console.log(data);
+
+    axios
+      .put("http://localhost:5000/api/v1/job/card", data, config)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const option = {
     cvv: "",
     holdername: "",
@@ -18,6 +76,19 @@ const ViewCardPage = () => {
     } else {
       setValue({ ...value, [e.target.name]: e.target.value });
     }
+  };
+  const formatCardNumber = (e) => {
+    // add space every 4 characters
+    //check if it is a number
+    if (isNaN(e.target.value.replaceAll(" ", ""))) {
+      return;
+    }
+    const cardNumber = e.target.value.replace(/\s/g, "");
+    const cardNumberWithSpaces =
+      cardNumber.length < 16
+        ? cardNumber.replace(/(.{4})/g, "$1 ")
+        : cardNumber.replace(/(.{4})/g, "$1 ").trim();
+    setValue({ ...value, [e.target.name]: cardNumberWithSpaces });
   };
   return (
     <Wrapper>
@@ -48,12 +119,12 @@ const ViewCardPage = () => {
       </div>
       <form action="" className="">
         <Labelinput
-          handleChange={nhandleChange}
+          handleChange={formatCardNumber}
           value={value.cardnumber}
           name={"cardnumber"}
           label={"Card Number"}
-          type={"number"}
-          maxLength={16}
+          // type={"number"}
+          maxLength={19}
           placeholder={"Enter Your Card Number"}
         />
         <Labelinput
@@ -82,7 +153,9 @@ const ViewCardPage = () => {
           />
         </div>
 
-        <button className="btn-submit">submit</button>
+        <button className="btn-submit" onClick={handleSubmit}>
+          submit
+        </button>
       </form>
     </Wrapper>
   );

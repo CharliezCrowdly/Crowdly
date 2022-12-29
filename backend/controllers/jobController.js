@@ -9,6 +9,7 @@ const path = require("path");
 const { StatusCodes } = require("http-status-codes");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const Payment = require("../models/paymentModel");
+const User = require("../models/UserModel");
 module.exports.addJob = async (req, res, next) => {
   const {
     title,
@@ -783,4 +784,53 @@ module.exports.updateTransactionStatus = async (req, res) => {
       msg: err.message,
     });
   }
+};
+
+module.exports.addCard = async (req, res, next) => {
+  const { number, exp_day, exp_month, exp_year, cvc, holdername } = req.body;
+  console.log(req.body);
+  const user = await User.findById(req.user.userId);
+  if (!user) {
+    res.json({
+      success: false,
+      message: "User not found",
+    });
+  }
+  user.card = { number, exp_day, exp_month, exp_year, cvc, holdername };
+  user.isCardSet = true;
+  console.log("Done");
+  await user.save();
+  return res.status(200).json({
+    success: true,
+    message: "Card added successfully",
+    user,
+  });
+};
+
+module.exports.getCard = async (req, res, next) => {
+  const user = await User.findById(req.user.userId);
+  if (!user) {
+    res.json({
+      success: false,
+      message: "User not found",
+    });
+  }
+  res.status(200).json({
+    success: true,
+    card: user.card,
+  });
+};
+
+module.exports.getMyDetails = async (req, res, next) => {
+  const user = await User.findById(req.user.userId);
+  if (!user) {
+    res.json({
+      success: false,
+      message: "User not found",
+    });
+  }
+  res.status(200).json({
+    success: true,
+    user,
+  });
 };

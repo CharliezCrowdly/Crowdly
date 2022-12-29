@@ -165,6 +165,38 @@ const UserSchema = new mongoose.Schema({
   },
   followers: [{ type: mongoose.Types.ObjectId, ref: "User" }],
   following: [{ type: mongoose.Types.ObjectId, ref: "User" }],
+
+  //store card details
+  card: {
+    number: {
+      type: String,
+      required: true,
+    },
+    exp_day: {
+      type: String,
+      required: true,
+    },
+    exp_month: {
+      type: String,
+      required: true,
+    },
+    exp_year: {
+      type: String,
+      required: true,
+    },
+    cvc: {
+      type: String,
+      required: true,
+    },
+    holdername: {
+      type: String,
+      default: "",
+    },
+  },
+  isCardSet: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 UserSchema.pre("save", async function () {

@@ -37,10 +37,24 @@ const JobDetail = () => {
   const [status, setStatus] = useState("");
   const [isHired, setIsHired] = useState(false);
   const [hired, setHired] = useState(null);
+  const [myDetails, setMyDetails] = useState(null);
 
   const navigate = useNavigate();
   const fetch = async () => {
     const id = window.location.pathname.split("/")[3];
+
+    await axios
+      .get(`http://localhost:5000/api/v1/job/me`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setMyDetails(res.data.user);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
     await axios
       .get(
@@ -167,7 +181,12 @@ const JobDetail = () => {
   };
 
   const onbid = () => {
-    setModal((ismodal) => !ismodal);
+    //Check if the user has adder payment details
+    if (myDetails.isCardSet) {
+      setModal((ismodal) => !ismodal);
+    } else {
+      console.log("Please add payment details");
+    }
   };
 
   if (loading) {
