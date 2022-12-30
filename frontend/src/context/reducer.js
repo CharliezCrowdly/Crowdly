@@ -41,7 +41,8 @@ import {
   UPDATE_JOB_BEGIN,
   UPDATE_JOB_SUCCESS,
   UPDATE_JOB_ERROR,
-  CHANGE_VALUE_BEGIN
+  CHANGE_VALUE_BEGIN,
+  SHOW_ALERT
 } from "./action";
 import { initialState } from "./appContext";
 
@@ -386,6 +387,16 @@ const reducer = (state, action) => {
        alertText: action.payload.msg,
      };
    }
+
+     if (action.type === SHOW_ALERT) {
+       return {
+         ...state,
+
+         showAlert: true,
+         alertType: action.payload.alertType,
+         alertText: action.payload.alertText,
+       };
+     }
 
 
     if (action.type ===CHANGE_VALUE_BEGIN) {

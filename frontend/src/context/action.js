@@ -64,3 +64,5 @@ export const UPDATE_JOB_ERROR = "UPDATE_JOB_ERROR";
 
 export const CHANGE_VALUE_BEGIN = "CHANGE_VALUE_BEGIN";
 
+
+export const SHOW_ALERT = "SHOW_ALERT";

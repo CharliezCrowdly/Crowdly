@@ -44,6 +44,7 @@ import {
   UPDATE_JOB_SUCCESS,
   UPDATE_JOB_ERROR,
   CHANGE_VALUE_BEGIN,
+  SHOW_ALERT
 } from "./action";
 
 import axios from "axios";
@@ -227,6 +228,11 @@ const AppProvider = ({ children }) => {
   const clearValues = () => {
     dispatch({ type: CLEAR_VALUES });
   };
+
+  const showalert =({alertType,alertText})=>{
+    dispatch({type:SHOW_ALERT,payload:{alertText,alertType}})
+
+  }
 
   const createPost = async ({ userpost }) => {
     dispatch({ type: CREATE_POST_BEGIN });
@@ -634,6 +640,7 @@ const AppProvider = ({ children }) => {
         updateJob,
         changevalue,
         picupdate,
+        showalert
       }}
     >
       {children}
