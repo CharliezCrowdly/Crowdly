@@ -13,13 +13,13 @@ const Navbar = () => {
     notify: false,
   };
   const [drop, setdrop] = useState(option);
-  const { user, logoutUser,photo } = useAppContext();
+  const { user, logoutUser, photo } = useAppContext();
 
   const navigate = useNavigate();
 
   const gotoprofile = (e) => {
     e.stopPropagation();
-    navigate(`/user/profile/${user._id}`);
+    navigate(`/chats`);
   };
 
   const profileoption = () => {
@@ -38,15 +38,11 @@ const Navbar = () => {
         <NavLinks />
 
         <div className="nav-content ">
-          <div className="notify">
+          {/* <div className="notify">
             <IoIosNotifications className="bell-icon" onClick={notifyoption} />
             <span>20</span>
-          </div>
-          <img
-            className="profile-pic-sm"
-            src={photo}
-            alt=""
-          />
+          </div> */}
+          <img className="profile-pic-sm" src={photo} alt="" />
           <div className="dropdown-menus">
             <h5 onClick={profileoption}>{user.username}</h5>
 
@@ -55,7 +51,7 @@ const Navbar = () => {
                 drop.dropdown ? "dropdown-options glassmorphism" : "d-none"
               }
             >
-              <li onClick={(e) => gotoprofile(e)}>profile</li>
+              <li onClick={(e) => gotoprofile(e)}>Chat</li>
               <li onClick={() => logoutUser()}>logout</li>
             </ul>
           </div>

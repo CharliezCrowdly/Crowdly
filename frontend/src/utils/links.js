@@ -1,7 +1,7 @@
-import { AiFillMessage } from "react-icons/ai";
 import { MdWork } from "react-icons/md";
 import { FaPhotoVideo } from "react-icons/fa";
 import { MdExplore } from "react-icons/md";
+import { FaUser } from "react-icons/fa";
 
 
 const links = [
@@ -13,9 +13,9 @@ const links = [
   },
   {
     id: 2,
-    text: "Messages",
+    text: "Profile",
     path: "/user/message",
-    icon: <AiFillMessage />,
+    icon: <FaUser />,
   },
   {
     id: 3,
