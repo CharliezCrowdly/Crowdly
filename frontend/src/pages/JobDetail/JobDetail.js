@@ -188,7 +188,7 @@ const JobDetail = () => {
       setModal((ismodal) => !ismodal);
     } else {
       showalert({
-        alertType: "danger",
+        alertType: "success",
         alertText: "Please Complete your payment details \n to place your bid!",
       });
     }
