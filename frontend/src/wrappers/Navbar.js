@@ -40,6 +40,18 @@ const Wrapper = styled.aside`
       align-items: center;
       gap: 4px;
       position: relative;
+      width: 150px;
+      padding-inline: 5px;
+      padding-block: 0.2%;
+      border-radius: 5px;
+      cursor: pointer;
+
+      & > .icon {
+        margin-left: auto;
+        &.active {
+          transform: rotate(180deg);
+        }
+      }
       & > .notify {
         position: relative;
         margin-right: 10px;
@@ -64,23 +76,36 @@ const Wrapper = styled.aside`
       }
       & > .dropdown-menus {
         position: relative;
+        left: 0;
         & > h5 {
           cursor: pointer;
         }
 
         & > .dropdown-options {
           position: absolute;
-          top: 20px;
-          left: 0;
-          width: 100px;
+          top: 35px;
+          left: -50px;
+          width: 150px;
           border-radius: 5px;
-          text-align: center;
+          text-align: start;
+          background-color: whitesmoke;
+          color: var(--black-50);
 
           & > li {
             padding: 2%;
             font-weight: 500;
             text-transform: capitalize;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            & > span:first-child {
+              color: var(--blue-500);
+            }
+
+            & > span + span {
+              font-size: 0.8rem;
+            }
             &:hover {
               background-color: var(--light-blue-500);
               color: white;

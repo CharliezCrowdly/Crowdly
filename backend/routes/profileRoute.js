@@ -13,8 +13,9 @@ const {
   removefollower,
   editcoverpage,
   editprofileimg,
+  changepassword,
 } = require("../controllers/profileController");
-
+router.route("/changepassword").patch(changepassword);
 router.route("/editcoverpage").patch(editcoverpage);
 router.route("/editprofileimg").patch(editprofileimg);
 
@@ -27,5 +28,4 @@ router.route("/removefollower/:id").patch(removefollower);
 
 router.route("/:id").patch(followUser);
 router.route("/updateUser").put(updateUserDetails);
-
 module.exports = router;

@@ -1,5 +1,6 @@
 const Post = require("../models/Post");
 const User = require("../models/UserModel");
+const bcrypt = require("bcryptjs");
 
 const { BAD_REQUESTError } = require("../errors/index");
 const { StatusCodes } = require("http-status-codes");
@@ -224,6 +225,35 @@ const editprofileimg = async (req, res) => {
   }
 };
 
+const changepassword = async (req, res) => {
+  const { oldp, newp, vnewp } = req.body;
+  if (!oldp || !newp || !vnewp) {
+    throw new BAD_REQUESTError("provide all value");
+  }
+  let user = await User.findById(req.user.userId).select("+password");
+  const salt = await bcrypt.genSalt(10);
+  const isPasswordCorrect = await user.comparePassword(oldp);
+  console.log(isPasswordCorrect);
+
+  if (isPasswordCorrect) {
+    if (newp === vnewp) {
+      const newpassword = await bcrypt.hash(newp, salt);
+      user.password = newpassword;
+
+      await user.save();
+      return res
+        .status(StatusCodes.OK)
+        .json({ success: true, message: "Password Changed " });
+    } else {
+      return res
+        .status(400)
+        .json({ success: false, message: "verfiy Password incorrect " });
+    }
+  } else {
+    return res.status(400).json({ success: false, message: "Wrong password " });
+  }
+};
+
 module.exports = {
   searchProfile,
   followUser,
@@ -234,4 +264,5 @@ module.exports = {
   removefollower,
   editcoverpage,
   editprofileimg,
+  changepassword,
 };

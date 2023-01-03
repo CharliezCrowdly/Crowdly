@@ -25,6 +25,7 @@ import {
   EditJobPage,
   UserPaymentPage,
   ViewCardPage,
+  ChangePassword,
 } from "./pages";
 import EditProfilePage from "./pages/EditProfile/EditProfilePage";
 import ChatProvider from "./context/ChatProvider";
@@ -100,6 +101,17 @@ function App() {
             <Route path="card" element={<ViewCardPage />} />
 
             <Route path="profile/:id" element={<ProfilePage />} />
+          </Route>
+
+          <Route
+            path="/user"
+            element={
+              <ProtectedRoute>
+                <SharedLayout2 />
+              </ProtectedRoute>
+            }
+          >
+            <Route path="changepassword" element={<ChangePassword />} />
           </Route>
 
           <Route
