@@ -29,11 +29,11 @@ const JobDetail = () => {
   const [ismodal, setModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const [job, setJob] = useState("");
-  const { token, showalert } = useAppContext();
   const [owner, setOwner] = useState(false);
   const [applicants, setApplicants] = useState([]);
   const [applicantsLoading, setApplicantsLoading] = useState(true);
-  const { user, savejob, unsavejob } = useAppContext();
+  const { user, savejob, unsavejob, showAlert, token, displayalert } =
+    useAppContext();
   const [bookmarked, Setbookmark] = useState(false);
   const [applied, setApplied] = useState(false);
   const [status, setStatus] = useState("");
@@ -187,7 +187,19 @@ const JobDetail = () => {
     if (myDetails.isCardSet) {
       setModal((ismodal) => !ismodal);
     } else {
-      showalert({
+      displayalert({
+        alertType: "success",
+        alertText: "Please Complete your payment details \n to place your bid!",
+      });
+    }
+  };
+
+  const trybid = () => {
+    //Check if the user has adder payment details
+    if (myDetails.isCardSet) {
+      setModal(true);
+    } else {
+      displayalert({
         alertType: "success",
         alertText: "Please Complete your payment details \n to place your bid!",
       });
@@ -208,7 +220,7 @@ const JobDetail = () => {
         <SubmitProporsal ismodal={ismodal} onbid={onbid} />
         <div className="left-section glassmorphism">
           <section className="one">
-            <Alert />
+            {showAlert && <Alert />}
 
             <div className="title">
               <h1>{job.title}</h1>
@@ -302,7 +314,7 @@ const JobDetail = () => {
                     Applied
                   </button>
                 ) : (
-                  <button className="btn-easy" onClick={onbid}>
+                  <button className="btn-easy" onClick={trybid}>
                     Bid
                   </button>
                 )}

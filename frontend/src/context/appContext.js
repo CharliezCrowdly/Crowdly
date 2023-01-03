@@ -229,8 +229,15 @@ const AppProvider = ({ children }) => {
     dispatch({ type: CLEAR_VALUES });
   };
 
-  const showalert = ({ alertType, alertText }) => {
-    dispatch({ type: SHOW_ALERT, payload: { alertText, alertType } });
+  const displayalert = ({ alertType, alertText }) => {
+    try {
+      dispatch({
+        type: SHOW_ALERT,
+        payload: { alertText: alertText, alertType: alertType },
+      });
+    } catch (e) {
+      console.log(e);
+    }
     clearAlert();
   };
 
@@ -640,7 +647,7 @@ const AppProvider = ({ children }) => {
         updateJob,
         changevalue,
         picupdate,
-        showalert,
+        displayalert,
       }}
     >
       {children}
