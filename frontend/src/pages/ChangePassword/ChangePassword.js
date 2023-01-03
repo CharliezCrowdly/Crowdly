@@ -32,6 +32,7 @@ const ChangePassword = () => {
         .then((res) => {
           if (res.data.success === true) {
             displayalert({ alertType: "success", alertText: res.data.message });
+            setvalues(option);
           } else {
             displayalert({ alertType: "danger", alertText: res.data.message });
           }
