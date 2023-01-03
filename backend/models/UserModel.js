@@ -170,23 +170,23 @@ const UserSchema = new mongoose.Schema({
   card: {
     number: {
       type: String,
-      required: true,
+      // required: true,
     },
     exp_day: {
       type: String,
-      required: true,
+      // required: true,
     },
     exp_month: {
       type: String,
-      required: true,
+      // required: true,
     },
     exp_year: {
       type: String,
-      required: true,
+      // required: true,
     },
     cvc: {
       type: String,
-      required: true,
+      // required: true,
     },
     holdername: {
       type: String,

@@ -238,7 +238,7 @@ const changepassword = async (req, res) => {
   if (isPasswordCorrect) {
     if (newp === vnewp) {
       const newpassword = await bcrypt.hash(newp, salt);
-      user.password = newpassword;
+      user.password = newp;
 
       await user.save();
       return res
@@ -250,7 +250,10 @@ const changepassword = async (req, res) => {
         .json({ success: false, message: "verfiy Password incorrect " });
     }
   } else {
-    return res.status(400).json({ success: false, message: "Wrong password " });
+    console.log(user.password)
+    return res
+      .status(400)
+      .json({ success: false, message: "Wrong password ", user: user });
   }
 };
 
