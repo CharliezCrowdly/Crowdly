@@ -233,7 +233,9 @@ const changepassword = async (req, res) => {
   let user = await User.findById(req.user.userId).select("+password");
   const salt = await bcrypt.genSalt(10);
   const isPasswordCorrect = await user.comparePassword(oldp);
-  console.log(isPasswordCorrect);
+  if (newp.length < 4) {
+    throw new BAD_REQUESTError("New Password is too short");
+  }
 
   if (isPasswordCorrect) {
     if (newp === vnewp) {
@@ -250,10 +252,8 @@ const changepassword = async (req, res) => {
         .json({ success: false, message: "verfiy Password incorrect " });
     }
   } else {
-    console.log(user.password)
-    return res
-      .status(400)
-      .json({ success: false, message: "Wrong password ", user: user });
+    console.log(user.password);
+    return res.status(400).json({ success: false, message: "Wrong password " });
   }
 };
 
