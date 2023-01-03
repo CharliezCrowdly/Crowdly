@@ -16,6 +16,8 @@ import { useNavigate } from "react-router-dom";
 import { IoTime } from "react-icons/io5";
 import Countdown from "react-countdown";
 import StripeContainer from "../../component/StripeContainer";
+import { Alert } from "../../component";
+
 const JobDetail = () => {
   const [payment, setPayment] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState(null);
@@ -27,7 +29,7 @@ const JobDetail = () => {
   const [ismodal, setModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const [job, setJob] = useState("");
-  const { token } = useAppContext();
+  const { token, showalert } = useAppContext();
   const [owner, setOwner] = useState(false);
   const [applicants, setApplicants] = useState([]);
   const [applicantsLoading, setApplicantsLoading] = useState(true);
@@ -185,7 +187,10 @@ const JobDetail = () => {
     if (myDetails.isCardSet) {
       setModal((ismodal) => !ismodal);
     } else {
-      console.log("Please add payment details");
+      showalert({
+        alertType: "danger",
+        alertText: "Please Complete your payment details \n to place your bid!",
+      });
     }
   };
 
@@ -203,6 +208,8 @@ const JobDetail = () => {
         <SubmitProporsal ismodal={ismodal} onbid={onbid} />
         <div className="left-section glassmorphism">
           <section className="one">
+            <Alert />
+
             <div className="title">
               <h1>{job.title}</h1>
 
@@ -233,10 +240,6 @@ const JobDetail = () => {
                 </div>
               ) : null}
             </div>
-            {/* <div className="place">
-              <span className="location">Nepal,kathmandu</span>
-              <span>8 hours ago</span>
-            </div> */}
             <div className="jobtype">
               <FaBriefcase className="icon" />
               <span>{job.jobtype}</span>
