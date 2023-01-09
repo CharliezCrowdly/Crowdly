@@ -10,3 +10,5 @@ Feature: Is register successful?
     When I enter my password
     When I press submit
     Then I should be loggedin
+
+    
