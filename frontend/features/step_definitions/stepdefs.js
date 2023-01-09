@@ -10,6 +10,7 @@ Given(
     await driver.get("http://localhost:3000/login");
   }
 );
+
 When("I visit explore page", { timeout: 1000 * 1000 }, async () => {
   await driver.get("http://localhost:3000/user/explore");
 });
@@ -20,16 +21,19 @@ When("I enter my fullname", async () => {
   );
   element.sendKeys("Test User");
 });
+
 When("I enter my username", async () => {
   let element = driver.wait(
     until.elementLocated(By.xpath("//input[@placeholder='Enter Username']"))
   );
   element.sendKeys("TestUser122323");
 });
+
 When("I enter my email", async () => {
   let element = driver.wait(until.elementLocated(By.name("email")));
   element.sendKeys("testuser122332@gmail.com");
 });
+
 When("I enter description", async () => {
   let descriptionBox = driver.wait(
     until.elementLocated(
