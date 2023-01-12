@@ -11,10 +11,6 @@ Given(
   }
 );
 
-When("I visit explore page", { timeout: 1000 * 1000 }, async () => {
-  await driver.get("http://localhost:3000/user/explore");
-});
-
 When("I enter my fullname", async () => {
   let element = driver.wait(
     until.elementLocated(By.xpath("//input[@placeholder='Enter Fullname']"))
@@ -46,11 +42,11 @@ When("I click files", async () => {
   let imageBox = driver.wait(
     until.elementLocated(By.xpath("//input[@name='postfile']"))
   );
-  imageBox.sendKeys("C:Users\\Dell\\Desktop\\testimg.jpg");
+  imageBox.sendKeys("C:\\Users\\chira\\Downloads\\testimg.png");
 });
 When("I press post", async () => {
   let sendBox = driver.wait(
-    until.elementLocated(By.xpath("//button[normalize-space()='send']"))
+    until.elementLocated(By.xpath("//button[@class='btn-send']"))
   );
   sendBox.click();
 });
@@ -80,6 +76,18 @@ When("I press submit", { timeout: 500 * 1000 }, async () => {
   );
   setTimeout(submit.click(), 5000);
 });
+
+When("I visit explore page", async () => {
+  let explore = driver.wait(
+    until.elementLocated(
+      By.xpath(
+        "//nav[@class='navbar sticky']//span[contains(text(),'Explore')]"
+      )
+    )
+  );
+  explore.click();
+});
+
 When("I press login now", async () => {
   let loginNow = driver.wait(until.elementLocated(By.xpath("//p[1]")));
   loginNow.click();
