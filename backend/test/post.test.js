@@ -36,6 +36,7 @@ it("Post / upload ===> 400 on missing input", () => {
 //     .set("Authorization", `Bearer ${token}`)
 //     .expect(200);
 // });
+// test for post on feed
 
 it("Post / unlike ===> 200 on success ", () => {
   return request(app)
