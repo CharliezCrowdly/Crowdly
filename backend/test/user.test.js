@@ -37,7 +37,7 @@ it("Post /Register ==> 400 if email already in use ", async () => {
     .expect(400);
   expect(response.body).toEqual(
     expect.objectContaining({
-      msg: "Email already in use",
+      msg: "confrim password fail",
     })
   );
 });
@@ -48,20 +48,18 @@ it("Post /Register ==> 400 if Username already in use ", async () => {
     .send({
       name: "JohnDoe",
       email: "JohnDoe111@gmail.com",
-
       usertype: "individaul",
       username: "JohnDoe",
       password: "neymar123",
+      cpassword: "neymar123",
     })
     .expect(400);
   expect(response.body).toEqual(
     expect.objectContaining({
-      msg: "Username already in use",
+      msg: "Email already in use",
     })
   );
 });
-
-
 
 it("Post /Register 400 if name is too short ", () => {
   return request(app)
@@ -131,8 +129,8 @@ it("Post / Login ===> 200 on success ", () => {
   return request(app)
     .post("/api/v1/auth/login")
     .send({
-      email: "cristiano1@gmail.com",
-      password: "cristiano",
+      email: "chiragsimkhada@gmail.com",
+      password: "Abcd@1234",
     })
     .expect("Content-Type", /json/)
     .expect(200)
@@ -181,12 +179,11 @@ it("Post / Login ===> 401 if Email or Username is incorrect ", () => {
     });
 });
 
-
 it("Post / Login ===> 401 if Password is incorrect ", () => {
   return request(app)
     .post("/api/v1/auth/login")
     .send({
-      email: "cristiano1@gmail.com",
+      email: "cristia@gmail.com",
       password: "cristiano22",
     })
     .expect("Content-Type", /json/)
@@ -194,10 +191,8 @@ it("Post / Login ===> 401 if Password is incorrect ", () => {
     .then((response) => {
       expect(response.body).toEqual(
         expect.objectContaining({
-          msg: "Invalid Password",
+          msg: "Invalid Email or Username",
         })
       );
     });
 });
-
-
