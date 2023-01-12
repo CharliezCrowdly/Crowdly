@@ -2,8 +2,7 @@ const app = require("../server");
 const request = require("supertest");
 
 const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzZhMzYwYWYxY2RjNTFjYjM3OTc5MmIiLCJpYXQiOjE2NjkzNjI3MTUsImV4cCI6MTY2OTQ0OTExNX0.NorytCfr0S4op760jasrH2a3joHmAesEemFGCGLy3tE";
-
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2M2JiODA2OTBkMzgyYWJhNzEzNjcwNDQiLCJpYXQiOjE2NzM1MzUxMDAsImV4cCI6MTY3MzYyMTUwMH0.FbLd4ZozJloNUp3AZ6lqJtDYj4zU2yBtKCSSM1gxuhI";
 it("todo / add ===> 200 on success", () => {
   return request(app)
     .post("/api/v1/todo/add")

@@ -31,7 +31,7 @@ When("I enter my username", async () => {
 
 When("I enter my email", async () => {
   let element = driver.wait(until.elementLocated(By.name("email")));
-  element.sendKeys("testuser122332@gmail.com");
+  element.sendKeys("chiragsimkhadatest@gmail.com");
 });
 
 When("I enter description", async () => {
@@ -66,18 +66,22 @@ When("I select applicant", async () => {
 });
 When("I enter my password", async () => {
   let element = driver.wait(until.elementLocated(By.name("password")));
-  element.sendKeys("password");
+  element.sendKeys("Abcd@1234");
 });
-When("I press submit", async () => {
-  let submit = driver.wait(
-    until.elementLocated(By.xpath("//button[normalize-space()='Submit']"))
+When("I enter my confirm password", { timeout: 500 * 1000 }, async () => {
+  let element = driver.wait(
+    until.elementLocated(By.xpath("//input[@placeholder='Verify Password']"))
   );
-  submit.click();
+  element.sendKeys("Abcd@1234");
+});
+When("I press submit", { timeout: 500 * 1000 }, async () => {
+  let submit = driver.wait(
+    until.elementLocated(By.xpath("//button[@type='submit']"))
+  );
+  setTimeout(submit.click(), 5000);
 });
 When("I press login now", async () => {
-  let loginNow = driver.wait(
-    until.elementLocated(By.xpath("//p[@class='toggle-account']"))
-  );
+  let loginNow = driver.wait(until.elementLocated(By.xpath("//p[1]")));
   loginNow.click();
 });
 When("I Press Like", async () => {

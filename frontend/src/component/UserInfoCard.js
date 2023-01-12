@@ -34,6 +34,14 @@ const UserInfoCard = () => {
               My Card
             </div>
           </>
+        ) : user.usertype == "admin" ? (
+          <div
+            className="edit-profile"
+            onClick={() => navigate("/user/payments")}
+            style={{ cursor: "pointer" }}
+          >
+            View Payments
+          </div>
         ) : (
           <div
             className="edit-profile"
