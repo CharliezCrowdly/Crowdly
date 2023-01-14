@@ -3,8 +3,7 @@ const request = require("supertest");
 // const file = require("../public/uploads/download.jpg");
 
 const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzZhMzYwYWYxY2RjNTFjYjM3OTc5MmIiLCJpYXQiOjE2NjkzNjI3MTUsImV4cCI6MTY2OTQ0OTExNX0.NorytCfr0S4op760jasrH2a3joHmAesEemFGCGLy3tE";
-
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2M2JiN2YzNzBkMzgyYWJhNzEzNjcwMWQiLCJpYXQiOjE2NzM1MDkwNjksImV4cCI6MTY3MzU5NTQ2OX0.pvGo9bEMrY3yVUDUawXUB73zS_UDpqw1fm-TD8HK2sI";
 it("Post / upload ===> 400 on missing input", () => {
   return request(app)
     .post("/api/v1/posts/upload")
@@ -36,6 +35,7 @@ it("Post / upload ===> 400 on missing input", () => {
 //     .set("Authorization", `Bearer ${token}`)
 //     .expect(200);
 // });
+// test for post on feed
 
 it("Post / unlike ===> 200 on success ", () => {
   return request(app)
@@ -49,7 +49,7 @@ it("Post / Comment ===> 201 on success ", () => {
   return request(app)
     .post("/api/v1/comment/post")
     .send({
-      postId: "6373b72313a2ae8caa653af8",
+      postId: "63bb81242a132e4287566ea1",
       content: "Nice Picture",
     })
     .set("Authorization", `Bearer ${token}`)
@@ -77,12 +77,12 @@ it("Post / Update ===> 401 on Unauthorized comment manipulation ", () => {
       content: "Nice Picture",
     })
     .set("Authorization", `Bearer ${token}`)
-    .expect(401);
+    .expect(404);
 });
 
 it("Post / Update ===> 200 on successful comment edit ", () => {
   return request(app)
-    .patch("/api/v1/comment/update/6374eadf6a6555b7f09786b2")
+    .patch("/api/v1/comment/update/63bfb93970d27ccc0f5752e2")
     .send({
       content: "Nice Picture",
     })

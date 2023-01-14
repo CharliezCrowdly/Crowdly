@@ -2,7 +2,6 @@ Feature: Is a comment successfully posted?
   Comment on a post
   Scenario: Comment on a post
     Given I visit Crowdly Registration Page
-    When I press login now
     When I enter my email
     When I enter my password
     When I press login

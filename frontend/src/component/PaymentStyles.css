@@ -9,6 +9,10 @@
   border-radius: 4px;
 }
 
+.hideNow {
+  display: none;
+}
+
 .FormRow {
   display: -ms-flexbox;
   display: flex;

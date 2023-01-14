@@ -41,7 +41,8 @@ import {
   UPDATE_JOB_BEGIN,
   UPDATE_JOB_SUCCESS,
   UPDATE_JOB_ERROR,
-  CHANGE_VALUE_BEGIN
+  CHANGE_VALUE_BEGIN,
+  SHOW_ALERT,
 } from "./action";
 import { initialState } from "./appContext";
 
@@ -99,8 +100,8 @@ const reducer = (state, action) => {
       user: action.payload.user,
       userLocation: action.payload.location,
       jobLocation: action.payload.location,
-      photo:action.payload.photo,
-      naam:action.payload.naam,
+      photo: action.payload.photo,
+      naam: action.payload.naam,
 
       showAlert: true,
       alertType: "success",
@@ -281,7 +282,7 @@ const reducer = (state, action) => {
       showAlert: true,
       alertType: "success",
       alertText: "New JOB ADDED!",
-      jobid:action.payload.id
+      jobid: action.payload.id,
     };
   }
   if (action.type === ADD_JOB_ERROR) {
@@ -360,41 +361,49 @@ const reducer = (state, action) => {
     };
   }
 
-   if (action.type === UPDATE_JOB_BEGIN) {
-     return {
-       ...state,
-       isLoading: true,
-     };
-   }
-   if (action.type === UPDATE_JOB_SUCCESS) {
-     return {
-       ...state,
-       isLoading: false,
-       showAlert: true,
-       alertType: "success",
-       alertText: "JOB UPDATEED!",
-       
-     };
-   }
-   if (action.type === UPDATE_JOB_ERROR) {
-     return {
-       ...state,
-       isLoading: false,
-       showAlert: true,
-       isSubmit: false,
-       alertType: "danger",
-       alertText: action.payload.msg,
-     };
-   }
+  if (action.type === UPDATE_JOB_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+  if (action.type === UPDATE_JOB_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "success",
+      alertText: "JOB UPDATEED!",
+    };
+  }
+  if (action.type === UPDATE_JOB_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      isSubmit: false,
+      alertType: "danger",
+      alertText: action.payload.msg,
+    };
+  }
 
+  if (action.type === SHOW_ALERT) {
+    return {
+      ...state,
 
-    if (action.type ===CHANGE_VALUE_BEGIN) {
-      return {
-        ...state,
+      showAlert: true,
+      alertType: action.payload.alertType,
+      alertText: action.payload.alertText,
+    };
+  }
 
-        [action.payload.name]: action.payload.value,
-      };
-    }
+  if (action.type === CHANGE_VALUE_BEGIN) {
+    return {
+      ...state,
+
+      [action.payload.name]: action.payload.value,
+    };
+  }
 
   throw new Error(`no such action: ${action.type}`);
 };

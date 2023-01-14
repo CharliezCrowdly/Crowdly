@@ -1,7 +1,8 @@
 import { NavLink } from "react-router-dom";
 import links from "../utils/links";
-
+import { useAppContext } from "../context/appContext";
 const NavLinks = ({ toggleSidebar }) => {
+  const { user } = useAppContext();
   return (
     <div className="nav-links">
       {links.map((link) => {
@@ -9,7 +10,7 @@ const NavLinks = ({ toggleSidebar }) => {
 
         return (
           <NavLink
-            to={path}
+            to={id === 2 ? `/user/profile/${user._id}` : path}
             key={id}
             onClick={toggleSidebar}
             className={({ isActive }) =>

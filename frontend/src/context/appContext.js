@@ -44,6 +44,7 @@ import {
   UPDATE_JOB_SUCCESS,
   UPDATE_JOB_ERROR,
   CHANGE_VALUE_BEGIN,
+  SHOW_ALERT,
 } from "./action";
 
 import axios from "axios";
@@ -193,7 +194,7 @@ const AppProvider = ({ children }) => {
         user,
         token,
         photo,
-        naam
+        naam,
       });
       dispatch({
         type: SETUP_USER_SUCCESS,
@@ -226,6 +227,18 @@ const AppProvider = ({ children }) => {
 
   const clearValues = () => {
     dispatch({ type: CLEAR_VALUES });
+  };
+
+  const displayalert = ({ alertType, alertText }) => {
+    try {
+      dispatch({
+        type: SHOW_ALERT,
+        payload: { alertText: alertText, alertType: alertType },
+      });
+    } catch (e) {
+      console.log(e);
+    }
+    clearAlert();
   };
 
   const createPost = async ({ userpost }) => {
@@ -634,6 +647,7 @@ const AppProvider = ({ children }) => {
         updateJob,
         changevalue,
         picupdate,
+        displayalert,
       }}
     >
       {children}

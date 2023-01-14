@@ -22,7 +22,10 @@ import {
   ProfilePage,
   ResetPage,
   IsLoggedin,
-  EditJobPage
+  EditJobPage,
+  UserPaymentPage,
+  ViewCardPage,
+  ChangePassword,
 } from "./pages";
 import EditProfilePage from "./pages/EditProfile/EditProfilePage";
 import ChatProvider from "./context/ChatProvider";
@@ -88,13 +91,27 @@ function App() {
             }
           >
             <Route path="add/job" element={<AddJobPage />} />
-            <Route path="edit/job/:id" element={<EditJobPage/>}/>
+            <Route path="edit/job/:id" element={<EditJobPage />} />
             <Route path="edit" element={<EditProfilePage />} />
             {/* <Route path="payment" element={<PaymentPage />} /> */}
 
             <Route path="message" element={<MessagePage />} />
             <Route path="applicants/:id" element={<ApplicantPage />} />
+            <Route path="payments" element={<UserPaymentPage />} />
+            <Route path="card" element={<ViewCardPage />} />
+
             <Route path="profile/:id" element={<ProfilePage />} />
+          </Route>
+
+          <Route
+            path="/user"
+            element={
+              <ProtectedRoute>
+                <SharedLayout2 />
+              </ProtectedRoute>
+            }
+          >
+            <Route path="changepassword" element={<ChangePassword />} />
           </Route>
 
           <Route

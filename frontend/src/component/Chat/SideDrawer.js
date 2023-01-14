@@ -179,14 +179,14 @@ const SideDrawer = () => {
                   if (user.type == "Applicant") {
                     navigate("/applicant/profile");
                   } else {
-                    navigate("/employer/dashboard");
+                    navigate("/user/feeds");
                   }
                 }}
               >
                 My Dashboard
               </MenuItem>
               <MenuDivider />
-              <MenuItem onClick={logoutHandler}>Logout</MenuItem>
+              {/* <MenuItem onClick={logoutHandler}>Logout</MenuItem> */}
             </MenuList>
           </Menu>
         </div>
@@ -229,7 +229,3 @@ const SideDrawer = () => {
 };
 
 export default SideDrawer;
-
-
-
-

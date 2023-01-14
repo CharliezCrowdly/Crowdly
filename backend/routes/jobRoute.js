@@ -9,7 +9,6 @@ const {
 
   getAppliedJobs,
 
-
   submitProposal,
   getCompanyJobs,
   getApplicants,
@@ -19,18 +18,25 @@ const {
   unsaveJobs,
   savedJobs,
 
-  createdJobs,
   payment,
 
   appliedJobs,
   updateJob,
-
+  getHiredApplicant,
+  getPayment,
+  getAllPayment,
+  updateTransactionStatus,
+  addCard,
+  getCard,
+  getMyDetails,
 } = require("../controllers/jobController");
 
 const router = require("express").Router();
 router.get("/getAllJobs", getAllJobs);
 router.post("/addJob", addJob);
 router.get("/getJob/:id", getJob);
+router.get("/hired/:id", getHiredApplicant);
+router.get("/getPayment/:id", getPayment);
 router.post("/applyForJob", applyForJob);
 router.post("/sendProposal", submitProposal);
 router.post("/saveJob", saveJob);
@@ -45,21 +51,12 @@ router.route("/appliedjobs").get(appliedJobs);
 router.route("/updateStatus").post(updateJobStatus);
 
 router.route("/payment").post(payment);
+router.route("/payments").get(getAllPayment);
+router.route("/card").put(addCard);
+router.route("/card").get(getCard);
+router.route("/me").get(getMyDetails);
 
 router.route("/updatejob/:id").put(updateJob);
-
-//   router.get("/getCompanyJobDetail", getCompanyJobDetail);
-//   router.route("/getCompanyJobDetailApp").get(protect, getCompanyJobDetailApp);
-// router.get("/getCompanyJobDetailApp", getCompanyJobDetailApp);
-//   router.get("/getAllJobs", getAllJobs);
-//   router.get("/getSectorJob", getJobsForSpecificSector);
-//   router.post("/updateJobStatus", updateJobStatus);
-
-//   router.route("/savedJobs").get(protect, getSavedJobs);
-//   router.route("/appliedJobs").get(protect, getAppliedJobs);
-//   router.route("/appliedJobsApp").get(protect, getAppliedJobsApp);
-//   router.route("/applyForJob").post(protect, applyForJob);
-//   router.route("/editJob").put(protect, editJob);
-
+router.route("/updateTransaction").put(updateTransactionStatus);
 
 module.exports = router;

@@ -15,7 +15,13 @@ import Table from "react-bootstrap/Table";
 import { useNavigate } from "react-router-dom";
 import { IoTime } from "react-icons/io5";
 import Countdown from "react-countdown";
+import StripeContainer from "../../component/StripeContainer";
+import { Alert } from "../../component";
+
 const JobDetail = () => {
+  const [payment, setPayment] = useState(false);
+  const [paymentStatus, setPaymentStatus] = useState(null);
+  const [showPayment, setShowPayment] = useState(false);
   const { requirement, company } = joblists;
   const [isReadmore, setReadmore] = useState(false);
   const [save, setSave] = useState(false);
@@ -23,19 +29,34 @@ const JobDetail = () => {
   const [ismodal, setModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const [job, setJob] = useState("");
-  const { token } = useAppContext();
   const [owner, setOwner] = useState(false);
   const [applicants, setApplicants] = useState([]);
   const [applicantsLoading, setApplicantsLoading] = useState(true);
-  const { user, savejob, unsavejob } = useAppContext();
+  const { user, savejob, unsavejob, showAlert, token, displayalert } =
+    useAppContext();
   const [bookmarked, Setbookmark] = useState(false);
   const [applied, setApplied] = useState(false);
   const [status, setStatus] = useState("");
-  //get job id from params and fetch job detail
+  const [isHired, setIsHired] = useState(false);
+  const [hired, setHired] = useState(null);
+  const [myDetails, setMyDetails] = useState(null);
 
   const navigate = useNavigate();
   const fetch = async () => {
     const id = window.location.pathname.split("/")[3];
+
+    await axios
+      .get(`http://localhost:5000/api/v1/job/me`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setMyDetails(res.data.user);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
     await axios
       .get(
@@ -90,7 +111,53 @@ const JobDetail = () => {
           }
         });
       });
-  };
+
+    await axios
+      .get(
+        `http://localhost:5000/api/v1/job/hired/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+        {
+          params: {
+            id: id,
+          },
+        }
+      )
+      .then(async (res) => {
+        if (res.data.applicant.length > 0) {
+          setIsHired(true);
+          setHired(res.data.applicant[0]);
+          console.log(res.data.applicant[0]);
+
+          await axios
+            .get(
+              `http://localhost:5000/api/v1/job/getPayment/${id}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              },
+              {
+                params: {
+                  id: id,
+                },
+              }
+            )
+            .then((res) => {
+              console.log(res.data.data);
+              if (res.data.data.length == 0) {
+                setPayment(true);
+                setPaymentStatus("Not Paid");
+              } else {
+                setPaymentStatus(res.data.data[0].status);
+              }
+            });
+        }
+      });
+  }; //getPayment
 
   useEffect(() => {
     fetch();
@@ -116,12 +183,36 @@ const JobDetail = () => {
   };
 
   const onbid = () => {
-    setModal((ismodal) => !ismodal);
+    //Check if the user has adder payment details
+    if (myDetails.isCardSet) {
+      setModal((ismodal) => !ismodal);
+    } else {
+      displayalert({
+        alertType: "success",
+        alertText: "Please Complete your payment details \n to place your bid!",
+      });
+    }
+  };
+
+  const trybid = () => {
+    //Check if the user has adder payment details
+    if (myDetails.isCardSet) {
+      setModal(true);
+    } else {
+      displayalert({
+        alertType: "success",
+        alertText: "Please Complete your payment details \n to place your bid!",
+      });
+    }
   };
 
   if (loading) {
     return <div></div>;
   }
+
+  const handleShowPayment = () => {
+    setShowPayment(true);
+  };
 
   return (
     <>
@@ -129,6 +220,8 @@ const JobDetail = () => {
         <SubmitProporsal ismodal={ismodal} onbid={onbid} />
         <div className="left-section glassmorphism">
           <section className="one">
+            {showAlert && <Alert />}
+
             <div className="title">
               <h1>{job.title}</h1>
 
@@ -159,10 +252,6 @@ const JobDetail = () => {
                 </div>
               ) : null}
             </div>
-            {/* <div className="place">
-              <span className="location">Nepal,kathmandu</span>
-              <span>8 hours ago</span>
-            </div> */}
             <div className="jobtype">
               <FaBriefcase className="icon" />
               <span>{job.jobtype}</span>
@@ -225,7 +314,7 @@ const JobDetail = () => {
                     Applied
                   </button>
                 ) : (
-                  <button className="btn-easy" onClick={onbid}>
+                  <button className="btn-easy" onClick={trybid}>
                     Bid
                   </button>
                 )}
@@ -330,6 +419,27 @@ const JobDetail = () => {
               ) : null}
             </div>
           </div>
+          {owner ? (
+            payment ? (
+              <button
+                className={`btn-easy ${showPayment ? "hideNow" : ""}`}
+                onClick={handleShowPayment}
+              >
+                Complete Payment
+              </button>
+            ) : (
+              <>Payment Status: {paymentStatus}</>
+            )
+          ) : (
+            <div></div>
+          )}
+          {showPayment && (
+            <StripeContainer
+              paymentTo={hired.applicant._id}
+              amount={hired.bid}
+              jobId={job._id}
+            />
+          )}
         </div>
         <div className="right-section ">
           <Recommendationlst />

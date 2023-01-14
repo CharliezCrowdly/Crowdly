@@ -9,6 +9,7 @@ import Applicantlst from "./component/Applicantlst";
 import { useParams } from "react-router-dom";
 const ApplicantPage = () => {
   const { id } = useParams();
+  const [refresh, setrefresh] = useState(1);
   const { token } = useAppContext();
   const [applicants, setApplicants] = useState([]);
   const [search, setsearch] = useState({
@@ -31,8 +32,12 @@ const ApplicantPage = () => {
 
   const changestatus = (index) => {
     let newapplicant = applicantslst;
+    //change status of all applicants to rejected
+    newapplicant.forEach((item) => (item.status = "Rejected"));
+    console.log(newapplicant);
     newapplicant[index].status = "Hired";
     setApplicantslst(newapplicant);
+    setApplicants(newapplicant);
   };
 
   const fetch = async () => {
@@ -59,7 +64,7 @@ const ApplicantPage = () => {
 
   useEffect(() => {
     fetch();
-  }, []);
+  }, [refresh]);
 
   const statusfilter = (e) => {
     var newsearch = search.status;
@@ -121,7 +126,11 @@ const ApplicantPage = () => {
       </div>
       <div className="right-container glassmorphism">
         <SearechFilter filter={applyFilters} handleChange={handleChange} />
-        <Applicantlst applicants={applicants} changestatus={changestatus} />
+        <Applicantlst
+          applicants={applicants}
+          changestatus={changestatus}
+          setrefresh={setrefresh}
+        />
       </div>
     </Wrapper>
   );
