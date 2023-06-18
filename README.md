@@ -27,8 +27,8 @@ Talking about the minor features, Crowdly allows users to save jobs and posts in
 <img src="images/card.png" alt="screenshot"/>
 
 <p>
-<img src="images/edit.png" alt="screenshot" width="450"/>
-<img src="images/follow.png" alt="screenshot" width="450"/>
+<img src="images/edit.png" alt="screenshot" width="48%"/>
+<img src="images/follow.png" alt="screenshot" width="48%"/>
 <img src="images/dash.jpg" alt="screenshot" width="100%"/>
 
 </p>
